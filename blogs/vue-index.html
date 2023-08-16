@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vue | 张垒的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="记录好的技术文档">
+    
+    <link rel="preload" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css" as="style"><link rel="preload" href="/vuepress-blog/assets/js/app.cfe4f1dc.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/7.a84a24ff.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/2.c3a99807.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/1.c178cf32.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/35.f12bb5f8.js" as="script"><link rel="prefetch" href="/vuepress-blog/assets/js/10.7e8e7b1e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/11.52366231.js"><link rel="prefetch" href="/vuepress-blog/assets/js/14.8efccace.js"><link rel="prefetch" href="/vuepress-blog/assets/js/15.acd8f527.js"><link rel="prefetch" href="/vuepress-blog/assets/js/16.696abc55.js"><link rel="prefetch" href="/vuepress-blog/assets/js/17.83830d6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/18.02b980f1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/19.68f440c9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/20.0a9cda66.js"><link rel="prefetch" href="/vuepress-blog/assets/js/21.7edb07fe.js"><link rel="prefetch" href="/vuepress-blog/assets/js/22.f567e8c0.js"><link rel="prefetch" href="/vuepress-blog/assets/js/23.2884f722.js"><link rel="prefetch" href="/vuepress-blog/assets/js/24.d348a5d9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/25.ec080050.js"><link rel="prefetch" href="/vuepress-blog/assets/js/26.69adbacd.js"><link rel="prefetch" href="/vuepress-blog/assets/js/27.e94edaee.js"><link rel="prefetch" href="/vuepress-blog/assets/js/28.fa2c3683.js"><link rel="prefetch" href="/vuepress-blog/assets/js/29.480e11e4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/3.83b8031d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/30.9e44a369.js"><link rel="prefetch" href="/vuepress-blog/assets/js/31.ab5be7a3.js"><link rel="prefetch" href="/vuepress-blog/assets/js/32.fd74f8d8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/33.cf91586c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/34.57e43fc1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/36.0505d053.js"><link rel="prefetch" href="/vuepress-blog/assets/js/37.128579b6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/38.afd14854.js"><link rel="prefetch" href="/vuepress-blog/assets/js/39.136c8139.js"><link rel="prefetch" href="/vuepress-blog/assets/js/4.d9f667de.js"><link rel="prefetch" href="/vuepress-blog/assets/js/40.4702d49e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/41.c2c28470.js"><link rel="prefetch" href="/vuepress-blog/assets/js/42.2fc7c472.js"><link rel="prefetch" href="/vuepress-blog/assets/js/43.9b307549.js"><link rel="prefetch" href="/vuepress-blog/assets/js/44.ef443176.js"><link rel="prefetch" href="/vuepress-blog/assets/js/45.a7c60c22.js"><link rel="prefetch" href="/vuepress-blog/assets/js/46.466967ef.js"><link rel="prefetch" href="/vuepress-blog/assets/js/47.48816b2e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/48.cbbfa44c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/49.b362bf6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/5.3df9e6ac.js"><link rel="prefetch" href="/vuepress-blog/assets/js/50.7605d1cc.js"><link rel="prefetch" href="/vuepress-blog/assets/js/51.35192135.js"><link rel="prefetch" href="/vuepress-blog/assets/js/52.bf567756.js"><link rel="prefetch" href="/vuepress-blog/assets/js/53.b0768c7b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/54.9735e1f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/55.84021d4c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/56.e4771e7e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/57.7c72619d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/58.f8487d5b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/59.c97f0f0e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/6.5940db39.js"><link rel="prefetch" href="/vuepress-blog/assets/js/60.0cb291f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/61.2405fff4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/62.a854dc11.js"><link rel="prefetch" href="/vuepress-blog/assets/js/63.13eb262f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/64.cb4d6ac7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/65.6e7515c4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/66.7db29015.js"><link rel="prefetch" href="/vuepress-blog/assets/js/67.45bf8f7c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/68.b604b4f6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/69.8e28194e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/70.6c3a479b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/71.b1ddb05f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/8.f2a8d12d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/9.0b4a9f34.js"><link rel="prefetch" href="/vuepress-blog/assets/js/vendors~docsearch.5bf76089.js">
+    <link rel="stylesheet" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>张垒的博客</h3> <p class="description" data-v-59e6cb88>记录好的技术文档</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-blog/" class="home-link router-link-active"><!----> <span class="site-name">张垒的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-blog/me.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>33</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>31</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Vue</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">Vue</h1> <div data-v-8a445198><!----> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2020/5/17</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>Vue</span></i></div></div> <div class="theme-reco-content content__default"><p>「 如何优雅的使用VUE? 」不可不知的VUE实战技巧</p> <h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>在大家都会用vue的时代，我们又如何去区别是新手小白还是资深vue玩家呢? 如何让自己与刚学vue的人拉开差距呢? 其实，很多人对于vue只停留在基础使用。想要提升自己，就应该想办法将其运用到更高的层次。</p> <p>本文会从以下三个方面，来进阶我们对vue的运用能力
+组件 : 全局组件注册
+Render函数 : 拯救繁乱的template
+Vue权限控制 : 高精度全局权限控制</p> <h2 id="_1-「全局组件注册」"><a href="#_1-「全局组件注册」" class="header-anchor">#</a> 1 -「全局组件注册」</h2> <p>组件是我们非常常用的东西，很多人使用组件都是通过一个一个文件去引用和注册。如果一个组件在整个项目里面的使用次数较多，每一次使用都需要引用并注册，就会显得特别麻烦</p> <p>一般组件应用弊端
+傻瓜式，太笨拙
+繁琐，低效</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>I am HelloWorld<span class="token operator">&lt;</span>/h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
+    <span class="token operator">&lt;</span>Child<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span><span class="token operator">&lt;</span>/Child<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token function">import</span> Child1 from <span class="token string">'./child1.vue'</span>   // 引入
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'HelloWorld'</span>,
+  <span class="token function-name function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    return<span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  components:<span class="token punctuation">{</span>   // 注册
+    Child1
+  <span class="token punctuation">}</span>,
+  props: <span class="token punctuation">{</span>
+    msg: String
+  <span class="token punctuation">}</span>,
+  methods:<span class="token punctuation">{</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>style scoped <span class="token assign-left variable">lang</span><span class="token operator">=</span><span class="token string">&quot;less&quot;</span><span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/style<span class="token operator">&gt;</span>
+</code></pre></div><p>当我们在项目需要重复多次使用该组件，会导致出现很多重复的引入和注册代码，既繁琐又不雅观。因此我们可以通过一个全局的Js文件来管理，将需要多次使用的组件进行全局注册</p> <h3 id="创建全局-js文件管理全局组件"><a href="#创建全局-js文件管理全局组件" class="header-anchor">#</a> 创建全局.js文件管理全局组件</h3> <p>{% asset_img 01.jpg This is an image %}</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// <span class="token number">1</span> - globalComponent.js
+
+<span class="token function">import</span> Vue from <span class="token string">'vue'</span> // 引入vue
+
+// 处理首字母大写 abc <span class="token operator">=</span><span class="token operator">&gt;</span> Abc
+<span class="token keyword">function</span> changeStr<span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> str.charAt<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>.toUpperCase<span class="token punctuation">(</span><span class="token punctuation">)</span> + str.slice<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+/*
+    require.context<span class="token punctuation">(</span>arg1,arg2,arg3<span class="token punctuation">)</span>
+        arg1 - 读取文件的路径
+        arg2 - 是否遍历文件的子目录
+        arg3 - 匹配文件的正则
+    关于这个Api的用法，建议小伙伴们去查阅一下，用途也比较广泛
+*/
+const requireComponent <span class="token operator">=</span> require.context<span class="token punctuation">(</span><span class="token string">'.'</span>, false, /<span class="token punctuation">\</span>.vue$/<span class="token punctuation">)</span>
+console.log<span class="token punctuation">(</span><span class="token string">'requireComponent.keys():'</span>,requireComponent.keys<span class="token punctuation">(</span><span class="token punctuation">))</span>  // 打印
+requireComponent.keys<span class="token punctuation">(</span><span class="token punctuation">)</span>.forEach<span class="token punctuation">(</span>fileName <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const config <span class="token operator">=</span> requireComponent<span class="token punctuation">(</span>fileName<span class="token punctuation">)</span>
+    console.log<span class="token punctuation">(</span><span class="token string">'config:'</span>,config<span class="token punctuation">)</span>  // 打印
+    const componentName <span class="token operator">=</span> changeStr<span class="token punctuation">(</span>
+        fileName.replace<span class="token punctuation">(</span>/^<span class="token punctuation">\</span>.<span class="token punctuation">\</span>//, <span class="token string">''</span><span class="token punctuation">)</span>.replace<span class="token punctuation">(</span>/<span class="token punctuation">\</span>.<span class="token punctuation">\</span>w+$/, <span class="token string">''</span><span class="token punctuation">)</span>   // ./child1.vue <span class="token operator">=</span><span class="token operator">&gt;</span> child1
+    <span class="token punctuation">)</span>
+    
+    Vue.component<span class="token punctuation">(</span>componentName, config.default <span class="token operator">||</span> config<span class="token punctuation">)</span> // 动态注册该目录下的所有.vue文件
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>// <span class="token number">2</span> - 将globalComponent.js引入main.js
+
+<span class="token function">import</span> global from <span class="token string">'./components/globalComponent'</span>
+
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>// <span class="token number">3</span> - 使用这类组件不再需要引入和注册，直接标签使用即可
+
+<span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>I am HelloWorld<span class="token operator">&lt;</span>/h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
+    <span class="token operator">&lt;</span>Child<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span><span class="token operator">&lt;</span>/Child<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+</code></pre></div><p>运行程序，我们看下是否能够正常显示并分析两句打印</p> <p><img src="/vuepress-blog/assets/img/02.8147ce8f.jpg" alt=""></p> <h3 id="extra-路由分区以及动态添加路由"><a href="#extra-路由分区以及动态添加路由" class="header-anchor">#</a> Extra： 路由分区以及动态添加路由</h3> <p>假设我们有很多路由，每一个路由都通过傻瓜式的引入方式，会导致整个项目代码量增多，繁琐，更重要的一点是增加后期维护的难度。因此我们也可以通过上面类似的方式，对路由的引入和使用进行管理，实现分区引入路由，将不同功能下的路由进行区分，通过动态的方式进行引入，即方便快捷又增加可维护</p> <h3 id="创建专门的路由-js文件管理所有的路由"><a href="#创建专门的路由-js文件管理所有的路由" class="header-anchor">#</a> 创建专门的路由.js文件管理所有的路由</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>总路由管理文件 - index.js
+
+分区路由
+    - index.routes.js
+    - login.routes.js
+
+在大型项目中，往往会有很多互不关联的模块，例如电商平台中的商城，个人信息，这种情况下就可以对路由进行分区
+
+</code></pre></div><p><img src="data:image/jpeg;base64,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" alt=""></p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 分区路由文件写法
+
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+    path:<span class="token string">'/index'</span>,
+    name:<span class="token string">'Index'</span>,
+    component: <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> import<span class="token punctuation">(</span><span class="token string">'../views/Index.vue'</span><span class="token punctuation">)</span>,  // 懒加载式引入，当跳转到时才进行引入chunk
+    children: <span class="token punctuation">[</span><span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>
+// 总路由管理文件 index.js 写法
+<span class="token function">import</span> Vue from <span class="token string">'vue'</span>
+<span class="token function">import</span> VueRouter from <span class="token string">'vue-router'</span>
+
+Vue.use<span class="token punctuation">(</span>VueRouter<span class="token punctuation">)</span>
+
+const routerList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>  // 路由数组 - 存放所有路由
+<span class="token keyword">function</span> importAll<span class="token punctuation">(</span>routerArr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    // 该函数用于将所有分区路由中的路由添加到路由数组
+    routerArr.keys<span class="token punctuation">(</span><span class="token punctuation">)</span>.forEach<span class="token punctuation">(</span> key <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+        console.log<span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+        routerList.push<span class="token punctuation">(</span>routerArr<span class="token punctuation">(</span>key<span class="token punctuation">)</span>.default<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+importAll<span class="token punctuation">(</span>require.context<span class="token punctuation">(</span><span class="token string">'.'</span>,true,/<span class="token punctuation">\</span>.routes<span class="token punctuation">\</span>.js/<span class="token punctuation">))</span>
+
+const routes <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">..</span>.routerList
+<span class="token punctuation">]</span>
+
+const router <span class="token operator">=</span> new VueRouter<span class="token punctuation">(</span><span class="token punctuation">{</span>
+    routes
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token builtin class-name">export</span> default router
+
+</code></pre></div><p>运行程序，我们看下是否能够正常显示并分析两句打印</p> <p><img src="/vuepress-blog/assets/img/04.7ba9e31b.jpg" alt=""></p> <div class="language-bash extra-class"><pre class="language-bash"><code>优化之后的代码，会更灵活，更具有观赏性，既便捷高效，又方便维护
+</code></pre></div><h2 id="_2-「拯救繁乱的template」"><a href="#_2-「拯救繁乱的template」" class="header-anchor">#</a> 2 -「拯救繁乱的template」</h2> <p>很多人在写组件的时候，会依赖脚手架中的标签，其实template也存在一定的缺陷，例如：</p> <p>template里存在一值多判断
+过多使用template会使代码冗余，杂乱</p> <p>`` bash
+VUE给我们提供了一个render函数，我们可以通过这个函数巧妙的解决template造成的问题</p> <div class="language- extra-class"><pre class="language-text"><code>
+### 实战 - 处理多个button
+
+``` bash
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;I am Home&lt;/h1&gt;
+    &lt;!-- 假设按钮有多种类型,通过value来显示不同类型 --&gt;
+    &lt;div v-if='value === 1'&gt;
+      &lt;button&gt;button1&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div v-else-if='value === 2'&gt;
+      &lt;button&gt;button2&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div v-else&gt;
+      &lt;button&gt;button3&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'Home',
+  data(){
+    return{
+        value:1
+    }
+  },
+  methods:{
+  }
+}
+&lt;/script&gt;
+
+&lt;style scoped lang=&quot;less&quot;&gt;
+&lt;/style&gt;
+
+</code></pre></div><p>上面这种写法，当出现多种类型的button，就会显得杂乱无章，当然，很多人会选择去封装一个button组件，那么这个组件的封装，又是一个技巧点，利用VUE的render函数，减少不必要的template，因此ru我们可以这样写</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 创建一个button.vue文件 写法如下
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+    props:<span class="token punctuation">{</span>
+        type:<span class="token punctuation">{</span>
+            type:String,
+            default:<span class="token string">'normal'</span>
+        <span class="token punctuation">}</span>,
+        text:<span class="token punctuation">{</span>
+            type:String,
+            default:<span class="token string">'button'</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>,
+    render<span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        /*
+            h 类似于 createElement， 接受2个参数
+            <span class="token number">1</span> - 元素
+            <span class="token number">2</span> - 选项
+         */
+        <span class="token builtin class-name">return</span> h<span class="token punctuation">(</span><span class="token string">'button'</span>,<span class="token punctuation">{</span>
+            // 相当于 v-bind:class
+            class:<span class="token punctuation">{</span>
+                btn:true,
+                <span class="token string">'btn-success'</span>:this.type <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'success'</span>,
+                <span class="token string">'btn-danger'</span>:this.type <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'danger'</span>,
+                <span class="token string">'btn-warning'</span>:this.type <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'warning'</span>,
+                <span class="token string">'btn-normal'</span>:this.type <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'normal'</span>,
+            <span class="token punctuation">}</span>,
+            domProps:<span class="token punctuation">{</span>
+                innerText: this.text <span class="token operator">||</span> <span class="token string">'默认'</span>
+            <span class="token punctuation">}</span>,
+            on:<span class="token punctuation">{</span>
+                click:this.handleClick
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>,
+    methods:<span class="token punctuation">{</span>
+        <span class="token function-name function">handleClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            this.<span class="token variable">$emit</span><span class="token punctuation">(</span><span class="token string">'myClick'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>style scoped<span class="token operator">&gt;</span>
+.btn<span class="token punctuation">{</span>
+    width: 100px<span class="token punctuation">;</span>
+    height:40px<span class="token punctuation">;</span>
+    line-height:40px<span class="token punctuation">;</span>
+    border:0px<span class="token punctuation">;</span>
+    border-radius:5px<span class="token punctuation">;</span>
+    color:<span class="token comment">#ffff;</span>
+<span class="token punctuation">}</span>
+.btn-success<span class="token punctuation">{</span>
+    background:<span class="token comment">#2ecc71;</span>
+<span class="token punctuation">}</span>
+.btn-danger<span class="token punctuation">{</span>
+    background:<span class="token comment">#e74c3c;</span>
+<span class="token punctuation">}</span>
+.btn-warning<span class="token punctuation">{</span>
+    background:<span class="token comment">#f39c12;</span>
+<span class="token punctuation">}</span>
+.btn-normal<span class="token punctuation">{</span>
+    background:<span class="token comment">#bdc3c7;</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/style<span class="token operator">&gt;</span>
+
+
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>//  引入
+
+<span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>I am Home<span class="token operator">&lt;</span>/h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span>-- 按钮根据value显示不同类型的button --<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>Button <span class="token assign-left variable">type</span><span class="token operator">=</span><span class="token string">'success'</span> <span class="token assign-left variable">text</span><span class="token operator">=</span><span class="token string">'button1'</span> @myClick<span class="token operator">=</span><span class="token string">'...'</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span>/Button<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token function">import</span> Button from <span class="token string">'./button.vue'</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'Home'</span>,
+  <span class="token function-name function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    return<span class="token punctuation">{</span>
+        value:1
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  components:<span class="token punctuation">{</span>
+      Button
+  <span class="token punctuation">}</span>,
+  methods:<span class="token punctuation">{</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>style scoped <span class="token assign-left variable">lang</span><span class="token operator">=</span><span class="token string">&quot;less&quot;</span><span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/style<span class="token operator">&gt;</span>
+
+
+</code></pre></div><p>上面这种写法，根据value来显示不同类型的button，我们只需要通过value去修改type,text等，就可以实现这一目的，而不需要去创建多个button，通过v-if去判断</p> <div class="language-bash extra-class"><pre class="language-bash"><code>优化之后的代码，避免了一值多判断的缺点，减少冗余，更加灵活， 这种方式较适合业务简单，使用次数多的组件
+
+</code></pre></div><h2 id="_3-「高精度全局权限处理」"><a href="#_3-「高精度全局权限处理」" class="header-anchor">#</a> 3 -「高精度全局权限处理」</h2> <div class="language-bash extra-class"><pre class="language-bash"><code>权限的控制由前端处理的场景很多，例如根据后台返回内容，判断该人是否对此功能有权限，进而去修改元素v-if / v-show，这种情况下，当这个功能在多处地方出现，就会导致我们做很多很多不必要的重复代码，如果判断条件繁琐的情况，更加冗余，代码量也会增加很多。因此我们可以造一个小车轮，挂在全局上对权限进行处理
+
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>/* 
+    在项目里新建一个common文件夹用于存放全局 .js 文件
+    这种全局文件夹做法相当普遍，一般项目里都应该有这样一个文件夹来管理全局的东西
+*/
+
+// common/jurisdiction.js  用于存放与权限相关的全局函数/变量
+
+<span class="token builtin class-name">export</span> <span class="token keyword">function</span> checkJurisdiction<span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    // 权限数组
+    <span class="token builtin class-name">let</span> jurisdictionList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'1'</span>, <span class="token string">'2'</span>, <span class="token string">'3'</span>, <span class="token string">'5'</span><span class="token punctuation">]</span>
+    <span class="token builtin class-name">let</span> index <span class="token operator">=</span> jurisdictionList.indexOf<span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    console.log<span class="token punctuation">(</span><span class="token string">'index:'</span>,index<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">&gt;</span> -1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        // 有权限
+        <span class="token builtin class-name">return</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        // 无权限
+        <span class="token builtin class-name">return</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>// 将全局权限Js挂载到全局中 
+// main.js
+
+<span class="token function">import</span> <span class="token punctuation">{</span> checkJurisdiction <span class="token punctuation">}</span> from <span class="token string">'./common/jurisdiction'</span>
+
+// 优雅操作 - VUE自定义指令
+Vue.directive<span class="token punctuation">(</span><span class="token string">'permission'</span>,<span class="token punctuation">{</span>
+  inserted<span class="token punctuation">(</span>el, binding<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    // inserted → 元素插入的时候
+    
+    <span class="token builtin class-name">let</span> permission <span class="token operator">=</span> binding.value // 获取到 v-permission的值
+
+    if<span class="token punctuation">(</span>permission<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token builtin class-name">let</span> hasPermission <span class="token operator">=</span> checkJurisdiction<span class="token punctuation">(</span>permission<span class="token punctuation">)</span>
+      if<span class="token punctuation">(</span><span class="token operator">!</span>hasPermission<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        // 没有权限 移除Dom元素
+        el.parentNode <span class="token operator">&amp;&amp;</span> el.parentNode.removeChild<span class="token punctuation">(</span>el<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>else<span class="token punctuation">{</span>
+      throw new Error<span class="token punctuation">(</span><span class="token string">'需要传key'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>// 使用方式
+
+<span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>I am Home<span class="token operator">&lt;</span>/h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span>-- 按钮根据value --<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div v-permission<span class="token operator">=</span><span class="token string">&quot;'10'&quot;</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>button<span class="token operator">&gt;</span>权限<span class="token operator"><span class="token file-descriptor important">1</span>&lt;</span>/button<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div v-permission<span class="token operator">=</span><span class="token string">&quot;'5'&quot;</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>button<span class="token operator">&gt;</span>权限<span class="token operator"><span class="token file-descriptor important">2</span>&lt;</span>/button<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+// 无需再通过value去判断，直接通过v-permission的值进行判断即可
+
+
+</code></pre></div><p>运行程序，我们看下是否能够正常显示并分析打印</p> <p><img src="/vuepress-blog/assets/img/05.371f091f.jpg" alt=""></p> <p>可以看到 v-permission = &quot;'10'&quot;是没有权限且不显示，v-permission = &quot;'5'&quot;是具有权限且显示</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-index.html#前言" class="sidebar-link reco-side-前言" data-v-b57cc07c>前言</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-index.html#_1-「全局组件注册」" class="sidebar-link reco-side-_1-「全局组件注册」" data-v-b57cc07c>1 -「全局组件注册」</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-index.html#创建全局-js文件管理全局组件" class="sidebar-link reco-side-创建全局-js文件管理全局组件" data-v-b57cc07c>创建全局.js文件管理全局组件</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-index.html#extra-路由分区以及动态添加路由" class="sidebar-link reco-side-extra-路由分区以及动态添加路由" data-v-b57cc07c>Extra： 路由分区以及动态添加路由</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-index.html#创建专门的路由-js文件管理所有的路由" class="sidebar-link reco-side-创建专门的路由-js文件管理所有的路由" data-v-b57cc07c>创建专门的路由.js文件管理所有的路由</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-index.html#_2-「拯救繁乱的template」" class="sidebar-link reco-side-_2-「拯救繁乱的template」" data-v-b57cc07c>2 -「拯救繁乱的template」</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-index.html#_3-「高精度全局权限处理」" class="sidebar-link reco-side-_3-「高精度全局权限处理」" data-v-b57cc07c>3 -「高精度全局权限处理」</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://cs-sycdn.kuwo.cn/371642c104355a522300695af11424d3/64db8722/resource/n3/6/44/3638605905.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:20px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:10px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>可能</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>程响</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div></div></div>
+    <script src="/vuepress-blog/assets/js/app.cfe4f1dc.js" defer></script><script src="/vuepress-blog/assets/js/7.a84a24ff.js" defer></script><script src="/vuepress-blog/assets/js/2.c3a99807.js" defer></script><script src="/vuepress-blog/assets/js/1.c178cf32.js" defer></script><script src="/vuepress-blog/assets/js/35.f12bb5f8.js" defer></script>
+  </body>
+</html>

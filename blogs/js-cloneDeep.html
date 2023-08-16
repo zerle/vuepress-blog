@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>如何实现一个深拷贝 | 张垒的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="记录好的技术文档">
+    
+    <link rel="preload" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css" as="style"><link rel="preload" href="/vuepress-blog/assets/js/app.cfe4f1dc.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/7.a84a24ff.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/2.c3a99807.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/1.c178cf32.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/53.b0768c7b.js" as="script"><link rel="prefetch" href="/vuepress-blog/assets/js/10.7e8e7b1e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/11.52366231.js"><link rel="prefetch" href="/vuepress-blog/assets/js/14.8efccace.js"><link rel="prefetch" href="/vuepress-blog/assets/js/15.acd8f527.js"><link rel="prefetch" href="/vuepress-blog/assets/js/16.696abc55.js"><link rel="prefetch" href="/vuepress-blog/assets/js/17.83830d6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/18.02b980f1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/19.68f440c9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/20.0a9cda66.js"><link rel="prefetch" href="/vuepress-blog/assets/js/21.7edb07fe.js"><link rel="prefetch" href="/vuepress-blog/assets/js/22.f567e8c0.js"><link rel="prefetch" href="/vuepress-blog/assets/js/23.2884f722.js"><link rel="prefetch" href="/vuepress-blog/assets/js/24.d348a5d9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/25.ec080050.js"><link rel="prefetch" href="/vuepress-blog/assets/js/26.69adbacd.js"><link rel="prefetch" href="/vuepress-blog/assets/js/27.e94edaee.js"><link rel="prefetch" href="/vuepress-blog/assets/js/28.fa2c3683.js"><link rel="prefetch" href="/vuepress-blog/assets/js/29.480e11e4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/3.83b8031d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/30.9e44a369.js"><link rel="prefetch" href="/vuepress-blog/assets/js/31.ab5be7a3.js"><link rel="prefetch" href="/vuepress-blog/assets/js/32.fd74f8d8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/33.cf91586c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/34.57e43fc1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/35.f12bb5f8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/36.0505d053.js"><link rel="prefetch" href="/vuepress-blog/assets/js/37.128579b6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/38.afd14854.js"><link rel="prefetch" href="/vuepress-blog/assets/js/39.136c8139.js"><link rel="prefetch" href="/vuepress-blog/assets/js/4.d9f667de.js"><link rel="prefetch" href="/vuepress-blog/assets/js/40.4702d49e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/41.c2c28470.js"><link rel="prefetch" href="/vuepress-blog/assets/js/42.2fc7c472.js"><link rel="prefetch" href="/vuepress-blog/assets/js/43.9b307549.js"><link rel="prefetch" href="/vuepress-blog/assets/js/44.ef443176.js"><link rel="prefetch" href="/vuepress-blog/assets/js/45.a7c60c22.js"><link rel="prefetch" href="/vuepress-blog/assets/js/46.466967ef.js"><link rel="prefetch" href="/vuepress-blog/assets/js/47.48816b2e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/48.cbbfa44c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/49.b362bf6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/5.3df9e6ac.js"><link rel="prefetch" href="/vuepress-blog/assets/js/50.7605d1cc.js"><link rel="prefetch" href="/vuepress-blog/assets/js/51.35192135.js"><link rel="prefetch" href="/vuepress-blog/assets/js/52.bf567756.js"><link rel="prefetch" href="/vuepress-blog/assets/js/54.9735e1f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/55.84021d4c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/56.e4771e7e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/57.7c72619d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/58.f8487d5b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/59.c97f0f0e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/6.5940db39.js"><link rel="prefetch" href="/vuepress-blog/assets/js/60.0cb291f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/61.2405fff4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/62.a854dc11.js"><link rel="prefetch" href="/vuepress-blog/assets/js/63.13eb262f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/64.cb4d6ac7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/65.6e7515c4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/66.7db29015.js"><link rel="prefetch" href="/vuepress-blog/assets/js/67.45bf8f7c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/68.b604b4f6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/69.8e28194e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/70.6c3a479b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/71.b1ddb05f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/8.f2a8d12d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/9.0b4a9f34.js"><link rel="prefetch" href="/vuepress-blog/assets/js/vendors~docsearch.5bf76089.js">
+    <link rel="stylesheet" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>张垒的博客</h3> <p class="description" data-v-59e6cb88>记录好的技术文档</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-blog/" class="home-link router-link-active"><!----> <span class="site-name">张垒的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-blog/me.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>33</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>31</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>如何实现一个深拷贝</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">如何实现一个深拷贝</h1> <div data-v-8a445198><!----> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2020/11/24</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>深拷贝</span></i></div></div> <div class="theme-reco-content content__default"><p>本文会详细介绍对象、数组、循环引用、引用丢失、Symbol 和递归爆栈等情况下的深拷贝实践，欢迎阅读。</p> <h2 id="第一步-简单实现"><a href="#第一步-简单实现" class="header-anchor">#</a> 第一步：简单实现</h2> <p>其实深拷贝可以拆分成 2 步，浅拷贝 + 递归，浅拷贝时判断属性值是否是对象，如果是对象就进行递归操作，两个一结合就实现了深拷贝。</p> <p>根据上篇文章内容，我们可以写出简单浅拷贝代码如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneShallow<span class="token punctuation">(</span>source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    var target <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>var key <span class="token keyword">in</span> <span class="token builtin class-name">source</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>source, key<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+// 测试用例
+var a <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name: <span class="token string">&quot;xiaoming&quot;</span>,
+    book: <span class="token punctuation">{</span>
+        title: <span class="token string">&quot;You Don't Know JS&quot;</span>,
+        price: <span class="token string">&quot;45&quot;</span>
+    <span class="token punctuation">}</span>,
+    a1: undefined,
+    a2: null,
+    a3: <span class="token number">123</span>
+<span class="token punctuation">}</span>
+var b <span class="token operator">=</span> cloneShallow<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+a.name <span class="token operator">=</span> <span class="token string">&quot;高级前端进阶&quot;</span><span class="token punctuation">;</span>
+a.book.price <span class="token operator">=</span> <span class="token string">&quot;55&quot;</span><span class="token punctuation">;</span>
+
+console.log<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> 
+//   name: <span class="token string">'xiaoming'</span>, 
+//   book: <span class="token punctuation">{</span> title: <span class="token string">'You Don\'</span>t Know JS<span class="token string">', price: '</span><span class="token number">55</span>' <span class="token punctuation">}</span>,
+//   a1: undefined,
+//   a2: null,
+//   a3: <span class="token number">123</span>
+// <span class="token punctuation">}</span>
+</code></pre></div><p>上面代码是浅拷贝实现，只要稍微改动下，加上是否是对象的判断并在相应的位置使用递归就可以实现简单深拷贝。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep1<span class="token punctuation">(</span>source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    var target <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    for<span class="token punctuation">(</span>var key <span class="token keyword">in</span> <span class="token builtin class-name">source</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>source, key<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>typeof source<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep1<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 注意这里
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+// 使用上面测试用例测试一下
+var b <span class="token operator">=</span> cloneDeep1<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> 
+//   name: <span class="token string">'xiaoming'</span>, 
+//   book: <span class="token punctuation">{</span> title: <span class="token string">'You Don\'</span>t Know JS<span class="token string">', price: '</span><span class="token number">45</span>' <span class="token punctuation">}</span>, 
+//   a1: undefined,
+//   a2: <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+//   a3: <span class="token number">123</span>
+// <span class="token punctuation">}</span>
+</code></pre></div><p>一个简单的深拷贝就完成了，但是这个实现还存在很多问题。</p> <ul><li><p>1、没有对传入参数进行校验，传入 null 时应该返回 null 而不是 {}</p></li> <li><p>2、对于对象的判断逻辑不严谨，因为 typeof null === 'object'</p></li> <li><p>3、没有考虑数组的兼容</p></li></ul> <h2 id="第二步-拷贝数组"><a href="#第二步-拷贝数组" class="header-anchor">#</a> 第二步：拷贝数组</h2> <p>我们来看下对于对象的判断，之前在【进阶3-3期】有过介绍，判断方案如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> isObject<span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> Object.prototype.toString.call<span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'[object Object]'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>但是用在这里并不合适，因为我们要保留数组这种情况，所以这里使用 typeof 来处理。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>typeof null //<span class="token string">&quot;object&quot;</span>
+typeof <span class="token punctuation">{</span><span class="token punctuation">}</span> //<span class="token string">&quot;object&quot;</span>
+typeof <span class="token punctuation">[</span><span class="token punctuation">]</span> //<span class="token string">&quot;object&quot;</span>
+typeof <span class="token keyword">function</span> <span class="token function-name function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> //<span class="token string">&quot;function&quot;</span> <span class="token punctuation">(</span>特殊情况<span class="token punctuation">)</span>
+</code></pre></div><p>改动过后的 isObject 判断逻辑如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> isObject<span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token builtin class-name">return</span> typeof obj <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'object'</span> <span class="token operator">&amp;&amp;</span> obj <span class="token operator">!=</span> null<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>所以兼容数组的写法如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep2<span class="token punctuation">(</span>source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> <span class="token builtin class-name">source</span><span class="token punctuation">;</span> // 非对象返回自身
+      
+    var target <span class="token operator">=</span> Array.isArray<span class="token punctuation">(</span>source<span class="token punctuation">)</span> ? <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    for<span class="token punctuation">(</span>var key <span class="token keyword">in</span> <span class="token builtin class-name">source</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>source, key<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep2<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 注意这里
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+// 使用上面测试用例测试一下
+var b <span class="token operator">=</span> cloneDeep2<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> 
+//   name: <span class="token string">'xiaoming'</span>, 
+//   book: <span class="token punctuation">{</span> title: <span class="token string">'You Don\'</span>t Know JS<span class="token string">', price: '</span><span class="token number">45</span>' <span class="token punctuation">}</span>,
+//   a1: undefined,
+//   a2: null,
+//   a3: <span class="token number">123</span>
+// <span class="token punctuation">}</span>
+</code></pre></div><h2 id="第三步-循环引用"><a href="#第三步-循环引用" class="header-anchor">#</a> 第三步：循环引用</h2> <p>我们知道 JSON 无法深拷贝循环引用，遇到这种情况会抛出异常。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 此处 a 是文章开始的测试用例
+a.circleRef <span class="token operator">=</span> a<span class="token punctuation">;</span>
+
+JSON.parse<span class="token punctuation">(</span>JSON.stringify<span class="token punctuation">(</span>a<span class="token punctuation">))</span><span class="token punctuation">;</span>
+// TypeError: Converting circular structure to JSON
+</code></pre></div><h3 id="_1、使用哈希表"><a href="#_1、使用哈希表" class="header-anchor">#</a> 1、使用哈希表</h3> <p>解决方案很简单，其实就是循环检测，我们设置一个数组或者哈希表存储已拷贝过的对象，当检测到当前对象已存在于哈希表中时，取出该值并返回即可。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep3<span class="token punctuation">(</span>source, <span class="token builtin class-name">hash</span> <span class="token operator">=</span> new WeakMap<span class="token punctuation">(</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> <span class="token builtin class-name">source</span><span class="token punctuation">;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>hash.has<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> hash.get<span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span> // 新增代码，查哈希表
+      
+    var target <span class="token operator">=</span> Array.isArray<span class="token punctuation">(</span>source<span class="token punctuation">)</span> ? <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    hash.set<span class="token punctuation">(</span>source, target<span class="token punctuation">)</span><span class="token punctuation">;</span> // 新增代码，哈希表设值
+    
+    for<span class="token punctuation">(</span>var key <span class="token keyword">in</span> <span class="token builtin class-name">source</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>source, key<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep3<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span>, <span class="token builtin class-name">hash</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 新增代码，传入哈希表
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>测试一下，看看效果如何。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>a.circleRef <span class="token operator">=</span> a<span class="token punctuation">;</span>
+
+var b <span class="token operator">=</span> cloneDeep3<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	name: <span class="token string">&quot;xiaoming&quot;</span>,
+// 	a1: undefined,
+//	a2: null,
+// 	a3: <span class="token number">123</span>,
+// 	book: <span class="token punctuation">{</span>title: <span class="token string">&quot;You Don't Know JS&quot;</span>, price: <span class="token string">&quot;45&quot;</span><span class="token punctuation">}</span>,
+// 	circleRef: <span class="token punctuation">{</span>name: <span class="token string">&quot;xiaoming&quot;</span>, book: <span class="token punctuation">{</span>…<span class="token punctuation">}</span>, a1: undefined, a2: null, a3: <span class="token number">123</span>, …<span class="token punctuation">}</span>
+// <span class="token punctuation">}</span>
+</code></pre></div><p>完美！</p> <h3 id="_2、使用数组"><a href="#_2、使用数组" class="header-anchor">#</a> 2、使用数组</h3> <p>这里使用了 ES6 中的 WeakMap 来处理，那在 ES5 下应该如何处理呢？</p> <p>也很简单，使用数组来处理就好啦，代码如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep3<span class="token punctuation">(</span>source, uniqueList<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> <span class="token builtin class-name">source</span><span class="token punctuation">;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>uniqueList<span class="token punctuation">)</span> uniqueList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> // 新增代码，初始化数组
+      
+    var target <span class="token operator">=</span> Array.isArray<span class="token punctuation">(</span>source<span class="token punctuation">)</span> ? <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    
+    // <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span> 新增代码
+    // 数据已经存在，返回保存的数据
+    var uniqueData <span class="token operator">=</span> find<span class="token punctuation">(</span>uniqueList, <span class="token builtin class-name">source</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>uniqueData<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token builtin class-name">return</span> uniqueData.target<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        
+    // 数据不存在，保存源数据，以及对应的引用
+    uniqueList.push<span class="token punctuation">(</span><span class="token punctuation">{</span>
+        source: source,
+        target: target
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    // <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+
+    for<span class="token punctuation">(</span>var key <span class="token keyword">in</span> <span class="token builtin class-name">source</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>source, key<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep3<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span>, uniqueList<span class="token punctuation">)</span><span class="token punctuation">;</span> // 新增代码，传入数组
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+// 新增方法，用于查找
+<span class="token keyword">function</span> find<span class="token punctuation">(</span>arr, item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    for<span class="token punctuation">(</span>var i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr.length<span class="token punctuation">;</span> i++<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>.source <span class="token operator">==</span><span class="token operator">=</span> item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token builtin class-name">return</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token builtin class-name">return</span> null<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+// 用上面测试用例已测试通过
+</code></pre></div><p>现在已经很完美的解决了循环引用这种情况，那其实还是一种情况是引用丢失，我们看下面的例子。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var obj1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+var obj2 <span class="token operator">=</span> <span class="token punctuation">{</span>a: obj1, b: obj1<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+obj2.a <span class="token operator">==</span><span class="token operator">=</span> obj2.b<span class="token punctuation">;</span> 
+// <span class="token boolean">true</span>
+
+var obj3 <span class="token operator">=</span> cloneDeep2<span class="token punctuation">(</span>obj2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+obj3.a <span class="token operator">==</span><span class="token operator">=</span> obj3.b<span class="token punctuation">;</span> 
+// <span class="token boolean">false</span>
+</code></pre></div><p>引用丢失在某些情况下是有问题的，比如上面的对象 obj2，obj2 的键值 a 和 b 同时引用了同一个对象 obj1，使用 cloneDeep2 进行深拷贝后就丢失了引用关系变成了两个不同的对象，那如何处理呢。</p> <p>其实你有没有发现，我们的 cloneDeep3 已经解决了这个问题，因为只要存储已拷贝过的对象就可以了。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var obj3 <span class="token operator">=</span> cloneDeep3<span class="token punctuation">(</span>obj2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+obj3.a <span class="token operator">==</span><span class="token operator">=</span> obj3.b<span class="token punctuation">;</span> 
+// <span class="token boolean">true</span>
+</code></pre></div><p>完美！</p> <h2 id="第四步-拷贝-symbol"><a href="#第四步-拷贝-symbol" class="header-anchor">#</a> 第四步：拷贝 Symbol</h2> <p>这个时候可能要搞事情了，那我们能不能拷贝 Symol 类型呢？</p> <p>当然可以，不过 Symbol 在 ES6 下才有，我们需要一些方法来检测出 Symble 类型。</p> <p>方法一：Object.getOwnPropertySymbols(...)</p> <p>方法二：Reflect.ownKeys(...)</p> <p>对于方法一可以查找一个给定对象的符号属性时返回一个 ?symbol 类型的数组。注意，每个初始化的对象都是没有自己的 symbol 属性的，因此这个数组可能为空，除非你已经在对象上设置了 symbol 属性。（来自MDN）</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var obj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+var a <span class="token operator">=</span> Symbol<span class="token punctuation">(</span><span class="token string">&quot;a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 创建新的symbol类型
+var b <span class="token operator">=</span> Symbol.for<span class="token punctuation">(</span><span class="token string">&quot;b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 从全局的symbol注册?表设置和取得symbol
+
+obj<span class="token punctuation">[</span>a<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;localSymbol&quot;</span><span class="token punctuation">;</span>
+obj<span class="token punctuation">[</span>b<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;globalSymbol&quot;</span><span class="token punctuation">;</span>
+
+var objectSymbols <span class="token operator">=</span> Object.getOwnPropertySymbols<span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console.log<span class="token punctuation">(</span>objectSymbols.length<span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token number">2</span>
+console.log<span class="token punctuation">(</span>objectSymbols<span class="token punctuation">)</span>         // <span class="token punctuation">[</span>Symbol<span class="token punctuation">(</span>a<span class="token punctuation">)</span>, Symbol<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">]</span>
+console.log<span class="token punctuation">(</span>objectSymbols<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>      // Symbol<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+</code></pre></div><p>对于方法二返回一个由目标对象自身的属性键组成的数组。它的返回值等同于Object.getOwnPropertyNames(target).concat(Object.getOwnPropertySymbols(target))。(来自MDN)</p> <div class="language-bash extra-class"><pre class="language-bash"><code>Reflect.ownKeys<span class="token punctuation">(</span><span class="token punctuation">{</span>z: <span class="token number">3</span>, y: <span class="token number">2</span>, x: <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span> <span class="token string">&quot;z&quot;</span>, <span class="token string">&quot;y&quot;</span>, <span class="token string">&quot;x&quot;</span> <span class="token punctuation">]</span>
+Reflect.ownKeys<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span><span class="token string">&quot;length&quot;</span><span class="token punctuation">]</span>
+
+var sym <span class="token operator">=</span> Symbol.for<span class="token punctuation">(</span><span class="token string">&quot;comet&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+var sym2 <span class="token operator">=</span> Symbol.for<span class="token punctuation">(</span><span class="token string">&quot;meteor&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+var obj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">[</span>sym<span class="token punctuation">]</span>: <span class="token number">0</span>, <span class="token string">&quot;str&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>, <span class="token string">&quot;773&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>, <span class="token string">&quot;0&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>,
+           <span class="token punctuation">[</span>sym2<span class="token punctuation">]</span>: <span class="token number">0</span>, <span class="token string">&quot;-1&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>, <span class="token string">&quot;8&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>, <span class="token string">&quot;second str&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+Reflect.ownKeys<span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">[</span> <span class="token string">&quot;0&quot;</span>, <span class="token string">&quot;8&quot;</span>, <span class="token string">&quot;773&quot;</span>, <span class="token string">&quot;str&quot;</span>, <span class="token string">&quot;-1&quot;</span>, <span class="token string">&quot;second str&quot;</span>, Symbol<span class="token punctuation">(</span>comet<span class="token punctuation">)</span>, Symbol<span class="token punctuation">(</span>meteor<span class="token punctuation">)</span> <span class="token punctuation">]</span>
+// 注意顺序
+// Indexes <span class="token keyword">in</span> numeric order, 
+// strings <span class="token keyword">in</span> insertion order, 
+// symbols <span class="token keyword">in</span> insertion order
+</code></pre></div><h4 id="方法一"><a href="#方法一" class="header-anchor">#</a> 方法一</h4> <p>思路就是先查找有没有 Symbol 属性，如果查找到则先遍历处理 Symbol 情况，然后再处理正常情况，多出来的逻辑就是下面的新增代码。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep4<span class="token punctuation">(</span>source, <span class="token builtin class-name">hash</span> <span class="token operator">=</span> new WeakMap<span class="token punctuation">(</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> <span class="token builtin class-name">source</span><span class="token punctuation">;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>hash.has<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> hash.get<span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+      
+    <span class="token builtin class-name">let</span> target <span class="token operator">=</span> Array.isArray<span class="token punctuation">(</span>source<span class="token punctuation">)</span> ? <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    hash.set<span class="token punctuation">(</span>source, target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    // <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span> 新增代码
+    <span class="token builtin class-name">let</span> symKeys <span class="token operator">=</span> Object.getOwnPropertySymbols<span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span> // 查找
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>symKeys.length<span class="token punctuation">)</span> <span class="token punctuation">{</span> // 查找成功	
+        symKeys.forEach<span class="token punctuation">(</span>symKey <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">[</span>symKey<span class="token punctuation">]</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>symKey<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep4<span class="token punctuation">(</span>source<span class="token punctuation">[</span>symKey<span class="token punctuation">]</span>, <span class="token builtin class-name">hash</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>symKey<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>symKey<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>    
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    // <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+    
+    for<span class="token punctuation">(</span>let key <span class="token keyword">in</span> <span class="token builtin class-name">source</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>source, key<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep4<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span>, <span class="token builtin class-name">hash</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>测试下效果</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 此处 a 是文章开始的测试用例
+var sym1 <span class="token operator">=</span> Symbol<span class="token punctuation">(</span><span class="token string">&quot;a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 创建新的symbol类型
+var sym2 <span class="token operator">=</span> Symbol.for<span class="token punctuation">(</span><span class="token string">&quot;b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 从全局的symbol注册?表设置和取得symbol
+
+a<span class="token punctuation">[</span>sym1<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;localSymbol&quot;</span><span class="token punctuation">;</span>
+a<span class="token punctuation">[</span>sym2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;globalSymbol&quot;</span><span class="token punctuation">;</span>
+
+var b <span class="token operator">=</span> cloneDeep4<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	name: <span class="token string">&quot;xiaoming&quot;</span>,
+// 	a1: undefined,
+//	a2: null,
+// 	a3: <span class="token number">123</span>,
+// 	book: <span class="token punctuation">{</span>title: <span class="token string">&quot;You Don't Know JS&quot;</span>, price: <span class="token string">&quot;45&quot;</span><span class="token punctuation">}</span>,
+// 	circleRef: <span class="token punctuation">{</span>name: <span class="token string">&quot;xiaoming&quot;</span>, book: <span class="token punctuation">{</span>…<span class="token punctuation">}</span>, a1: undefined, a2: null, a3: <span class="token number">123</span>, …<span class="token punctuation">}</span>,
+//  <span class="token punctuation">[</span>Symbol<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">]</span>: <span class="token string">'localSymbol'</span>,
+//  <span class="token punctuation">[</span>Symbol<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">]</span>: <span class="token string">'globalSymbol'</span>
+// <span class="token punctuation">}</span>
+</code></pre></div><p>完美！</p> <h4 id="方法二"><a href="#方法二" class="header-anchor">#</a> 方法二</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep4<span class="token punctuation">(</span>source, <span class="token builtin class-name">hash</span> <span class="token operator">=</span> new WeakMap<span class="token punctuation">(</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> <span class="token builtin class-name">source</span><span class="token punctuation">;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>hash.has<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> hash.get<span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+      
+    <span class="token builtin class-name">let</span> target <span class="token operator">=</span> Array.isArray<span class="token punctuation">(</span>source<span class="token punctuation">)</span> ? <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    hash.set<span class="token punctuation">(</span>source, target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+  	Reflect.ownKeys<span class="token punctuation">(</span>source<span class="token punctuation">)</span>.forEach<span class="token punctuation">(</span>key <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span> // 改动
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep4<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span>, <span class="token builtin class-name">hash</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>  
+  	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+// 测试已通过
+</code></pre></div><p>这里使用了 Reflect.ownKeys() 获取所有的键值，同时包括 Symbol，对 source 遍历赋值即可。</p> <p>写到这里已经差不多了，我们再延伸下，对于 target 换一种写法，改动如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep4<span class="token punctuation">(</span>source, <span class="token builtin class-name">hash</span> <span class="token operator">=</span> new WeakMap<span class="token punctuation">(</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> <span class="token builtin class-name">source</span><span class="token punctuation">;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>hash.has<span class="token punctuation">(</span>source<span class="token punctuation">))</span> <span class="token builtin class-name">return</span> hash.get<span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+      
+    <span class="token builtin class-name">let</span> target <span class="token operator">=</span> Array.isArray<span class="token punctuation">(</span>source<span class="token punctuation">)</span> ? <span class="token punctuation">[</span><span class="token punctuation">..</span>.source<span class="token punctuation">]</span> <span class="token builtin class-name">:</span> <span class="token punctuation">{</span> <span class="token punctuation">..</span>.source <span class="token punctuation">}</span><span class="token punctuation">;</span> // 改动 <span class="token number">1</span>
+    hash.set<span class="token punctuation">(</span>source, target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+  	Reflect.ownKeys<span class="token punctuation">(</span>target<span class="token punctuation">)</span>.forEach<span class="token punctuation">(</span>key <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span> // 改动 <span class="token number">2</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>isObject<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+            target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cloneDeep4<span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span>, <span class="token builtin class-name">hash</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>  
+  	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span> target<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+// 测试已通过
+</code></pre></div><p>在改动 1 中，返回一个新数组或者新对象，获取到源对象之后就可以如改动 2 所示传入 target 遍历赋值即可。</p> <p>Reflect.ownKeys() 这种方式的问题在于不能深拷贝原型链上的数据，因为返回的是目标对象自身的属性键组成的数组。如果想深拷贝原型链上的数据怎么办，那用 for..in 就可以了。</p> <p>我们再介绍下两个知识点，分别是构造字面量数组时使用展开语法和构造字面量对象时使用展开语法。（以下代码示例来源于 MDN）</p> <h5 id="_1、展开语法之字面量数组"><a href="#_1、展开语法之字面量数组" class="header-anchor">#</a> 1、展开语法之字面量数组</h5> <p>这是 ES2015 （ES6） 才有的语法，可以通过字面量方式, 构造新数组，而不再需要组合使用 push, splice, concat 等方法。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var parts <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'shoulders'</span>, <span class="token string">'knees'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> 
+var lyrics <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'head'</span>, <span class="token punctuation">..</span>.parts, <span class="token string">'and'</span>, <span class="token string">'toes'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> 
+// <span class="token punctuation">[</span><span class="token string">&quot;head&quot;</span>, <span class="token string">&quot;shoulders&quot;</span>, <span class="token string">&quot;knees&quot;</span>, <span class="token string">&quot;and&quot;</span>, <span class="token string">&quot;toes&quot;</span><span class="token punctuation">]</span>
+</code></pre></div><p>这里的使用方法和参数列表的展开有点类似。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> myFunction<span class="token punctuation">(</span>v, w, x, y, z<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+var args <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span>, <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+myFunction<span class="token punctuation">(</span>-1, <span class="token punctuation">..</span>.args, <span class="token number">2</span>, <span class="token punctuation">..</span>.<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>返回的是新数组，对新数组修改之后不会影响到旧数组，类似于 arr.slice()。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+var arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">..</span>.arr<span class="token punctuation">]</span><span class="token punctuation">;</span> // like arr.slice<span class="token punctuation">(</span><span class="token punctuation">)</span>
+arr2.push<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+// arr2 此时变成 <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span>, <span class="token number">4</span><span class="token punctuation">]</span>
+// arr 不受影响
+</code></pre></div><p>展开语法和 Object.assign() 行为一致, 执行的都是浅拷贝（即只遍历一层）。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>, <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>, <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+var b <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">..</span>.a<span class="token punctuation">]</span><span class="token punctuation">;</span>
+b.shift<span class="token punctuation">(</span><span class="token punctuation">)</span>.shift<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token number">1</span>
+// <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span>, <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>, <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+</code></pre></div><p>这里 a 是多层数组，b 只拷贝了第一层，对于第二层依旧和 a 持有同一个地址，所以对 b 的修改会影响到 a。</p> <h5 id="_2、展开语法之字面量对象"><a href="#_2、展开语法之字面量对象" class="header-anchor">#</a> 2、展开语法之字面量对象</h5> <p>这是 ES2018 才有的语法，将已有对象的所有可枚举属性拷贝到新构造的对象中，类似于 Object.assign() 方法。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var obj1 <span class="token operator">=</span> <span class="token punctuation">{</span> foo: <span class="token string">'bar'</span>, x: <span class="token number">42</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+var obj2 <span class="token operator">=</span> <span class="token punctuation">{</span> foo: <span class="token string">'baz'</span>, y: <span class="token number">13</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+var clonedObj <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">..</span>.obj1 <span class="token punctuation">}</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> foo: <span class="token string">&quot;bar&quot;</span>, x: <span class="token number">42</span> <span class="token punctuation">}</span>
+
+var mergedObj <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">..</span>.obj1, <span class="token punctuation">..</span>.obj2 <span class="token punctuation">}</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> foo: <span class="token string">&quot;baz&quot;</span>, x: <span class="token number">42</span>, y: <span class="token number">13</span> <span class="token punctuation">}</span>
+</code></pre></div><p>Object.assign() 函数会触发 setters，而展开语法不会。有时候不能替换或者模拟 Object.assign() 函数，因为会得到意想不到的结果，如下所示。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var obj1 <span class="token operator">=</span> <span class="token punctuation">{</span> foo: <span class="token string">'bar'</span>, x: <span class="token number">42</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+var obj2 <span class="token operator">=</span> <span class="token punctuation">{</span> foo: <span class="token string">'baz'</span>, y: <span class="token number">13</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+const merge <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token punctuation">..</span>.objects <span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span> <span class="token punctuation">{</span> <span class="token punctuation">..</span>.objects <span class="token punctuation">}</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+var mergedObj <span class="token operator">=</span> merge <span class="token punctuation">(</span> obj1, obj2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> <span class="token number">0</span>: <span class="token punctuation">{</span> foo: <span class="token string">'bar'</span>, x: <span class="token number">42</span> <span class="token punctuation">}</span>, <span class="token number">1</span>: <span class="token punctuation">{</span> foo: <span class="token string">'baz'</span>, y: <span class="token number">13</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+
+var mergedObj <span class="token operator">=</span> merge <span class="token punctuation">(</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>, obj1, obj2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> <span class="token number">0</span>: <span class="token punctuation">{</span><span class="token punctuation">}</span>, <span class="token number">1</span>: <span class="token punctuation">{</span> foo: <span class="token string">'bar'</span>, x: <span class="token number">42</span> <span class="token punctuation">}</span>, <span class="token number">2</span>: <span class="token punctuation">{</span> foo: <span class="token string">'baz'</span>, y: <span class="token number">13</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+</code></pre></div><p>这里实际上是将多个解构变为剩余参数（ rest ），然后再将剩余参数展开为字面量对象.</p> <h2 id="第五步-破解递归爆栈"><a href="#第五步-破解递归爆栈" class="header-anchor">#</a> 第五步：破解递归爆栈</h2> <p>上面四步使用的都是递归方法，但是有一个问题在于会爆栈，错误提示如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// RangeError: Maximum call stack size exceeded
+</code></pre></div><p>那应该如何解决呢？其实我们使用循环就可以了，代码如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> cloneDeep5<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    const root <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    // 栈
+    const loopList <span class="token operator">=</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            parent: root,
+            key: undefined,
+            data: x,
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    while<span class="token punctuation">(</span>loopList.length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        // 广度优先
+        const <span class="token function">node</span> <span class="token operator">=</span> loopList.pop<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        const parent <span class="token operator">=</span> node.parent<span class="token punctuation">;</span>
+        const key <span class="token operator">=</span> node.key<span class="token punctuation">;</span>
+        const data <span class="token operator">=</span> node.data<span class="token punctuation">;</span>
+
+        // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
+        <span class="token builtin class-name">let</span> res <span class="token operator">=</span> parent<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>typeof key <span class="token operator">!=</span><span class="token operator">=</span> <span class="token string">'undefined'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            res <span class="token operator">=</span> parent<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        for<span class="token punctuation">(</span>let k <span class="token keyword">in</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>data.hasOwnProperty<span class="token punctuation">(</span>k<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>typeof data<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    // 下一次循环
+                    loopList.push<span class="token punctuation">(</span><span class="token punctuation">{</span>
+                        parent: res,
+                        key: k,
+                        data: data<span class="token punctuation">[</span>k<span class="token punctuation">]</span>,
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    res<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> data<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token builtin class-name">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>完结！</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-cloneDeep.html#第一步-简单实现" class="sidebar-link reco-side-第一步-简单实现" data-v-b57cc07c>第一步：简单实现</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-cloneDeep.html#第二步-拷贝数组" class="sidebar-link reco-side-第二步-拷贝数组" data-v-b57cc07c>第二步：拷贝数组</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-cloneDeep.html#第三步-循环引用" class="sidebar-link reco-side-第三步-循环引用" data-v-b57cc07c>第三步：循环引用</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-cloneDeep.html#_1、使用哈希表" class="sidebar-link reco-side-_1、使用哈希表" data-v-b57cc07c>1、使用哈希表</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-cloneDeep.html#_2、使用数组" class="sidebar-link reco-side-_2、使用数组" data-v-b57cc07c>2、使用数组</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-cloneDeep.html#第四步-拷贝-symbol" class="sidebar-link reco-side-第四步-拷贝-symbol" data-v-b57cc07c>第四步：拷贝 Symbol</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-cloneDeep.html#第五步-破解递归爆栈" class="sidebar-link reco-side-第五步-破解递归爆栈" data-v-b57cc07c>第五步：破解递归爆栈</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://cs-sycdn.kuwo.cn/371642c104355a522300695af11424d3/64db8722/resource/n3/6/44/3638605905.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:20px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:10px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>可能</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>程响</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div></div></div>
+    <script src="/vuepress-blog/assets/js/app.cfe4f1dc.js" defer></script><script src="/vuepress-blog/assets/js/7.a84a24ff.js" defer></script><script src="/vuepress-blog/assets/js/2.c3a99807.js" defer></script><script src="/vuepress-blog/assets/js/1.c178cf32.js" defer></script><script src="/vuepress-blog/assets/js/53.b0768c7b.js" defer></script>
+  </body>
+</html>

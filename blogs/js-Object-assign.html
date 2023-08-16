@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Object.assign 原理及其实现 | 张垒的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="记录好的技术文档">
+    
+    <link rel="preload" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css" as="style"><link rel="preload" href="/vuepress-blog/assets/js/app.cfe4f1dc.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/7.a84a24ff.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/2.c3a99807.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/1.c178cf32.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/52.bf567756.js" as="script"><link rel="prefetch" href="/vuepress-blog/assets/js/10.7e8e7b1e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/11.52366231.js"><link rel="prefetch" href="/vuepress-blog/assets/js/14.8efccace.js"><link rel="prefetch" href="/vuepress-blog/assets/js/15.acd8f527.js"><link rel="prefetch" href="/vuepress-blog/assets/js/16.696abc55.js"><link rel="prefetch" href="/vuepress-blog/assets/js/17.83830d6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/18.02b980f1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/19.68f440c9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/20.0a9cda66.js"><link rel="prefetch" href="/vuepress-blog/assets/js/21.7edb07fe.js"><link rel="prefetch" href="/vuepress-blog/assets/js/22.f567e8c0.js"><link rel="prefetch" href="/vuepress-blog/assets/js/23.2884f722.js"><link rel="prefetch" href="/vuepress-blog/assets/js/24.d348a5d9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/25.ec080050.js"><link rel="prefetch" href="/vuepress-blog/assets/js/26.69adbacd.js"><link rel="prefetch" href="/vuepress-blog/assets/js/27.e94edaee.js"><link rel="prefetch" href="/vuepress-blog/assets/js/28.fa2c3683.js"><link rel="prefetch" href="/vuepress-blog/assets/js/29.480e11e4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/3.83b8031d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/30.9e44a369.js"><link rel="prefetch" href="/vuepress-blog/assets/js/31.ab5be7a3.js"><link rel="prefetch" href="/vuepress-blog/assets/js/32.fd74f8d8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/33.cf91586c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/34.57e43fc1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/35.f12bb5f8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/36.0505d053.js"><link rel="prefetch" href="/vuepress-blog/assets/js/37.128579b6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/38.afd14854.js"><link rel="prefetch" href="/vuepress-blog/assets/js/39.136c8139.js"><link rel="prefetch" href="/vuepress-blog/assets/js/4.d9f667de.js"><link rel="prefetch" href="/vuepress-blog/assets/js/40.4702d49e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/41.c2c28470.js"><link rel="prefetch" href="/vuepress-blog/assets/js/42.2fc7c472.js"><link rel="prefetch" href="/vuepress-blog/assets/js/43.9b307549.js"><link rel="prefetch" href="/vuepress-blog/assets/js/44.ef443176.js"><link rel="prefetch" href="/vuepress-blog/assets/js/45.a7c60c22.js"><link rel="prefetch" href="/vuepress-blog/assets/js/46.466967ef.js"><link rel="prefetch" href="/vuepress-blog/assets/js/47.48816b2e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/48.cbbfa44c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/49.b362bf6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/5.3df9e6ac.js"><link rel="prefetch" href="/vuepress-blog/assets/js/50.7605d1cc.js"><link rel="prefetch" href="/vuepress-blog/assets/js/51.35192135.js"><link rel="prefetch" href="/vuepress-blog/assets/js/53.b0768c7b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/54.9735e1f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/55.84021d4c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/56.e4771e7e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/57.7c72619d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/58.f8487d5b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/59.c97f0f0e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/6.5940db39.js"><link rel="prefetch" href="/vuepress-blog/assets/js/60.0cb291f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/61.2405fff4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/62.a854dc11.js"><link rel="prefetch" href="/vuepress-blog/assets/js/63.13eb262f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/64.cb4d6ac7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/65.6e7515c4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/66.7db29015.js"><link rel="prefetch" href="/vuepress-blog/assets/js/67.45bf8f7c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/68.b604b4f6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/69.8e28194e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/70.6c3a479b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/71.b1ddb05f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/8.f2a8d12d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/9.0b4a9f34.js"><link rel="prefetch" href="/vuepress-blog/assets/js/vendors~docsearch.5bf76089.js">
+    <link rel="stylesheet" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>张垒的博客</h3> <p class="description" data-v-59e6cb88>记录好的技术文档</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-blog/" class="home-link router-link-active"><!----> <span class="site-name">张垒的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-blog/me.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>33</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>31</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Object.assign 原理及其实现</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">Object.assign 原理及其实现</h1> <div data-v-8a445198><!----> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2020/11/24</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>Object.assign</span></i></div></div> <div class="theme-reco-content content__default"><p>本篇文章会先介绍浅拷贝 Object.assign 的实现原理，然后带你手动实现一个浅拷贝。</p> <h2 id="浅拷贝-object-assign"><a href="#浅拷贝-object-assign" class="header-anchor">#</a> 浅拷贝 Object.assign</h2> <p>主要是将所有可枚举属性的值从一个或多个源对象复制到目标对象，同时返回目标对象。（来自 MDN）</p> <p>语法如下所示：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>Object.assign<span class="token punctuation">(</span>target, <span class="token punctuation">..</span>.sources<span class="token punctuation">)</span>
+</code></pre></div><p>其中 target 是目标对象，sources 是源对象，可以有多个，返回修改后的目标对象 target。</p> <p>如果目标对象中的属性具有相同的键，则属性将被源对象中的属性覆盖。后来的源对象的属性将类似地覆盖早先的属性。</p> <h3 id="示例1"><a href="#示例1" class="header-anchor">#</a> 示例1</h3> <p>我们知道浅拷贝就是拷贝第一层的基本类型值，以及第一层的引用类型地址。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 第一步
+<span class="token builtin class-name">let</span> a <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name: <span class="token string">&quot;advanced&quot;</span>,
+    age: <span class="token number">18</span>
+<span class="token punctuation">}</span>
+<span class="token builtin class-name">let</span> b <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name: <span class="token string">&quot;xiaoming&quot;</span>,
+    book: <span class="token punctuation">{</span>
+        title: <span class="token string">&quot;You Don't Know JS&quot;</span>,
+        price: <span class="token string">&quot;45&quot;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token builtin class-name">let</span> c <span class="token operator">=</span> Object.assign<span class="token punctuation">(</span>a, b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	name: <span class="token string">&quot;xiaoming&quot;</span>,
+//  age: <span class="token number">18</span>,
+// 	book: <span class="token punctuation">{</span>title: <span class="token string">&quot;You Don't Know JS&quot;</span>, price: <span class="token string">&quot;45&quot;</span><span class="token punctuation">}</span>
+// <span class="token punctuation">}</span> 
+console.log<span class="token punctuation">(</span>a <span class="token operator">==</span><span class="token operator">=</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token boolean">true</span>
+
+// 第二步
+b.name <span class="token operator">=</span> <span class="token string">&quot;change&quot;</span><span class="token punctuation">;</span>
+b.book.price <span class="token operator">=</span> <span class="token string">&quot;55&quot;</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	name: <span class="token string">&quot;change&quot;</span>,
+// 	book: <span class="token punctuation">{</span>title: <span class="token string">&quot;You Don't Know JS&quot;</span>, price: <span class="token string">&quot;55&quot;</span><span class="token punctuation">}</span>
+// <span class="token punctuation">}</span> 
+
+// 第三步
+console.log<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	name: <span class="token string">&quot;xiaoming&quot;</span>,
+//  age: <span class="token number">18</span>,
+// 	book: <span class="token punctuation">{</span>title: <span class="token string">&quot;You Don't Know JS&quot;</span>, price: <span class="token string">&quot;55&quot;</span><span class="token punctuation">}</span>
+// <span class="token punctuation">}</span> 
+</code></pre></div><p>1、在第一步中，使用 Object.assign 把源对象 b 的值复制到目标对象 a 中，这里把返回值定义为对象 c，可以看出 b 会替换掉 a 中具有相同键的值，即如果目标对象（a）中的属性具有相同的键，则属性将被源对象（b）中的属性覆盖。这里需要注意下，返回对象 c 就是 目标对象 a。</p> <p>2、在第二步中，修改源对象 b 的基本类型值（name）和引用类型值（book）。</p> <p>3、在第三步中，浅拷贝之后目标对象 a 的基本类型值没有改变，但是引用类型值发生了改变，因为 Object.assign() 拷贝的是属性值。假如源对象的属性值是一个指向对象的引用，它也只拷贝那个引用地址。</p> <h3 id="示例2"><a href="#示例2" class="header-anchor">#</a> 示例2</h3> <p>String 类型和 Symbol 类型的属性都会被拷贝，而且不会跳过那些值为 null 或 undefined 的源对象。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 第一步
+<span class="token builtin class-name">let</span> a <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name: <span class="token string">&quot;xiaoming&quot;</span>,
+    age: <span class="token number">18</span>
+<span class="token punctuation">}</span>
+<span class="token builtin class-name">let</span> b <span class="token operator">=</span> <span class="token punctuation">{</span>
+    b1: Symbol<span class="token punctuation">(</span><span class="token string">&quot;xiaoming&quot;</span><span class="token punctuation">)</span>,
+    b2: null,
+    b3: undefined
+<span class="token punctuation">}</span>
+<span class="token builtin class-name">let</span> c <span class="token operator">=</span> Object.assign<span class="token punctuation">(</span>a, b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	name: <span class="token string">&quot;xiaoming&quot;</span>,
+//  age: <span class="token number">18</span>,
+// 	b1: Symbol<span class="token punctuation">(</span>xiaoming<span class="token punctuation">)</span>,
+// 	b2: null,
+// 	b3: undefined
+// <span class="token punctuation">}</span> 
+console.log<span class="token punctuation">(</span>a <span class="token operator">==</span><span class="token operator">=</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token boolean">true</span>
+</code></pre></div><h2 id="object-assign-模拟实现"><a href="#object-assign-模拟实现" class="header-anchor">#</a> Object.assign 模拟实现</h2> <p>实现一个 Object.assign 大致思路如下：</p> <p>1、判断原生 Object 是否支持该函数，如果不存在的话创建一个函数 assign，并使用 Object.defineProperty 将该函数绑定到 Object 上。</p> <p>2、判断参数是否正确（目标对象不能为空，我们可以直接设置{}传递进去,但必须设置值）。</p> <p>3、使用 Object() 转成对象，并保存为 to，最后返回这个对象 to。</p> <p>4、使用 for..in 循环遍历出所有可枚举的自有属性。并复制给新的目标对象（使用 hasOwnProperty 获取自有属性，即非原型链上的属性）。</p> <p>实现代码如下，这里为了验证方便，使用 assign2 代替 assign。注意此模拟实现不支持 symbol 属性，因为ES5 中根本没有 symbol 。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>typeof Object.assign2 <span class="token operator">!=</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  // Attention <span class="token number">1</span>
+  Object.defineProperty<span class="token punctuation">(</span>Object, <span class="token string">&quot;assign2&quot;</span>, <span class="token punctuation">{</span>
+    value: <span class="token keyword">function</span> <span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token string">'use strict'</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>target <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span> // Attention <span class="token number">2</span>
+        throw new TypeError<span class="token punctuation">(</span><span class="token string">'Cannot convert undefined or null to object'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      // Attention <span class="token number">3</span>
+      var to <span class="token operator">=</span> Object<span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+      <span class="token keyword">for</span> <span class="token punctuation">(</span>var index <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> index <span class="token operator">&lt;</span> arguments.length<span class="token punctuation">;</span> index++<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        var nextSource <span class="token operator">=</span> arguments<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nextSource <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>  // Attention <span class="token number">2</span>
+          // Attention <span class="token number">4</span>
+          <span class="token keyword">for</span> <span class="token punctuation">(</span>var nextKey <span class="token keyword">in</span> nextSource<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>nextSource, nextKey<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+              to<span class="token punctuation">[</span>nextKey<span class="token punctuation">]</span> <span class="token operator">=</span> nextSource<span class="token punctuation">[</span>nextKey<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      <span class="token builtin class-name">return</span> to<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>,
+    writable: true,
+    configurable: <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>测试一下</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 测试用例
+<span class="token builtin class-name">let</span> a <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name: <span class="token string">&quot;advanced&quot;</span>,
+    age: <span class="token number">18</span>
+<span class="token punctuation">}</span>
+<span class="token builtin class-name">let</span> b <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name: <span class="token string">&quot;xiaoming&quot;</span>,
+    book: <span class="token punctuation">{</span>
+        title: <span class="token string">&quot;You Don't Know JS&quot;</span>,
+        price: <span class="token string">&quot;45&quot;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token builtin class-name">let</span> c <span class="token operator">=</span> Object.assign2<span class="token punctuation">(</span>a, b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	name: <span class="token string">&quot;xiaoming&quot;</span>,
+//  age: <span class="token number">18</span>,
+// 	book: <span class="token punctuation">{</span>title: <span class="token string">&quot;You Don't Know JS&quot;</span>, price: <span class="token string">&quot;45&quot;</span><span class="token punctuation">}</span>
+// <span class="token punctuation">}</span> 
+console.log<span class="token punctuation">(</span>a <span class="token operator">==</span><span class="token operator">=</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token boolean">true</span>
+</code></pre></div><p>针对上面的代码做如下扩展。</p> <h3 id="注意1-可枚举性"><a href="#注意1-可枚举性" class="header-anchor">#</a> 注意1：可枚举性</h3> <p>原生情况下挂载在 Object 上的属性是不可枚举的，但是直接在 Object 上挂载属性 a 之后是可枚举的，所以这里必须使用 Object.defineProperty，并设置 enumerable: false 以及 writable: true, configurable: true。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>for<span class="token punctuation">(</span>var i <span class="token keyword">in</span> Object<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span>Object<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+// 无输出
+
+Object.keys<span class="token punctuation">(</span> Object <span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</code></pre></div><p>上面代码说明原生 Object 上的属性不可枚举。</p> <p>我们可以使用 2 种方法查看 Object.assign 是否可枚举，使用 Object.getOwnPropertyDescriptor 或者 Object.propertyIsEnumerable 都可以，其中propertyIsEnumerable(..) 会检查给定的属性名是否直接存在于对象中（而不是在原型链上）并且满足 enumerable: true。具体用法如下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 方法1
+Object.getOwnPropertyDescriptor<span class="token punctuation">(</span>Object, <span class="token string">&quot;assign&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	value: ƒ, 
+//  writable: true, 	// 可写
+//  enumerable: false,  // 不可枚举，注意这里是 <span class="token boolean">false</span>
+//  configurable: <span class="token boolean">true</span>	// 可配置
+// <span class="token punctuation">}</span>
+
+// 方法2
+Object.propertyIsEnumerable<span class="token punctuation">(</span><span class="token string">&quot;assign&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token boolean">false</span>
+</code></pre></div><p>上面代码说明 Object.assign 是不可枚举的。</p> <p>介绍这么多是因为直接在 Object 上挂载属性 a 之后是可枚举的，我们来看如下代码。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>Object.a <span class="token operator">=</span> <span class="token function-name function">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span><span class="token string">&quot;log a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Object.getOwnPropertyDescriptor<span class="token punctuation">(</span>Object, <span class="token string">&quot;a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	value: ƒ, 
+//  writable: true, 
+//  enumerable: true,  // 注意这里是 <span class="token boolean">true</span>
+//  configurable: <span class="token boolean">true</span>
+// <span class="token punctuation">}</span>
+
+Object.propertyIsEnumerable<span class="token punctuation">(</span><span class="token string">&quot;a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token boolean">true</span>
+</code></pre></div><p>所以要实现 Object.assign 必须使用 Object.defineProperty，并设置 writable: true, enumerable: false, configurable: true，当然默认情况下不设置就是 false。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>Object.defineProperty<span class="token punctuation">(</span>Object, <span class="token string">&quot;b&quot;</span>, <span class="token punctuation">{</span>
+    value: <span class="token function-name function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console.log<span class="token punctuation">(</span><span class="token string">&quot;log b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Object.getOwnPropertyDescriptor<span class="token punctuation">(</span>Object, <span class="token string">&quot;b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span>
+// 	value: ƒ, 
+//  writable: false, 	// 注意这里是 <span class="token boolean">false</span>
+//  enumerable: false,  // 注意这里是 <span class="token boolean">false</span>
+//  configurable: <span class="token boolean">false</span>	// 注意这里是 <span class="token boolean">false</span>
+// <span class="token punctuation">}</span>
+</code></pre></div><p>所以具体到本次模拟实现中，相关代码如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 判断原生 Object 中是否存在函数 assign2
+<span class="token keyword">if</span> <span class="token punctuation">(</span>typeof Object.assign2 <span class="token operator">!=</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  // 使用属性描述符定义新属性 assign2
+  Object.defineProperty<span class="token punctuation">(</span>Object, <span class="token string">&quot;assign2&quot;</span>, <span class="token punctuation">{</span>
+    value: <span class="token keyword">function</span> <span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+      <span class="token punctuation">..</span>.
+    <span class="token punctuation">}</span>,
+    // 默认值是 false，即 enumerable: <span class="token boolean">false</span>
+    writable: true,
+    configurable: <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="注意2-判断参数是否正确"><a href="#注意2-判断参数是否正确" class="header-anchor">#</a> 注意2：判断参数是否正确</h3> <p>有些文章判断参数是否正确是这样的。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>target <span class="token operator">==</span><span class="token operator">=</span> undefined <span class="token operator">||</span> target <span class="token operator">==</span><span class="token operator">=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	throw new TypeError<span class="token punctuation">(</span><span class="token string">'Cannot convert undefined or null to object'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这样肯定没问题，但是这样写没有必要，因为 undefined 和 null 是相等的（高程 3 P52 ），即 undefined == null 返回 true，只需要按照如下方式判断就好了。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>target <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span> // TypeError <span class="token keyword">if</span> undefined or null
+	throw new TypeError<span class="token punctuation">(</span><span class="token string">'Cannot convert undefined or null to object'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="注意3-原始类型被包装为对象"><a href="#注意3-原始类型被包装为对象" class="header-anchor">#</a> 注意3：原始类型被包装为对象</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>var v1 <span class="token operator">=</span> <span class="token string">&quot;abc&quot;</span><span class="token punctuation">;</span>
+var v2 <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+var v3 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+var v4 <span class="token operator">=</span> Symbol<span class="token punctuation">(</span><span class="token string">&quot;foo&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+var obj <span class="token operator">=</span> Object.assign<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span>, v1, null, v2, undefined, v3, v4<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+// 原始类型会被包装，null 和 undefined 会被忽略。
+// 注意，只有字符串的包装对象才可能有自身可枚举属性。
+console.log<span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+// <span class="token punctuation">{</span> <span class="token string">&quot;0&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;a&quot;</span>, <span class="token string">&quot;1&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;b&quot;</span>, <span class="token string">&quot;2&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;c&quot;</span> <span class="token punctuation">}</span>
+</code></pre></div><p>上面代码中的源对象 v2、v3、v4 实际上被忽略了，原因在于他们自身没有可枚举属性。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var v1 <span class="token operator">=</span> <span class="token string">&quot;abc&quot;</span><span class="token punctuation">;</span>
+var v2 <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+var v3 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+var v4 <span class="token operator">=</span> Symbol<span class="token punctuation">(</span><span class="token string">&quot;foo&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+var v5 <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+// Object.keys<span class="token punctuation">(</span><span class="token punctuation">..</span><span class="token punctuation">)</span> 返回一个数组，包含所有可枚举属性
+// 只会查找对象直接包含的属性，不查找<span class="token punctuation">[</span><span class="token punctuation">[</span>Prototype<span class="token punctuation">]</span><span class="token punctuation">]</span>链
+Object.keys<span class="token punctuation">(</span> v1 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span> <span class="token string">'0'</span>, <span class="token string">'1'</span>, <span class="token string">'2'</span> <span class="token punctuation">]</span>
+Object.keys<span class="token punctuation">(</span> v2 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Object.keys<span class="token punctuation">(</span> v3 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Object.keys<span class="token punctuation">(</span> v4 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Object.keys<span class="token punctuation">(</span> v5 <span class="token punctuation">)</span><span class="token punctuation">;</span> 
+// TypeError: Cannot convert undefined or null to object
+
+// Object.getOwnPropertyNames<span class="token punctuation">(</span><span class="token punctuation">..</span><span class="token punctuation">)</span> 返回一个数组，包含所有属性，无论它们是否可枚举
+// 只会查找对象直接包含的属性，不查找<span class="token punctuation">[</span><span class="token punctuation">[</span>Prototype<span class="token punctuation">]</span><span class="token punctuation">]</span>链
+Object.getOwnPropertyNames<span class="token punctuation">(</span> v1 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span> <span class="token string">'0'</span>, <span class="token string">'1'</span>, <span class="token string">'2'</span>, <span class="token string">'length'</span> <span class="token punctuation">]</span>
+Object.getOwnPropertyNames<span class="token punctuation">(</span> v2 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Object.getOwnPropertyNames<span class="token punctuation">(</span> v3 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Object.getOwnPropertyNames<span class="token punctuation">(</span> v4 <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Object.getOwnPropertyNames<span class="token punctuation">(</span> v5 <span class="token punctuation">)</span><span class="token punctuation">;</span> 
+// TypeError: Cannot convert undefined or null to object
+</code></pre></div><p>但是下面的代码是可以执行的。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token string">&quot;abc&quot;</span><span class="token punctuation">;</span>
+var b <span class="token operator">=</span> <span class="token punctuation">{</span>
+    v1: <span class="token string">&quot;def&quot;</span>,
+    v2: true,
+    v3: <span class="token number">10</span>,
+    v4: Symbol<span class="token punctuation">(</span><span class="token string">&quot;foo&quot;</span><span class="token punctuation">)</span>,
+    v5: null,
+    v6: undefined
+<span class="token punctuation">}</span>
+
+var obj <span class="token operator">=</span> Object.assign<span class="token punctuation">(</span>a, b<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+console.log<span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> 
+//   <span class="token punctuation">[</span>String: <span class="token string">'abc'</span><span class="token punctuation">]</span>
+//   v1: <span class="token string">'def'</span>,
+//   v2: true,
+//   v3: <span class="token number">10</span>,
+//   v4: Symbol<span class="token punctuation">(</span>foo<span class="token punctuation">)</span>,
+//   v5: null,
+//   v6: undefined 
+// <span class="token punctuation">}</span>
+</code></pre></div><p>原因很简单，因为此时 undefined、true 等不是作为对象，而是作为对象 b 的属性值，对象 b 是可枚举的。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 接上面的代码
+Object.keys<span class="token punctuation">(</span> b <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token punctuation">[</span> <span class="token string">'v1'</span>, <span class="token string">'v2'</span>, <span class="token string">'v3'</span>, <span class="token string">'v4'</span>, <span class="token string">'v5'</span>, <span class="token string">'v6'</span> <span class="token punctuation">]</span>
+</code></pre></div><p>这里其实又可以看出一个问题来，那就是目标对象是原始类型，会包装成对象，对应上面的代码就是目标对象 a 会被包装成 [String: 'abc']，那模拟实现时应该如何处理呢？很简单，使用 Object(..) 就可以了。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token string">&quot;abc&quot;</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span> Object<span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">[</span>String: <span class="token string">'abc'</span><span class="token punctuation">]</span>
+</code></pre></div><p>到这里已经介绍很多知识了，让我们再来延伸一下，看看下面的代码能不能执行。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token string">&quot;abc&quot;</span><span class="token punctuation">;</span>
+var b <span class="token operator">=</span> <span class="token string">&quot;def&quot;</span><span class="token punctuation">;</span>
+Object.assign<span class="token punctuation">(</span>a, b<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre></div><p>答案是否定的，会提示以下错误。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>TypeError: Cannot assign to <span class="token builtin class-name">read</span> only property <span class="token string">'0'</span> of object <span class="token string">'[object String]'</span>
+</code></pre></div><p>原因在于 Object(&quot;abc&quot;) 时，其属性描述符为不可写，即 writable: false。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var myObject <span class="token operator">=</span> Object<span class="token punctuation">(</span> <span class="token string">&quot;abc&quot;</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Object.getOwnPropertyNames<span class="token punctuation">(</span> myObject <span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">[</span> <span class="token string">'0'</span>, <span class="token string">'1'</span>, <span class="token string">'2'</span>, <span class="token string">'length'</span> <span class="token punctuation">]</span>
+
+Object.getOwnPropertyDescriptor<span class="token punctuation">(</span>myObject, <span class="token string">&quot;0&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> 
+//   value: <span class="token string">'a'</span>,
+//   writable: false, // 注意这里
+//   enumerable: true,
+//   configurable: <span class="token boolean">false</span> 
+// <span class="token punctuation">}</span>
+</code></pre></div><p>同理，下面的代码也会报错。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token string">&quot;abc&quot;</span><span class="token punctuation">;</span>
+var b <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token number">0</span>: <span class="token string">&quot;d&quot;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+Object.assign<span class="token punctuation">(</span>a, b<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+// TypeError: Cannot assign to <span class="token builtin class-name">read</span> only property <span class="token string">'0'</span> of object <span class="token string">'[object String]'</span>
+</code></pre></div><p>但是并不是说只要 writable: false 就会报错，看下面的代码。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var myObject <span class="token operator">=</span> Object<span class="token punctuation">(</span><span class="token string">'abc'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+Object.getOwnPropertyDescriptor<span class="token punctuation">(</span>myObject, <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token punctuation">{</span> 
+//   value: <span class="token string">'a'</span>,
+//   writable: false, // 注意这里
+//   enumerable: true,
+//   configurable: <span class="token boolean">false</span> 
+// <span class="token punctuation">}</span>
+
+myObject<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'d'</span><span class="token punctuation">;</span>
+// <span class="token string">'d'</span>
+
+myObject<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+// <span class="token string">'a'</span>
+</code></pre></div><p>这里并没有报错，原因在于 JS 对于不可写的属性值的修改静默失败（silently failed）,在严格模式下才会提示错误。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token string">'use strict'</span>
+var myObject <span class="token operator">=</span> Object<span class="token punctuation">(</span><span class="token string">'abc'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+myObject<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'d'</span><span class="token punctuation">;</span>
+// TypeError: Cannot assign to <span class="token builtin class-name">read</span> only property <span class="token string">'0'</span> of object <span class="token string">'[object String]'</span>
+</code></pre></div><p>所以我们在模拟实现 Object.assign 时需要使用严格模式。</p> <h3 id="注意4-存在性"><a href="#注意4-存在性" class="header-anchor">#</a> 注意4：存在性</h3> <p>如何在不访问属性值的情况下判断对象中是否存在某个属性呢，看下面的代码。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var anotherObject <span class="token operator">=</span> <span class="token punctuation">{</span>
+    a: <span class="token number">1</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+// 创建一个关联到 anotherObject 的对象
+var myObject <span class="token operator">=</span> Object.create<span class="token punctuation">(</span> anotherObject <span class="token punctuation">)</span><span class="token punctuation">;</span>
+myObject.b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">(</span><span class="token string">&quot;a&quot;</span> <span class="token keyword">in</span> myObject<span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token boolean">true</span>
+<span class="token punctuation">(</span><span class="token string">&quot;b&quot;</span> <span class="token keyword">in</span> myObject<span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token boolean">true</span>
+
+myObject.hasOwnProperty<span class="token punctuation">(</span> <span class="token string">&quot;a&quot;</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token boolean">false</span>
+myObject.hasOwnProperty<span class="token punctuation">(</span> <span class="token string">&quot;b&quot;</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> // <span class="token boolean">true</span>
+</code></pre></div><p>这边使用了 in 操作符和 hasOwnProperty 方法，区别如下（你不知道的JS上卷 P119）：</p> <p>1、in 操作符会检查属性是否在对象及其 [[Prototype]] 原型链中。</p> <p>2、hasOwnProperty(..) 只会检查属性是否在 myObject 对象中，不会检查 [[Prototype]] 原型链。</p> <p>Object.assign 方法肯定不会拷贝原型链上的属性，所以模拟实现时需要用 hasOwnProperty(..) 判断处理下，但是直接使用 myObject.hasOwnProperty(..) 是有问题的，因为有的对象可能没有连接到 Object.prototype 上（比如通过 Object.create(null) 来创建），这种情况下，使用 myObject.hasOwnProperty(..) 就会失败。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var myObject <span class="token operator">=</span> Object.create<span class="token punctuation">(</span> null <span class="token punctuation">)</span><span class="token punctuation">;</span>
+myObject.b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">(</span><span class="token string">&quot;b&quot;</span> <span class="token keyword">in</span> myObject<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+// <span class="token boolean">true</span>
+
+myObject.hasOwnProperty<span class="token punctuation">(</span> <span class="token string">&quot;b&quot;</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+// TypeError: myObject.hasOwnProperty is not a <span class="token keyword">function</span>
+</code></pre></div><p>解决方法也很简单，使用我们在【进阶3-3期】中介绍的 call 就可以了，使用如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var myObject <span class="token operator">=</span> Object.create<span class="token punctuation">(</span> null <span class="token punctuation">)</span><span class="token punctuation">;</span>
+myObject.b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>myObject, <span class="token string">&quot;b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+// <span class="token boolean">true</span>
+</code></pre></div><p>所以具体到本次模拟实现中，相关代码如下。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 使用 for<span class="token punctuation">..</span>in 遍历对象 nextSource 获取属性值
+// 此处会同时检查其原型链上的属性
+<span class="token keyword">for</span> <span class="token punctuation">(</span>var nextKey <span class="token keyword">in</span> nextSource<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    // 使用 hasOwnProperty 判断对象 nextSource 中是否存在属性 nextKey
+    // 过滤其原型链上的属性
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Object.prototype.hasOwnProperty.call<span class="token punctuation">(</span>nextSource, nextKey<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+        // 赋值给对象 to,并在遍历结束后返回对象 to
+        to<span class="token punctuation">[</span>nextKey<span class="token punctuation">]</span> <span class="token operator">=</span> nextSource<span class="token punctuation">[</span>nextKey<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>完结！</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#浅拷贝-object-assign" class="sidebar-link reco-side-浅拷贝-object-assign" data-v-b57cc07c>浅拷贝 Object.assign</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#示例1" class="sidebar-link reco-side-示例1" data-v-b57cc07c>示例1</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#示例2" class="sidebar-link reco-side-示例2" data-v-b57cc07c>示例2</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#object-assign-模拟实现" class="sidebar-link reco-side-object-assign-模拟实现" data-v-b57cc07c>Object.assign 模拟实现</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#注意1-可枚举性" class="sidebar-link reco-side-注意1-可枚举性" data-v-b57cc07c>注意1：可枚举性</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#注意2-判断参数是否正确" class="sidebar-link reco-side-注意2-判断参数是否正确" data-v-b57cc07c>注意2：判断参数是否正确</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#注意3-原始类型被包装为对象" class="sidebar-link reco-side-注意3-原始类型被包装为对象" data-v-b57cc07c>注意3：原始类型被包装为对象</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/js-Object-assign.html#注意4-存在性" class="sidebar-link reco-side-注意4-存在性" data-v-b57cc07c>注意4：存在性</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://cs-sycdn.kuwo.cn/371642c104355a522300695af11424d3/64db8722/resource/n3/6/44/3638605905.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:20px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:10px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>可能</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>程响</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div></div></div>
+    <script src="/vuepress-blog/assets/js/app.cfe4f1dc.js" defer></script><script src="/vuepress-blog/assets/js/7.a84a24ff.js" defer></script><script src="/vuepress-blog/assets/js/2.c3a99807.js" defer></script><script src="/vuepress-blog/assets/js/1.c178cf32.js" defer></script><script src="/vuepress-blog/assets/js/52.bf567756.js" defer></script>
+  </body>
+</html>

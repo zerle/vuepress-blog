@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>请你实现一个大文件上传和断点续传 | 张垒的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="记录好的技术文档">
+    
+    <link rel="preload" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css" as="style"><link rel="preload" href="/vuepress-blog/assets/js/app.cfe4f1dc.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/7.a84a24ff.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/2.c3a99807.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/1.c178cf32.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/58.f8487d5b.js" as="script"><link rel="prefetch" href="/vuepress-blog/assets/js/10.7e8e7b1e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/11.52366231.js"><link rel="prefetch" href="/vuepress-blog/assets/js/14.8efccace.js"><link rel="prefetch" href="/vuepress-blog/assets/js/15.acd8f527.js"><link rel="prefetch" href="/vuepress-blog/assets/js/16.696abc55.js"><link rel="prefetch" href="/vuepress-blog/assets/js/17.83830d6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/18.02b980f1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/19.68f440c9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/20.0a9cda66.js"><link rel="prefetch" href="/vuepress-blog/assets/js/21.7edb07fe.js"><link rel="prefetch" href="/vuepress-blog/assets/js/22.f567e8c0.js"><link rel="prefetch" href="/vuepress-blog/assets/js/23.2884f722.js"><link rel="prefetch" href="/vuepress-blog/assets/js/24.d348a5d9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/25.ec080050.js"><link rel="prefetch" href="/vuepress-blog/assets/js/26.69adbacd.js"><link rel="prefetch" href="/vuepress-blog/assets/js/27.e94edaee.js"><link rel="prefetch" href="/vuepress-blog/assets/js/28.fa2c3683.js"><link rel="prefetch" href="/vuepress-blog/assets/js/29.480e11e4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/3.83b8031d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/30.9e44a369.js"><link rel="prefetch" href="/vuepress-blog/assets/js/31.ab5be7a3.js"><link rel="prefetch" href="/vuepress-blog/assets/js/32.fd74f8d8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/33.cf91586c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/34.57e43fc1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/35.f12bb5f8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/36.0505d053.js"><link rel="prefetch" href="/vuepress-blog/assets/js/37.128579b6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/38.afd14854.js"><link rel="prefetch" href="/vuepress-blog/assets/js/39.136c8139.js"><link rel="prefetch" href="/vuepress-blog/assets/js/4.d9f667de.js"><link rel="prefetch" href="/vuepress-blog/assets/js/40.4702d49e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/41.c2c28470.js"><link rel="prefetch" href="/vuepress-blog/assets/js/42.2fc7c472.js"><link rel="prefetch" href="/vuepress-blog/assets/js/43.9b307549.js"><link rel="prefetch" href="/vuepress-blog/assets/js/44.ef443176.js"><link rel="prefetch" href="/vuepress-blog/assets/js/45.a7c60c22.js"><link rel="prefetch" href="/vuepress-blog/assets/js/46.466967ef.js"><link rel="prefetch" href="/vuepress-blog/assets/js/47.48816b2e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/48.cbbfa44c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/49.b362bf6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/5.3df9e6ac.js"><link rel="prefetch" href="/vuepress-blog/assets/js/50.7605d1cc.js"><link rel="prefetch" href="/vuepress-blog/assets/js/51.35192135.js"><link rel="prefetch" href="/vuepress-blog/assets/js/52.bf567756.js"><link rel="prefetch" href="/vuepress-blog/assets/js/53.b0768c7b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/54.9735e1f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/55.84021d4c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/56.e4771e7e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/57.7c72619d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/59.c97f0f0e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/6.5940db39.js"><link rel="prefetch" href="/vuepress-blog/assets/js/60.0cb291f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/61.2405fff4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/62.a854dc11.js"><link rel="prefetch" href="/vuepress-blog/assets/js/63.13eb262f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/64.cb4d6ac7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/65.6e7515c4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/66.7db29015.js"><link rel="prefetch" href="/vuepress-blog/assets/js/67.45bf8f7c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/68.b604b4f6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/69.8e28194e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/70.6c3a479b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/71.b1ddb05f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/8.f2a8d12d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/9.0b4a9f34.js"><link rel="prefetch" href="/vuepress-blog/assets/js/vendors~docsearch.5bf76089.js">
+    <link rel="stylesheet" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>张垒的博客</h3> <p class="description" data-v-59e6cb88>记录好的技术文档</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-blog/" class="home-link router-link-active"><!----> <span class="site-name">张垒的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-blog/me.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>33</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>31</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>请你实现一个大文件上传和断点续传</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">请你实现一个大文件上传和断点续传</h1> <div data-v-8a445198><!----> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2021/5/24</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>文件上传</span></i></div></div> <div class="theme-reco-content content__default"><p>本文将从零搭建前端和服务端，实现一个大文件上传和断点续传的 demo：</p> <p>前端：vue
+服务端：nodejs</p> <p>源码<a href="https://github.com/zerle/uploadBigFile" target="_blank" rel="noopener noreferrer">请戳这里<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="大文件上传"><a href="#大文件上传" class="header-anchor">#</a> 大文件上传</h2> <h3 id="前端"><a href="#前端" class="header-anchor">#</a> 前端</h3> <p>前端大文件上传，核心是利用 Blob.prototype.slice 方法，此方法和数组的 slice 方法相似，调用的 slice 方法可以返回原文件的某个切片。</p> <p>这样我们就可以根据预先设置好的切片最大数量将文件切分为一个个切片，然后借助 http 的可并发性，同时上传多个切片，这样从原本传一个大文件，变成了同时传多个小的文件切片，可以大大减少上传时间。</p> <p>另外由于是并发，传输到服务端的顺序可能会发生变化，所以我们还需要给每个切片记录顺序。</p> <h3 id="服务端"><a href="#服务端" class="header-anchor">#</a> 服务端</h3> <p>服务端需要负责接受这些切片，并在接收到所有切片后合并切片。</p> <p>这里又引伸出两个问题：</p> <p>何时合并切片，即切片什么时候传输完成？
+如何合并切片？
+第一个问题需要前端进行配合，前端在每个切片中都携带切片最大数量的信息，当服务端接收到这个数量的切片时自动合并，也可以额外发一个请求主动通知服务端进行切片的合并。</p> <p>第二个问题，具体如何合并切片呢？这里可以使用 NodeJS 的 API fs.appendFileSync，它可以同步地将数据追加到指定文件，也就是说，当服务端接收完所有切片后，可以先创建一个空文件，然后将所有切片逐步合并到这个文件中。</p> <p>so，talk is cheap, show me the code，接着让我们用代码实现上面的思路吧。</p> <h2 id="前端部分"><a href="#前端部分" class="header-anchor">#</a> 前端部分</h2> <p>前端使用 Vue 作为开发框架，对界面没有太大要求，原生也可以。</p> <h3 id="上传控件"><a href="#上传控件" class="header-anchor">#</a> 上传控件</h3> <p>首先创建选择文件的控件，监听 change 事件以及上传按钮：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+   <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>input <span class="token assign-left variable">type</span><span class="token operator">=</span><span class="token string">&quot;file&quot;</span> @change<span class="token operator">=</span><span class="token string">&quot;handleFileChange&quot;</span> /<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">&quot;handleUpload&quot;</span><span class="token operator">&gt;</span>上传<span class="token operator">&lt;</span>/button<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  data: <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+      container: <span class="token punctuation">{</span>
+        file: null
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  methods: <span class="token punctuation">{</span>
+    handleFileChange <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      const <span class="token punctuation">[</span>file<span class="token punctuation">]</span> <span class="token operator">=</span> e.target.files
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>file<span class="token punctuation">)</span> <span class="token builtin class-name">return</span>
+      this.container.file <span class="token operator">=</span> <span class="token function">file</span>
+    <span class="token punctuation">}</span>,
+    async <span class="token function-name function">handleUpload</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+</code></pre></div><p>{% asset_img 01.png This is an image %}</p> <h3 id="请求逻辑"><a href="#请求逻辑" class="header-anchor">#</a> 请求逻辑</h3> <p>考虑到通用性，这里没有用第三方的请求库，而是用原生 XMLHttpRequest 做一层简单的封装来发请求：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>request<span class="token punctuation">(</span><span class="token punctuation">{</span>
+    url,
+    method <span class="token operator">=</span> <span class="token string">&quot;post&quot;</span>,
+    data,
+    headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    returnnewPromise<span class="token punctuation">(</span>resolve <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+        const xhr <span class="token operator">=</span> new XMLHttpRequest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        xhr.open<span class="token punctuation">(</span>method, url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Object.keys<span class="token punctuation">(</span>headers<span class="token punctuation">)</span>.forEach<span class="token punctuation">(</span>key <span class="token operator">=</span><span class="token operator">&gt;</span>
+            xhr.setRequestHeader<span class="token punctuation">(</span>key, headers<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        xhr.send<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        xhr.onload <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+            resolve<span class="token punctuation">(</span><span class="token punctuation">{</span>
+                data: e.target.response
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="上传切片"><a href="#上传切片" class="header-anchor">#</a> 上传切片</h3> <p>接着实现比较重要的上传功能，上传需要做两件事：</p> <ul><li>对文件进行切片</li> <li>将切片传输给服务端</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>input <span class="token assign-left variable">type</span><span class="token operator">=</span><span class="token string">&quot;file&quot;</span> @change<span class="token operator">=</span><span class="token string">&quot;handleFileChange&quot;</span> /<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">&quot;handleUpload&quot;</span><span class="token operator">&gt;</span>上传<span class="token operator">&lt;</span>/button<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+const LENGTH <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> // 切片数量
+
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  data: <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+      container: <span class="token punctuation">{</span>
+        file: null,
+        data: <span class="token punctuation">[</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  methods: <span class="token punctuation">{</span>
+    <span class="token function-name function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+    /*新增部分---start*/
+    // 生成文件切片
+    createFileChunk <span class="token punctuation">(</span>file, length <span class="token operator">=</span> LENGTH<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      const fileChunkList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+      const chunkSize <span class="token operator">=</span> Math.ceil<span class="token punctuation">(</span>file.size / length<span class="token punctuation">)</span>
+      <span class="token builtin class-name">let</span> cur <span class="token operator">=</span> <span class="token number">0</span>
+      <span class="token keyword">while</span> <span class="token punctuation">(</span>cur <span class="token operator">&lt;</span> file.size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        fileChunkList.push<span class="token punctuation">(</span><span class="token punctuation">{</span>
+          file: file.slice<span class="token punctuation">(</span>cur, cur + chunkSize<span class="token punctuation">)</span>,
+          size: chunkSize
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        cur <span class="token operator">+=</span> chunkSize
+      <span class="token punctuation">}</span>
+      <span class="token builtin class-name">return</span> fileChunkList
+    <span class="token punctuation">}</span>,
+    // 上传切片
+    async <span class="token function-name function">uploadChunks</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      const requestList <span class="token operator">=</span> this.container.data
+        .map<span class="token variable"><span class="token punctuation">((</span>{chunk<span class="token punctuation">,</span> hash}<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+          const formData <span class="token operator">=</span> new FormData<span class="token punctuation">(</span><span class="token punctuation">)</span>
+          formData.append<span class="token punctuation">(</span>'chunk'<span class="token punctuation">,</span> chunk<span class="token punctuation">)</span>
+          formData.append<span class="token punctuation">(</span>'hash'<span class="token punctuation">,</span> hash<span class="token punctuation">)</span>
+          formData.append<span class="token punctuation">(</span>'filename'<span class="token punctuation">,</span> this.container.file.name<span class="token punctuation">)</span>
+          return {formData}
+        }<span class="token punctuation">)</span>
+        .map<span class="token punctuation">(</span>async <span class="token punctuation">(</span>{formData}<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+          this.request<span class="token punctuation">(</span>{
+            url<span class="token operator">:</span> 'http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">3000</span><span class="token operator">/</span>upload'<span class="token punctuation">,</span>
+            data<span class="token operator">:</span> formData
+          }<span class="token punctuation">)</span>
+        }<span class="token punctuation">)</span>
+      <span class="token operator">/</span><span class="token operator">/</span> 并发切片
+      await Promise.all<span class="token punctuation">(</span>requestList<span class="token punctuation">)</span>
+    }<span class="token punctuation">,</span>
+    <span class="token operator">/</span><span class="token operator">/</span> 文件上传
+    async handleUpload <span class="token punctuation">(</span><span class="token punctuation">)</span> {
+      if <span class="token punctuation">(</span><span class="token operator">!</span>this.container.file<span class="token punctuation">)</span> return false
+      const fileChunkList <span class="token operator">=</span> this.createFileChunk<span class="token punctuation">(</span>this.container.file<span class="token punctuation">)</span>
+      this.container.data <span class="token operator">=</span> fileChunkList.map<span class="token punctuation">((</span>{file}<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>{
+        chunk<span class="token operator">:</span> file<span class="token punctuation">,</span>
+        index<span class="token punctuation">,</span>
+        hash<span class="token operator">:</span> this.container.file.name <span class="token operator">+</span> '<span class="token operator">-</span>' <span class="token operator">+</span> index<span class="token punctuation">,</span> <span class="token operator">/</span><span class="token operator">/</span> 文件名 <span class="token operator">+</span> 数组下标
+      }<span class="token punctuation">))</span></span>
+      await this.uploadChunks<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    /*新增部分---end*/
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+</code></pre></div><p>当点击上传按钮时，调用 createFileChunk 将文件切片，切片数量通过一个常量 Length 控制，这里设置为 10，即将文件分成 10 个切片上传。</p> <p>createFileChunk 内使用 while 循环和 slice 方法将切片放入 fileChunkList 数组中返回。</p> <p>在生成文件切片时，需要给每个切片一个标识作为 hash，这里暂时使用文件名 + 下标，这样后端可以知道当前切片是第几个切片，用于之后的合并切片。</p> <p>随后调用 uploadChunks 上传所有的文件切片，将文件切片，切片 hash，以及文件名放入 FormData 中，再调用上一步的 request 函数返回一个 proimise，最后调用 Promise.all 并发上传所有的切片。</p> <h3 id="发送合并请求"><a href="#发送合并请求" class="header-anchor">#</a> 发送合并请求</h3> <p>这里使用整体思路中提到的第二种合并切片的方式，即前端主动通知服务端进行合并，所以前端还需要额外发请求，服务端接受到这个请求时主动合并切片</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 文件上传
+async <span class="token function-name function">handleUpload</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  /*新增部分---start*/
+  // 合并切片
+  await this.mergeRequest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>，
+// 合并切片
+async <span class="token function-name function">mergeRequest</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  await this.request<span class="token punctuation">(</span><span class="token punctuation">{</span>
+    url: <span class="token string">'http://localhost:3000/merge'</span>,
+    headers: <span class="token punctuation">{</span>
+      <span class="token string">'content-type'</span><span class="token builtin class-name">:</span> <span class="token string">'application/json'</span>
+    <span class="token punctuation">}</span>,
+    data: JSON.stringify<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      filename: this.container.file.name,
+      hash: this.container.hash
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+/*新增部分---end*/
+</code></pre></div><h2 id="服务端部分"><a href="#服务端部分" class="header-anchor">#</a> 服务端部分</h2> <p>简单使用 HTTP 模块搭建服务端：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>const http <span class="token operator">=</span> require<span class="token punctuation">(</span><span class="token string">&quot;http&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+const server <span class="token operator">=</span> http.createServer<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+server.on<span class="token punctuation">(</span><span class="token string">&quot;request&quot;</span>, async <span class="token punctuation">(</span>req, res<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  res.setHeader<span class="token punctuation">(</span><span class="token string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="token string">&quot;*&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  res.setHeader<span class="token punctuation">(</span><span class="token string">&quot;Access-Control-Allow-Headers&quot;</span>, <span class="token string">&quot;*&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req.method <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">&quot;OPTIONS&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    res.status <span class="token operator">=</span> <span class="token number">200</span><span class="token punctuation">;</span>
+    res.end<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+server.listen<span class="token punctuation">(</span><span class="token number">3000</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> console.log<span class="token punctuation">(</span><span class="token string">&quot;正在监听 3000 端口&quot;</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="接受切片"><a href="#接受切片" class="header-anchor">#</a> 接受切片</h3> <p>使用 multiparty 包处理前端传来的 FormData，在 multiparty.parse 的回调中，files 参数保存了 FormData 中文件，fields 参数保存了 FormData 中非文件的字段：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>const multiparty <span class="token operator">=</span> require<span class="token punctuation">(</span><span class="token string">'multiparty'</span><span class="token punctuation">)</span>
+const fse <span class="token operator">=</span> require<span class="token punctuation">(</span><span class="token string">'fs-extra'</span><span class="token punctuation">)</span>
+// 提取后缀名
+const extractExt <span class="token operator">=</span> filename <span class="token operator">=</span><span class="token operator">&gt;</span> filename.slice<span class="token punctuation">(</span>filename.lastIndexOf<span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span>, filename.length<span class="token punctuation">)</span>
+const extractName <span class="token operator">=</span> filename <span class="token operator">=</span><span class="token operator">&gt;</span> filename.slice<span class="token punctuation">(</span><span class="token number">0</span>, filename.lastIndexOf<span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">))</span>
+const UPLOAD_DIR <span class="token operator">=</span> path.resolve<span class="token punctuation">(</span>__dirname, <span class="token string">&quot;..&quot;</span>, <span class="token string">&quot;target&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 大文件存储目录
+
+<span class="token keyword">function</span> upload <span class="token punctuation">(</span>req, res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req.url <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'/upload'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    const multipart <span class="token operator">=</span> new multiparty.Form<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    multipart.parse<span class="token punctuation">(</span>req, async <span class="token punctuation">(</span>err, fields, files<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token builtin class-name">return</span> <span class="token boolean">false</span>
+      const <span class="token punctuation">[</span>chunk<span class="token punctuation">]</span> <span class="token operator">=</span> files.chunk
+      const <span class="token punctuation">[</span>hash<span class="token punctuation">]</span> <span class="token operator">=</span> fields.hash
+      // const <span class="token punctuation">[</span>filename<span class="token punctuation">]</span> <span class="token operator">=</span> fields.filename
+      const chunkDir <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>UPLOAD_DIR<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>extractName<span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token variable">`</span></span>
+
+      // 切片目录不存在，创建切片目录
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>fse.existsSync<span class="token punctuation">(</span>chunkDir<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+        await fse.mkdirs<span class="token punctuation">(</span>chunkDir<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+
+      await fse.move<span class="token punctuation">(</span>chunk.path, <span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>chunkDir<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>hash<span class="token punctuation">}</span><span class="token variable">`</span></span><span class="token punctuation">)</span>
+      setTimeout<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+        res.end<span class="token punctuation">(</span><span class="token string">'received file chunk'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>, <span class="token number">3000</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>查看 multiparty 处理后的 chunk 对象，path 是存储临时文件的路径，size 是临时文件大小，在 multiparty 文档中提到可以使用 fs.rename(由于我用的是 fs-extra，其 rename 方法在 Windows 系统上存在权限问题，所以换成了 fse.move) 重命名的方式移动临时文件，也就是文件切片。</p> <p>在接受文件切片时，需要先创建存储切片的文件夹，由于前端在发送每个切片时额外携带了唯一值 hash，所以以 hash 作为文件名，将切片从临时路径移动切片文件夹中,最后的结果如下</p> <p>{% asset_img 02.png This is an image %}</p> <h3 id="合并切片"><a href="#合并切片" class="header-anchor">#</a> 合并切片</h3> <p>在接收到前端发送的合并请求后，服务端将文件夹下的所有切片进行合并</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> resolvePost <span class="token punctuation">(</span>req<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">return</span> new Promise<span class="token variable"><span class="token punctuation">((</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    let chunk <span class="token operator">=</span> ''
+    req.on<span class="token punctuation">(</span>'data'<span class="token punctuation">,</span> data <span class="token operator">=</span><span class="token operator">&gt;</span> {
+      chunk <span class="token operator">+=</span> data
+    }<span class="token punctuation">)</span>
+    req.on<span class="token punctuation">(</span>'end'<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+      resolve<span class="token punctuation">(</span>JSON.parse<span class="token punctuation">(</span>chunk<span class="token punctuation">))</span></span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+async <span class="token keyword">function</span> mergeFileChunk <span class="token punctuation">(</span>filePath, filename<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  const chunkDir <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>UPLOAD_DIR<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>extractName<span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token variable">`</span></span>
+  const chunkPaths <span class="token operator">=</span> await fse.readdir<span class="token punctuation">(</span>chunkDir<span class="token punctuation">)</span>
+  await fse.writeFile<span class="token punctuation">(</span>filePath, <span class="token string">''</span><span class="token punctuation">)</span>
+  chunkPaths.forEach<span class="token punctuation">(</span>chunkPath <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const content <span class="token operator">=</span> fse.readFileSync<span class="token punctuation">(</span><span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>chunkDir<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>chunkPath<span class="token punctuation">}</span><span class="token variable">`</span></span><span class="token punctuation">)</span>
+    fse.appendFileSync<span class="token punctuation">(</span>filePath, content<span class="token punctuation">)</span>
+    fse.unlinkSync<span class="token punctuation">(</span><span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>chunkDir<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>chunkPath<span class="token punctuation">}</span><span class="token variable">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  fse.rmdirSync<span class="token punctuation">(</span>chunkDir<span class="token punctuation">)</span> // 合并后删除保存切片的目录
+<span class="token punctuation">}</span>
+
+async <span class="token keyword">function</span> merge <span class="token punctuation">(</span>req, res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req.url <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'/merge'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    const data <span class="token operator">=</span> await resolvePost<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    const <span class="token punctuation">{</span> filename, <span class="token builtin class-name">hash</span> <span class="token punctuation">}</span> <span class="token operator">=</span> data
+    const filePath <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>UPLOAD_DIR<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>filename<span class="token punctuation">}</span><span class="token variable">`</span></span>
+    await mergeFileChunk<span class="token punctuation">(</span>filePath, <span class="token builtin class-name">hash</span><span class="token punctuation">)</span>
+    res.end<span class="token punctuation">(</span>
+      JSON.stringify<span class="token punctuation">(</span>
+        <span class="token punctuation">{</span>
+          code: <span class="token number">0</span>,
+          message: <span class="token string">'file merged success'</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>由于前端在发送合并请求时会携带文件名，服务端根据文件名可以找到上一步创建的切片文件夹。</p> <p>接着使用 fs.writeFileSync 先创建一个空文件，这个空文件的文件名就是切片文件夹名 + 后缀名组合而成，随后通过 fs.appendFileSync 从切片文件夹中不断将切片合并到空文件中，每次合并完成后删除这个切片，等所有切片都合并完毕后最后删除切片文件夹。</p> <p>{% asset_img 03.png This is an image %}</p> <p>至此一个简单的大文件上传就完成了，接下来我们在此基础上扩展一些额外的功能。</p> <h2 id="显示上传进度条"><a href="#显示上传进度条" class="header-anchor">#</a> 显示上传进度条</h2> <p>上传进度分两种，一个是每个切片的上传进度，另一个是整个文件的上传进度，而整个文件的上传进度是基于每个切片上传进度计算而来，所以我们需要先实现切片的上传进度。</p> <h3 id="切片进度条"><a href="#切片进度条" class="header-anchor">#</a> 切片进度条</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>request<span class="token punctuation">(</span><span class="token punctuation">{</span>
+  url,
+  method <span class="token operator">=</span> <span class="token string">&quot;post&quot;</span>,
+  data,
+  headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+  /*新增---start*/
+  onProgress <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> e,
+  /*新增---end*/
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">return</span> new Promise<span class="token punctuation">(</span>resolve <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const xhr <span class="token operator">=</span> new XMLHttpRequest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    /*新增---start*/
+    xhr.upload.onprogress <span class="token operator">=</span> onProgress<span class="token punctuation">;</span>
+    /*新增---end*/
+    xhr.open<span class="token punctuation">(</span>method, url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Object.keys<span class="token punctuation">(</span>headers<span class="token punctuation">)</span>.forEach<span class="token punctuation">(</span>key <span class="token operator">=</span><span class="token operator">&gt;</span>
+      xhr.setRequestHeader<span class="token punctuation">(</span>key, headers<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    xhr.send<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    xhr.onload <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      resolve<span class="token punctuation">(</span><span class="token punctuation">{</span>
+        data: e.target.response
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>由于每个切片都需要触发独立的监听事件，所以还需要一个工厂函数，根据传入的切片返回不同的监听函数。</p> <p>在原先的前端上传逻辑中新增监听函数部分</p> <div class="language-bash extra-class"><pre class="language-bash"><code>this.request<span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  /*修改部分*/
+  onProgress: this.createProgressHandler<span class="token punctuation">(</span>this.data<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+async <span class="token function-name function">handleUpload</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  this.data <span class="token operator">=</span> fileChunkList.map<span class="token variable"><span class="token punctuation">((</span>{ file }，index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>{
+    chunk<span class="token operator">:</span> file<span class="token punctuation">,</span>
+    index<span class="token punctuation">,</span>
+    hash<span class="token operator">:</span> this.container.file.name <span class="token operator">+</span> &quot;<span class="token operator">-</span>&quot; <span class="token operator">+</span> index
+    percentage<span class="token operator">:</span><span class="token number">0</span>
+  }<span class="token punctuation">))</span></span><span class="token punctuation">;</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token punctuation">}</span>
+
+createProgressHandler<span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">return</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    item.percentage <span class="token operator">=</span> parseInt<span class="token punctuation">(</span>String<span class="token variable"><span class="token punctuation">((</span>e.loaded <span class="token operator">/</span> e.total<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">100</span><span class="token punctuation">))</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>每个切片在上传时都会通过监听函数更新 data 数组对应元素的 percentage 属性，之后把将 data 数组放到视图中展示即可。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>computed: <span class="token punctuation">{</span>
+     <span class="token function-name function">uploadPercentage</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>this.container.file <span class="token operator">||</span> <span class="token operator">!</span>this.data.length<span class="token punctuation">)</span> return0<span class="token punctuation">;</span>
+        const loaded <span class="token operator">=</span> this.data
+          .map<span class="token punctuation">(</span>item <span class="token operator">=</span><span class="token operator">&gt;</span> item.size * item.percentage<span class="token punctuation">)</span>
+          .reduce<span class="token variable"><span class="token punctuation">((</span>acc<span class="token punctuation">,</span> cur<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> acc <span class="token operator">+</span> cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        returnparseInt<span class="token punctuation">((</span>loaded <span class="token operator">/</span> this.container.file.size<span class="token punctuation">)</span>.toFixed<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">))</span></span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>最终效果如下：</p> <p>{% asset_img 04.png This is an image %}</p> <h2 id="断点续传"><a href="#断点续传" class="header-anchor">#</a> 断点续传</h2> <p>断点续传的原理在于前端/服务端需要记住已上传的切片，这样下次上传就可以跳过之前已上传的部分，有两种方案实现记忆的功能：</p> <p>前端使用 localStorage 记录已上传的切片 hash。
+服务端保存已上传的切片 hash，前端每次上传前向服务端获取已上传的切片。
+第一种是前端的解决方案，第二种是服务端，而前端方案有一个缺陷，如果换了个浏览器就失去了记忆的效果，所以这里选取后者。</p> <h2 id="生成hash"><a href="#生成hash" class="header-anchor">#</a> 生成hash</h2> <p>无论是前端还是服务端，都必须要生成文件和切片的 hash，之前我们使用文件名 + 切片下标作为切片 hash，这样做文件名一旦修改就失去了效果，而事实上只要文件内容不变，hash 就不应该变化，所以正确的做法是根据文件内容生成 hash，所以我们需要修改一下 hash 的生成规则。</p> <p>这里用到另一个库 spark-md5，它可以根据文件内容计算出文件的 hash 值，另外考虑到如果上传一个超大文件，读取文件内容计算 hash 是非常耗费时间的，并且会引起 UI 的阻塞，导致页面假死状态，所以我们使用 web-worker 在 worker 线程计算 hash，这样用户仍可以在主界面正常的交互。</p> <p>由于实例化 web-worker 时，参数是一个 JavaScript 文件路径，且不能跨域。所以我们单独创建一个 hash.js 文件放在 public 目录下，另外在 worker 中也是不允许访问 DOM 的，但它提供了importScripts 函数用于导入外部脚本，通过它导入 spark-md5。</p> <ul><li>vue中需要worker-loader处理worker.js文件</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code>// 解析worker
+<span class="token punctuation">{</span>
+  test: /<span class="token punctuation">\</span>.worker.js$/,
+  loader: <span class="token string">'worker-loader'</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>public/hash.worker.js
+
+<span class="token function">import</span> SparkMD5 from <span class="token string">'spark-md5'</span>
+
+// 生成文件 <span class="token builtin class-name">hash</span>
+self.onmessage <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  const <span class="token punctuation">{</span> fileChunkList <span class="token punctuation">}</span> <span class="token operator">=</span> e.data
+  const spark <span class="token operator">=</span> new SparkMD5.ArrayBuffer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token builtin class-name">let</span> percentage <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token builtin class-name">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
+  const loadNext <span class="token operator">=</span> index <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const reader <span class="token operator">=</span> new FileReader<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    reader.readAsArrayBuffer<span class="token punctuation">(</span>fileChunkList<span class="token punctuation">[</span>index<span class="token punctuation">]</span>.file<span class="token punctuation">)</span>
+    reader.onload <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      count++
+      spark.append<span class="token punctuation">(</span>e.target.result<span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">==</span><span class="token operator">=</span> fileChunkList.length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        self.postMessage<span class="token punctuation">(</span><span class="token punctuation">{</span>
+          percentage: <span class="token number">100</span>,
+          hash: spark.end<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        self.close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        percentage <span class="token operator">+=</span> <span class="token number">100</span> / fileChunkList.length
+        self.postMessage<span class="token punctuation">(</span><span class="token punctuation">{</span>
+          percentage
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        // 递归计算下一个切片
+        loadNext<span class="token punctuation">(</span>count<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  loadNext<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>在 worker 线程中，接受文件切片 fileChunkList，利用 FileReader 读取每个切片的 ArrayBuffer 并不断传入 spark-md5 中，每计算完一个切片通过 postMessage 向主线程发送一个进度事件，全部完成后将最终的 hash 发送给主线程。</p> <p>spark-md5 需要根据所有切片才能算出一个 hash 值，不能直接将整个文件放入计算，否则即使不同文件也会有相同的 hash，具体可以看官方文档。</p> <p>接着编写主线程与 worker 线程通讯的逻辑</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 在vue文件中先引入hash.worker.js
+<span class="token function">import</span> Worker from <span class="token string">'../public/hash.worker'</span>
+// 生成文件 <span class="token builtin class-name">hash</span> <span class="token punctuation">(</span>web-worker<span class="token punctuation">)</span>
+calculateHash <span class="token punctuation">(</span>fileChunkList<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">return</span> new Promise<span class="token punctuation">(</span>resolve <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    // 添加 worker 属性
+    this.container.worker <span class="token operator">=</span> new Worker<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    this.container.worker.postMessage<span class="token punctuation">(</span><span class="token punctuation">{</span> fileChunkList <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    this.container.worker.onmessage <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      const <span class="token punctuation">{</span> percentage, <span class="token builtin class-name">hash</span> <span class="token punctuation">}</span> <span class="token operator">=</span> e.data
+      this.hashPercentage <span class="token operator">=</span> percentage
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>hash<span class="token punctuation">)</span> resolve<span class="token punctuation">(</span>hash<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>,
+async <span class="token function-name function">handleUpload</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>this.container.file<span class="token punctuation">)</span> <span class="token builtin class-name">return</span><span class="token punctuation">;</span>
+      const fileChunkList <span class="token operator">=</span> this.createFileChunk<span class="token punctuation">(</span>this.container.file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     this.container.hash <span class="token operator">=</span> await this.calculateHash<span class="token punctuation">(</span>fileChunkList<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      this.data <span class="token operator">=</span> fileChunkList.map<span class="token variable"><span class="token punctuation">((</span>{ file }，index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>{
+        fileHash<span class="token operator">:</span> this.container.hash<span class="token punctuation">,</span>
+        chunk<span class="token operator">:</span> file<span class="token punctuation">,</span>
+        hash<span class="token operator">:</span> this.container.hash <span class="token operator">+</span> &quot;<span class="token operator">-</span>&quot; <span class="token operator">+</span> index<span class="token punctuation">,</span>
+        percentage<span class="token operator">:</span><span class="token number">0</span>
+      }<span class="token punctuation">))</span></span><span class="token punctuation">;</span>
+      await this.uploadChunks<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>{% asset_img 05.png This is an image %}</p> <p>至此前端需要将之前用文件名作为 hash 的地方改写为 workder 返回的这个 hash。</p> <p>{% asset_img 06.png This is an image %}</p> <h2 id="文件秒传"><a href="#文件秒传" class="header-anchor">#</a> 文件秒传</h2> <p>在实现断点续传前先简单介绍一下文件秒传。</p> <p>所谓的文件秒传，即在服务端已经存在了上传的资源，所以当用户再次上传时会直接提示上传成功</p> <p>文件秒传需要依赖上一步生成的 hash，即在上传前，先计算出文件 hash，并把 hash 发送给服务端进行验证，由于 hash 的唯一性，所以一旦服务端能找到 hash 相同的文件，则直接返回上传成功的信息即可。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 文件秒传
+async verifyUpload <span class="token punctuation">(</span>filename, fileHash<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  const <span class="token punctuation">{</span> data <span class="token punctuation">}</span> <span class="token operator">=</span> await this.request<span class="token punctuation">(</span><span class="token punctuation">{</span>
+    url: <span class="token string">'http://localhost:3000/verify'</span>,
+    headers: <span class="token punctuation">{</span>
+      <span class="token string">'content-type'</span><span class="token builtin class-name">:</span> <span class="token string">'application/json'</span>
+    <span class="token punctuation">}</span>,
+    data: JSON.stringify<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      filename,
+      fileHash
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token builtin class-name">return</span> JSON.parse<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+// 文件上传
+async <span class="token function-name function">handleUpload</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  const <span class="token punctuation">{</span> shouldUpload <span class="token punctuation">}</span> <span class="token operator">=</span> await this.verifyUpload<span class="token punctuation">(</span>
+    this.container.file.name,
+    this.container.hash
+  <span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>shouldUpload<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    alert<span class="token punctuation">(</span><span class="token string">'秒传: 上传成功'</span><span class="token punctuation">)</span>
+    <span class="token builtin class-name">return</span> <span class="token boolean">false</span>
+  <span class="token punctuation">}</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>秒传其实就是给用户看的障眼法，实质上根本没有上传。就像下面这行代码:</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>a <span class="token assign-left variable">href</span><span class="token operator">=</span><span class="token string">&quot;javascript:alert('清除成功');&quot;</span><span class="token operator">&gt;</span>清除缓存<span class="token operator">&lt;</span>/a<span class="token operator">&gt;</span>
+</code></pre></div><p>服务端的逻辑非常简单，新增一个验证接口，验证文件是否存在即可。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 提取后缀名
+const extractExt <span class="token operator">=</span> filename <span class="token operator">=</span><span class="token operator">&gt;</span> filename.slice<span class="token punctuation">(</span>filename.lastIndexOf<span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span>, filename.length<span class="token punctuation">)</span>
+
+async <span class="token keyword">function</span> verify <span class="token punctuation">(</span>req, res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req.url <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'/verify'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    const <span class="token punctuation">{</span> fileHash, filename <span class="token punctuation">}</span> <span class="token operator">=</span> await resolvePost<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    const ext <span class="token operator">=</span> extractExt<span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+    const filePath <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>UPLOAD_DIR<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>fileHash<span class="token punctuation">}</span>$<span class="token punctuation">{</span>ext<span class="token punctuation">}</span><span class="token variable">`</span></span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>fse.existsSync<span class="token punctuation">(</span>filePath<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+      res.end<span class="token punctuation">(</span>
+        JSON.stringify<span class="token punctuation">(</span><span class="token punctuation">{</span>
+          shouldUpload: <span class="token boolean">false</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      res.end<span class="token punctuation">(</span>
+        JSON.stringify<span class="token punctuation">(</span><span class="token punctuation">{</span>
+          shouldUpload: <span class="token boolean">true</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="暂停上传"><a href="#暂停上传" class="header-anchor">#</a> 暂停上传</h2> <p>讲完了生成 hash 和文件秒传，回到断点续传。</p> <p>断点续传顾名思义即断点 + 续传，所以我们第一步先实现&quot;断点&quot;，也就是暂停上传。</p> <p>原理是使用 XMLHttpRequest 的 abort 方法，可以取消一个 xhr 请求的发送，为此我们需要将上传每个切片的 xhr 对象保存起来，我们再改造一下 request 方法。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>request<span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  requestList
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  xhr.onload <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>requestList<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      const xhrIndex <span class="token operator">=</span> requestList.findIndex<span class="token punctuation">(</span>item <span class="token operator">=</span><span class="token operator">&gt;</span> item <span class="token operator">==</span><span class="token operator">=</span> xhr<span class="token punctuation">)</span>
+      requestList.splice<span class="token punctuation">(</span>xhrIndex, <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    resolve<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      data: e.target.response
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  requestList <span class="token operator">&amp;&amp;</span> requestList.push<span class="token punctuation">(</span>xhr<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这样在上传切片时传入 requestList 数组作为参数，request 方法就会将所有的 xhr 保存在数组中了。</p> <p>每当一个切片上传成功时，将对应的 xhr 从 requestList 中删除，所以 requestList 中只保存正在上传切片的 xhr。</p> <p>之后新建一个暂停按钮，当点击按钮时，调用保存在 requestList 中 xhr 的 abort 方法，即取消并清空所有正在上传的切片。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 暂停上传
+<span class="token function-name function">handlePause</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  this.requestList.forEach<span class="token punctuation">(</span>xhr <span class="token operator">=</span><span class="token operator">&gt;</span> xhr <span class="token operator">&amp;&amp;</span> xhr.abort<span class="token punctuation">(</span><span class="token punctuation">))</span>
+  this.requestList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  this.isPaused <span class="token operator">=</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="恢复上传"><a href="#恢复上传" class="header-anchor">#</a> 恢复上传</h2> <p>之前在介绍断点续传的时提到使用第二种服务端存储的方式实现续传</p> <p>由于当文件切片上传后，服务端会建立一个文件夹存储所有上传的切片，所以每次前端上传前可以调用一个接口，服务端将已上传的切片的切片名返回，前端再跳过这些已经上传切片，这样就实现了&quot;续传&quot;的效果</p> <p>而这个接口可以和之前秒传的验证接口合并，前端每次上传前发送一个验证的请求，返回两种结果：</p> <p>服务端已存在该文件，不需要再次上传。
+服务端不存在该文件或者已上传部分文件切片，通知前端进行上传，并把已上传的文件切片返回给前端。
+所以我们改造一下之前文件秒传的服务端验证接口：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 返回已经上传切片名列表
+async <span class="token keyword">function</span> createUploadedList <span class="token punctuation">(</span>fileHash<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>fse.existsSync<span class="token punctuation">(</span><span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>UPLOAD_DIR<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>fileHash<span class="token punctuation">}</span><span class="token variable">`</span></span><span class="token punctuation">))</span> <span class="token punctuation">{</span>
+    const results <span class="token operator">=</span> await fse.readdir<span class="token punctuation">(</span><span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>UPLOAD_DIR<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>fileHash<span class="token punctuation">}</span><span class="token variable">`</span></span><span class="token punctuation">)</span>
+    <span class="token builtin class-name">return</span> results
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+async <span class="token keyword">function</span> verify <span class="token punctuation">(</span>req, res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req.url <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'/verify'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    const <span class="token punctuation">{</span> fileHash, filename <span class="token punctuation">}</span> <span class="token operator">=</span> await resolvePost<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    const ext <span class="token operator">=</span> extractExt<span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+    const filePath <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span>$<span class="token punctuation">{</span>UPLOAD_DIR<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>fileHash<span class="token punctuation">}</span>$<span class="token punctuation">{</span>ext<span class="token punctuation">}</span><span class="token variable">`</span></span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>fse.existsSync<span class="token punctuation">(</span>filePath<span class="token punctuation">))</span> <span class="token punctuation">{</span>
+      res.end<span class="token punctuation">(</span>
+        JSON.stringify<span class="token punctuation">(</span><span class="token punctuation">{</span>
+          shouldUpload: <span class="token boolean">false</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      res.end<span class="token punctuation">(</span>
+        JSON.stringify<span class="token punctuation">(</span><span class="token punctuation">{</span>
+          shouldUpload: true,
+          /*新增部分*/
+          uploadedList: await createUploadedList<span class="token punctuation">(</span>fileHash<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>接着回到前端，前端有两个地方需要调用验证的接口:</p> <p>点击上传时，检查是否需要上传和已上传的切片。
+点击暂停后的恢复上传，返回已上传的切片。
+新增恢复按钮并改造原来上传切片的逻辑：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>
+<span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">&quot;handleResume&quot;</span> v-else<span class="token operator">&gt;</span>恢复<span class="token operator">&lt;</span>/button<span class="token operator">&gt;</span>
+
+// 恢复上传
+async <span class="token function-name function">handleResume</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  const <span class="token punctuation">{</span> uploadedList <span class="token punctuation">}</span> <span class="token operator">=</span> await this.verifyUpload<span class="token punctuation">(</span>
+    this.container.file.name,
+    this.container.hash
+  <span class="token punctuation">)</span>
+  await this.uploadChunks<span class="token punctuation">(</span>uploadedList<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+// 文件上传
+async <span class="token function-name function">handleUpload</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  const <span class="token punctuation">{</span> shouldUpload, uploadedList <span class="token punctuation">}</span> <span class="token operator">=</span> await this.verifyUpload<span class="token punctuation">(</span>
+    this.container.file.name,
+    this.container.hash
+  <span class="token punctuation">)</span>
+  <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+  await this.uploadChunks<span class="token punctuation">(</span>uploadedList<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+// 上传切片
+async uploadChunks <span class="token punctuation">(</span>uploadedList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  const requestList <span class="token operator">=</span> this.container.data
+    .filter<span class="token variable"><span class="token punctuation">((</span>{ hash }<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token operator">!</span>uploadedList.includes<span class="token punctuation">(</span>hash<span class="token punctuation">))</span></span>
+    .map<span class="token punctuation">((</span><span class="token punctuation">{</span>chunk, hash, fileHash<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      const formData <span class="token operator">=</span> new FormData<span class="token punctuation">(</span><span class="token punctuation">)</span>
+      formData.append<span class="token punctuation">(</span><span class="token string">'chunk'</span>, chunk<span class="token punctuation">)</span>
+      formData.append<span class="token punctuation">(</span><span class="token string">'hash'</span>, <span class="token builtin class-name">hash</span><span class="token punctuation">)</span>
+      formData.append<span class="token punctuation">(</span><span class="token string">'fileHash'</span>, fileHash<span class="token punctuation">)</span>
+      formData.append<span class="token punctuation">(</span><span class="token string">'filename'</span>, this.container.file.name<span class="token punctuation">)</span>
+      <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>formData<span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    .map<span class="token punctuation">(</span>async <span class="token punctuation">(</span><span class="token punctuation">{</span>formData<span class="token punctuation">}</span>, index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      this.request<span class="token punctuation">(</span><span class="token punctuation">{</span>
+        url: <span class="token string">'http://localhost:3000/upload'</span>,
+        data: formData,
+        onProgress: this.createProgressHandler<span class="token punctuation">(</span>this.container.data<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span>,
+        requestList: this.requestList
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  // 并发切片
+  await Promise.all<span class="token punctuation">(</span>requestList<span class="token punctuation">)</span>
+  // 之前上传的切片数量 + 本次上传的切片数量 <span class="token operator">=</span> 所有切片数量时
+  // 合并切片
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>uploadedList.length + requestList.length <span class="token operator">==</span><span class="token operator">=</span> this.container.data.length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    await this.mergeRequest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这里给原来上传切片的函数新增 uploadedList 参数，即上图中服务端返回的切片名列表，通过 filter 过滤掉已上传的切片，并且由于新增了已上传的部分，所以之前合并接口的触发条件做了一些改动。</p> <p>到这里断点续传的功能基本完成了。</p> <h2 id="进度条改进"><a href="#进度条改进" class="header-anchor">#</a> 进度条改进</h2> <p>虽然实现了断点续传，但还需要修改一下进度条的显示规则，否则在暂停上传/接收到已上传切片时的进度条会出现偏差。</p> <h3 id="切片进度条-2"><a href="#切片进度条-2" class="header-anchor">#</a> 切片进度条</h3> <p>由于在点击上传/恢复上传时，会调用验证接口返回已上传的切片，所以需要将已上传切片的进度变成 100%。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 文件上传
+async <span class="token function-name function">handleUpload</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>this.container.file<span class="token punctuation">)</span> <span class="token builtin class-name">return</span>
+  const fileChunkList <span class="token operator">=</span> this.createFileChunk<span class="token punctuation">(</span>this.container.file<span class="token punctuation">)</span>
+  this.container.hash <span class="token operator">=</span> await this.calculateHash<span class="token punctuation">(</span>fileChunkList<span class="token punctuation">)</span>
+  const <span class="token punctuation">{</span> shouldUpload, uploadedList <span class="token punctuation">}</span> <span class="token operator">=</span> await this.verifyUpload<span class="token punctuation">(</span>
+    this.container.file.name,
+    this.container.hash
+  <span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>shouldUpload<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    alert<span class="token punctuation">(</span><span class="token string">'秒传: 上传成功'</span><span class="token punctuation">)</span>
+    <span class="token builtin class-name">return</span> <span class="token boolean">false</span>
+  <span class="token punctuation">}</span>
+  this.container.data <span class="token operator">=</span> fileChunkList.map<span class="token variable"><span class="token punctuation">((</span>{file<span class="token punctuation">,</span> size}<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>{
+    fileHash<span class="token operator">:</span> this.container.hash<span class="token punctuation">,</span>
+    chunk<span class="token operator">:</span> file<span class="token punctuation">,</span>
+    index<span class="token punctuation">,</span>
+<span class="token operator">+</span>   percentage<span class="token operator">:</span> uploadedList.includes<span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">100</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    size<span class="token punctuation">,</span>
+    <span class="token operator">/</span><span class="token operator">/</span> hash<span class="token operator">:</span> this.container.file.name <span class="token operator">+</span> '<span class="token operator">-</span>' <span class="token operator">+</span> index<span class="token punctuation">,</span> <span class="token operator">/</span><span class="token operator">/</span> 文件名 <span class="token operator">+</span> 数组下标
+    hash<span class="token operator">:</span> this.container.hash <span class="token operator">+</span> '<span class="token operator">-</span>' <span class="token operator">+</span> index
+  }<span class="token punctuation">))</span></span>
+  await this.uploadChunks<span class="token punctuation">(</span>uploadedList<span class="token punctuation">)</span>
+  // await this.mergeRequest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>,
+</code></pre></div><p>uploadedList 会返回已上传的切片，在遍历所有切片时判断当前切片是否在已上传列表里即可。</p> <h3 id="文件进度条"><a href="#文件进度条" class="header-anchor">#</a> 文件进度条</h3> <p>之前说到文件进度条是一个计算属性，根据所有切片的上传进度计算而来，这就遇到了一个问题：</p> <p>点击暂停会取消并清空切片的 xhr 请求，此时如果已经上传了一部分，就会发现文件进度条有倒退的现象：</p> <p>当点击恢复时，由于重新创建了 xhr 导致切片进度清零，所以总进度条就会倒退。</p> <p>解决方案是创建一个&quot;假&quot;的进度条，这个假进度条基于文件进度条，但只会停止和增加，然后给用户展示这个假的进度条</p> <p>这里我们使用 Vue 的监听属性：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+    container: <span class="token punctuation">{</span>
+      file: null,
+      data: <span class="token punctuation">[</span><span class="token punctuation">]</span>,
+      worker: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>,
++   fakeUploadPercentage: <span class="token number">0</span>,
+    hashPercentage: <span class="token number">0</span>,
+    requestList: <span class="token punctuation">[</span><span class="token punctuation">]</span>,
+    isPaused: <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+watch: <span class="token punctuation">{</span>
+  uploadPercentage <span class="token punctuation">(</span>now<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>now <span class="token operator">&gt;</span> this.fakeUploadPercentage<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      this.fakeUploadPercentage <span class="token operator">=</span> now
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>当 uploadPercentage 即真的文件进度条增加时，fakeUploadPercentage 也增加，一旦文件进度条后退，假的进度条只需停止即可。</p> <p>至此一个大文件上传 + 断点续传的解决方案就完成了</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <ul><li>大文件上传：</li></ul> <p>前端上传大文件时使用 Blob.prototype.slice 将文件切片，并发上传多个切片，最后发送一个合并的请求通知服务端合并切片。
+服务端接收切片并存储，收到合并请求后使用 fs.appendFileSync 对多个切片进行合并。
+原生 XMLHttpRequest 的 upload.onprogress 对切片上传进度的监听。
+使用 Vue 计算属性根据每个切片的进度算出整个文件的上传进度。</p> <ul><li>断点续传：</li></ul> <p>使用 spart-md5 根据文件内容算出文件 hash。
+通过 hash 可以判断服务端是否已经上传该文件，从而直接提示用户上传成功（秒传）。
+通过 XMLHttpRequest 的 abort 方法暂停切片的上传。
+上传前服务端返回已经上传的切片名，前端跳过这些切片的上传。</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#大文件上传" class="sidebar-link reco-side-大文件上传" data-v-b57cc07c>大文件上传</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#前端" class="sidebar-link reco-side-前端" data-v-b57cc07c>前端</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#服务端" class="sidebar-link reco-side-服务端" data-v-b57cc07c>服务端</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#前端部分" class="sidebar-link reco-side-前端部分" data-v-b57cc07c>前端部分</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#上传控件" class="sidebar-link reco-side-上传控件" data-v-b57cc07c>上传控件</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#请求逻辑" class="sidebar-link reco-side-请求逻辑" data-v-b57cc07c>请求逻辑</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#上传切片" class="sidebar-link reco-side-上传切片" data-v-b57cc07c>上传切片</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#发送合并请求" class="sidebar-link reco-side-发送合并请求" data-v-b57cc07c>发送合并请求</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#服务端部分" class="sidebar-link reco-side-服务端部分" data-v-b57cc07c>服务端部分</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#接受切片" class="sidebar-link reco-side-接受切片" data-v-b57cc07c>接受切片</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#合并切片" class="sidebar-link reco-side-合并切片" data-v-b57cc07c>合并切片</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#显示上传进度条" class="sidebar-link reco-side-显示上传进度条" data-v-b57cc07c>显示上传进度条</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#切片进度条" class="sidebar-link reco-side-切片进度条" data-v-b57cc07c>切片进度条</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#断点续传" class="sidebar-link reco-side-断点续传" data-v-b57cc07c>断点续传</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#生成hash" class="sidebar-link reco-side-生成hash" data-v-b57cc07c>生成hash</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#文件秒传" class="sidebar-link reco-side-文件秒传" data-v-b57cc07c>文件秒传</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#暂停上传" class="sidebar-link reco-side-暂停上传" data-v-b57cc07c>暂停上传</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#恢复上传" class="sidebar-link reco-side-恢复上传" data-v-b57cc07c>恢复上传</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#进度条改进" class="sidebar-link reco-side-进度条改进" data-v-b57cc07c>进度条改进</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#切片进度条-2" class="sidebar-link reco-side-切片进度条-2" data-v-b57cc07c>切片进度条</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#文件进度条" class="sidebar-link reco-side-文件进度条" data-v-b57cc07c>文件进度条</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/uploadFile.html#总结" class="sidebar-link reco-side-总结" data-v-b57cc07c>总结</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://cs-sycdn.kuwo.cn/371642c104355a522300695af11424d3/64db8722/resource/n3/6/44/3638605905.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:20px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:10px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>可能</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>程响</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div></div></div>
+    <script src="/vuepress-blog/assets/js/app.cfe4f1dc.js" defer></script><script src="/vuepress-blog/assets/js/7.a84a24ff.js" defer></script><script src="/vuepress-blog/assets/js/2.c3a99807.js" defer></script><script src="/vuepress-blog/assets/js/1.c178cf32.js" defer></script><script src="/vuepress-blog/assets/js/58.f8487d5b.js" defer></script>
+  </body>
+</html>

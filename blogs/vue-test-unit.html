@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Jest结合Vue-test-utils使用的初步实践 | 张垒的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="记录好的技术文档">
+    
+    <link rel="preload" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css" as="style"><link rel="preload" href="/vuepress-blog/assets/js/app.cfe4f1dc.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/7.a84a24ff.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/2.c3a99807.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/1.c178cf32.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/63.13eb262f.js" as="script"><link rel="prefetch" href="/vuepress-blog/assets/js/10.7e8e7b1e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/11.52366231.js"><link rel="prefetch" href="/vuepress-blog/assets/js/14.8efccace.js"><link rel="prefetch" href="/vuepress-blog/assets/js/15.acd8f527.js"><link rel="prefetch" href="/vuepress-blog/assets/js/16.696abc55.js"><link rel="prefetch" href="/vuepress-blog/assets/js/17.83830d6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/18.02b980f1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/19.68f440c9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/20.0a9cda66.js"><link rel="prefetch" href="/vuepress-blog/assets/js/21.7edb07fe.js"><link rel="prefetch" href="/vuepress-blog/assets/js/22.f567e8c0.js"><link rel="prefetch" href="/vuepress-blog/assets/js/23.2884f722.js"><link rel="prefetch" href="/vuepress-blog/assets/js/24.d348a5d9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/25.ec080050.js"><link rel="prefetch" href="/vuepress-blog/assets/js/26.69adbacd.js"><link rel="prefetch" href="/vuepress-blog/assets/js/27.e94edaee.js"><link rel="prefetch" href="/vuepress-blog/assets/js/28.fa2c3683.js"><link rel="prefetch" href="/vuepress-blog/assets/js/29.480e11e4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/3.83b8031d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/30.9e44a369.js"><link rel="prefetch" href="/vuepress-blog/assets/js/31.ab5be7a3.js"><link rel="prefetch" href="/vuepress-blog/assets/js/32.fd74f8d8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/33.cf91586c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/34.57e43fc1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/35.f12bb5f8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/36.0505d053.js"><link rel="prefetch" href="/vuepress-blog/assets/js/37.128579b6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/38.afd14854.js"><link rel="prefetch" href="/vuepress-blog/assets/js/39.136c8139.js"><link rel="prefetch" href="/vuepress-blog/assets/js/4.d9f667de.js"><link rel="prefetch" href="/vuepress-blog/assets/js/40.4702d49e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/41.c2c28470.js"><link rel="prefetch" href="/vuepress-blog/assets/js/42.2fc7c472.js"><link rel="prefetch" href="/vuepress-blog/assets/js/43.9b307549.js"><link rel="prefetch" href="/vuepress-blog/assets/js/44.ef443176.js"><link rel="prefetch" href="/vuepress-blog/assets/js/45.a7c60c22.js"><link rel="prefetch" href="/vuepress-blog/assets/js/46.466967ef.js"><link rel="prefetch" href="/vuepress-blog/assets/js/47.48816b2e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/48.cbbfa44c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/49.b362bf6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/5.3df9e6ac.js"><link rel="prefetch" href="/vuepress-blog/assets/js/50.7605d1cc.js"><link rel="prefetch" href="/vuepress-blog/assets/js/51.35192135.js"><link rel="prefetch" href="/vuepress-blog/assets/js/52.bf567756.js"><link rel="prefetch" href="/vuepress-blog/assets/js/53.b0768c7b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/54.9735e1f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/55.84021d4c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/56.e4771e7e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/57.7c72619d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/58.f8487d5b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/59.c97f0f0e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/6.5940db39.js"><link rel="prefetch" href="/vuepress-blog/assets/js/60.0cb291f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/61.2405fff4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/62.a854dc11.js"><link rel="prefetch" href="/vuepress-blog/assets/js/64.cb4d6ac7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/65.6e7515c4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/66.7db29015.js"><link rel="prefetch" href="/vuepress-blog/assets/js/67.45bf8f7c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/68.b604b4f6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/69.8e28194e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/70.6c3a479b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/71.b1ddb05f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/8.f2a8d12d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/9.0b4a9f34.js"><link rel="prefetch" href="/vuepress-blog/assets/js/vendors~docsearch.5bf76089.js">
+    <link rel="stylesheet" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>张垒的博客</h3> <p class="description" data-v-59e6cb88>记录好的技术文档</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-blog/" class="home-link router-link-active"><!----> <span class="site-name">张垒的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-blog/me.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>33</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>31</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Jest结合Vue-test-utils使用的初步实践</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">Jest结合Vue-test-utils使用的初步实践</h1> <div data-v-8a445198><!----> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2021/6/13</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>Vue-test-utils</span></i></div></div> <div class="theme-reco-content content__default"><h2 id="介绍"><a href="#介绍" class="header-anchor">#</a> 介绍</h2> <p>Vue-test-utils是Vue的官方的单元测试框架，它提供了一系列非常方便的工具，使我们更加轻松的为Vue构建的应用来编写单元测试。主流的 JavaScript 测试运行器有很多，但 Vue Test Utils 都能够支持。它是测试运行器无关的。</p> <p>Jest，是由Facebook开发的单元测试框架，也是Vue推荐的测试运行器之一。Vue对它的评价是：</p> <p>源码<a href="https://github.com/zerle/vue-test" target="_blank" rel="noopener noreferrer">请戳这里<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="language-bash extra-class"><pre class="language-bash"><code>Jest 是功能最全的测试运行器。它所需的配置是最少的，默认安装了 JSDOM，内置断言且命令行的用户体验非常好。不过你需要一个能够将单文件组件导入到测试中的预处理器。我们已经创建了 vue-jest 预处理器来处理最常见的单文件组件特性，但仍不是 vue-loader <span class="token number">100</span>% 的功能。
+</code></pre></div><p>我认为可以这样理解，Vue-test-utils在Vue和Jest之前提供了一个桥梁，暴露出一些接口，让我们更加方便的通过Jest为Vue应用编写单元测试。</p> <h2 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h2> <p>通过Vue-cli创造模板脚手架时，可以选择是否启用单元测试，并且选择单元测试框架，这样Vue就帮助我们自动配置好了Jest。</p> <p>如果是后期添加单元测试的话，首先要安装Jest和Vue Test Utils：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> --save-dev jest @vue/test-utils
+</code></pre></div><p>然后在package.json中定义一个单元测试的脚本。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// package.json
+<span class="token punctuation">{</span>
+  <span class="token string">&quot;scripts&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+    <span class="token string">&quot;test&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;jest&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>为了告诉Jest如何处理*.vue文件，需要安装和配置vue-jest预处理器：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> --save-dev vue-jest
+</code></pre></div><p>接下来在jest.config.js配置文件中进行配置：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>module.exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  moduleFileExtensions: <span class="token punctuation">[</span><span class="token string">'js'</span>, <span class="token string">'json'</span>, <span class="token string">'vue'</span><span class="token punctuation">]</span>,
+  moduleNameMapper: <span class="token punctuation">{</span>
+    <span class="token string">'^@/(.*)$'</span><span class="token builtin class-name">:</span> <span class="token string">'&lt;rootDir&gt;/src/$1'</span>
+  <span class="token punctuation">}</span>,
+  transform: <span class="token punctuation">{</span>
+    <span class="token string">'^.+\\.js$'</span><span class="token builtin class-name">:</span> <span class="token string">'&lt;rootDir&gt;/node_modules/babel-jest'</span>,
+    <span class="token string">'.*\\.(vue)$'</span><span class="token builtin class-name">:</span> <span class="token string">'&lt;rootDir&gt;/node_modules/vue-jest'</span>
+  <span class="token punctuation">}</span>,
+  testEnvironment: <span class="token string">'jsdom'</span>,
+  verbose: true,
+  testURL: <span class="token string">'http://localhost'</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>配置好了之后，就可以开始编写单元测试了。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>demo.spec.js
+
+<span class="token function">import</span> <span class="token punctuation">{</span> <span class="token function">mount</span> <span class="token punctuation">}</span> from <span class="token string">'@vue/test-utils'</span>
+<span class="token function">import</span> HelloWorld from <span class="token string">'@/components/HelloWorld'</span>
+
+describe<span class="token punctuation">(</span><span class="token string">'HelloWorld'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  test<span class="token punctuation">(</span><span class="token string">'是一个Vue实例'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>HelloWorld<span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>wrapper.isVueInstance<span class="token punctuation">(</span><span class="token punctuation">))</span>.toBeTruthy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>上面的例子中，就是通过vue-test-utils提供的mount方法来挂载组件，创建包裹器和Vue实例</p> <p>如果不使用vue-test-utils也是可以挂载组件的：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> HelloWorld from <span class="token string">'@/components/HelloWorld'</span>
+const Constructor <span class="token operator">=</span> Vue.extend<span class="token punctuation">(</span>HelloWorld<span class="token punctuation">)</span><span class="token punctuation">;</span>
+const vm <span class="token operator">=</span> new Constructor<span class="token punctuation">(</span><span class="token punctuation">)</span>.<span class="token variable">$mount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>启用单元测试的命令：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> run <span class="token builtin class-name">test</span>
+</code></pre></div><h3 id="报错问题"><a href="#报错问题" class="header-anchor">#</a> 报错问题</h3> <ul><li>报错 localStorage is not available for opaque origins</li></ul> <p>因为说是jest运行是node环境，所以没有localStorage。</p> <p>解决方案:</p> <p>①在jest.conf.js中配置
+testEnvironment: 'jsdom',
+verbose: true,
+testURL: &quot;http://localhost/&quot;</p> <p>②在package.json中配置
+&quot;jest&quot;: {
+&quot;verbose&quot;: true,
+&quot;testURL&quot;: &quot;http://localhost/&quot;
+}</p> <ul><li>jest不能识别import语法，需配置babel</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token string">&quot;env&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+    <span class="token string">&quot;test&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+      <span class="token string">&quot;presets&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span><span class="token string">&quot;env&quot;</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><h2 id="别名配置"><a href="#别名配置" class="header-anchor">#</a> 别名配置</h2> <p>使用别名在Vue中很常见，可以让我们避免使用复杂、易错的相对路径：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> Page from <span class="token string">'@/components/Test5/Test5'</span>
+</code></pre></div><p>上面的@就是别名，在使用Vue-cli搭建的项目中，默认已经在webpack.base.conf.js中对@进行了配置：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>module.exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">..</span>.
+  resolve: <span class="token punctuation">{</span>
+    extensions: <span class="token punctuation">[</span><span class="token string">'.js'</span>, <span class="token string">'.vue'</span>, <span class="token string">'.json'</span><span class="token punctuation">]</span>,
+    alias: <span class="token punctuation">{</span>
+      <span class="token string">'vue$'</span><span class="token builtin class-name">:</span> <span class="token string">'vue/dist/vue.esm.js'</span>,
+      <span class="token string">'@'</span><span class="token builtin class-name">:</span> path.join<span class="token punctuation">(</span>__dirname, <span class="token string">'..'</span>, <span class="token string">'src'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+<span class="token punctuation">}</span>
+</code></pre></div><p>同样，使用Jest时也需要在Jest的配置文件jest.config.js中进行配置</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token string">&quot;jest&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+  <span class="token string">&quot;moduleNameMapper&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+    <span class="token string">'^@/(.*)$'</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&lt;rootDir&gt;/src/<span class="token variable">$1</span>&quot;</span>,
+  <span class="token punctuation">}</span>,
+<span class="token punctuation">..</span>.
+</code></pre></div><h2 id="shallow-rendering"><a href="#shallow-rendering" class="header-anchor">#</a> Shallow Rendering</h2> <p>创建一个App.vue：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">id</span><span class="token operator">=</span><span class="token string">&quot;app&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span>-- <span class="token operator">&lt;</span>img <span class="token assign-left variable">src</span><span class="token operator">=</span><span class="token string">&quot;./assets/logo.png&quot;</span><span class="token operator">&gt;</span> --<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>Page :messages <span class="token operator">=</span> <span class="token string">&quot;messages&quot;</span> /<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span>-- <span class="token operator">&lt;</span>router-view/<span class="token operator">&gt;</span> --<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token function">import</span> Page from <span class="token string">'@/pages/Test1'</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'App'</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+      messages: <span class="token punctuation">[</span><span class="token string">'Hello Jest'</span>, <span class="token string">'Hello Vue'</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  components: <span class="token punctuation">{</span>
+    Page
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+</code></pre></div><p>然后创建一个Test1组件,目录src/pages/Test1.vue</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;outer&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>p v-for<span class="token operator">=</span><span class="token string">&quot;message in messages&quot;</span> :key<span class="token operator">=</span><span class="token string">&quot;message&quot;</span> <span class="token operator">&gt;</span><span class="token punctuation">{</span><span class="token punctuation">{</span>message<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  props: <span class="token punctuation">[</span><span class="token string">'messages'</span><span class="token punctuation">]</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>style scoped<span class="token operator">&gt;</span>
+  .outer <span class="token punctuation">{</span>
+    background: <span class="token comment">#3679;</span>
+  <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/style<span class="token operator">&gt;</span>
+</code></pre></div><p>针对App.vue编写单元测试文件App.spec.js</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> <span class="token punctuation">{</span>mount<span class="token punctuation">}</span> from <span class="token string">'@vue/test-utils'</span>
+
+<span class="token function">import</span> App from <span class="token string">'@/App'</span>
+
+describe<span class="token punctuation">(</span><span class="token string">'App.test.js'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">let</span> wrapper,
+  vm<span class="token punctuation">;</span>
+
+  beforeEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    // wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>App<span class="token punctuation">)</span>
+    wrapper <span class="token operator">=</span> shallowMount<span class="token punctuation">(</span>App<span class="token punctuation">)</span>
+    vm <span class="token operator">=</span> wrapper.vm
+    wrapper.setProps<span class="token punctuation">(</span><span class="token punctuation">{</span>messages: <span class="token punctuation">[</span><span class="token string">'Hello Jest'</span>, <span class="token string">'Hello Vue'</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span><span class="token string">'equals messages to [&quot;Hello Jest&quot;, &quot;Hello Vue&quot;]'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>vm.messages<span class="token punctuation">)</span>.toEqual<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'Hello Jest'</span>, <span class="token string">'Hello Vue'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  // 为App的单元测试增加快照 <span class="token punctuation">(</span>snapshot<span class="token punctuation">)</span>
+  test<span class="token punctuation">(</span><span class="token string">'has the expected html structrue'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>vm.<span class="token variable">$el</span><span class="token punctuation">)</span>.toMatchSnapshot<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>行单元测试后，测试通过，然后Jest会在test/<strong>snapshots</strong>/文件夹下创建一个快照文件App.spec.js.snap</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports<span class="token punctuation">[</span><span class="token variable"><span class="token variable">`</span>App.test.js has the expected html structrue <span class="token number">1</span><span class="token variable">`</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span>
+<span class="token operator">&lt;</span>div
+  <span class="token assign-left variable">id</span><span class="token operator">=</span><span class="token string">&quot;app&quot;</span>
+  <span class="token assign-left variable">messages</span><span class="token operator">=</span><span class="token string">&quot;Hello Jest,Hello Vue&quot;</span>
+<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div
+    <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;outer&quot;</span>
+  <span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span>
+      Hello Jest
+    <span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span>
+      Hello Vue
+    <span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token variable">`</span></span><span class="token punctuation">;</span>
+</code></pre></div><p>通过快照我们可以发现，子组件Test1被渲染到App中了。</p> <p>这里面有一个问题：单元测试应该以独立的单位进行。也就是说，当我们测试App时，不需要也不应该关注其子组件的情况。这样才能保证单元测试的独立性。比如，在created钩子函数中进行的操作就会给测试带来不确定的问题。</p> <p>为了解决这个问题，Vue-test-utils提供了shallowMount方法，它和mount一样，创建一个包含被挂载和渲染的Vue组件的Wrapper，不同的创建的是被存根的子组件。</p> <p>这个方法可以保证你关心的组件在渲染时没有同时将其子组件渲染，避免了子组件可能带来的副作用（比如Http请求等）</p> <p>所以，将App.spec.js中的mount方法更改为shallowMount方法，再次查看快照</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports<span class="token punctuation">[</span><span class="token variable"><span class="token variable">`</span>App.test.js has the expected html structrue <span class="token number">1</span><span class="token variable">`</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span>
+<span class="token operator">&lt;</span>div
+  <span class="token assign-left variable">id</span><span class="token operator">=</span><span class="token string">&quot;app&quot;</span>
+  <span class="token assign-left variable">messages</span><span class="token operator">=</span><span class="token string">&quot;Hello Jest,Hello Vue&quot;</span>
+<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>page-stub
+    <span class="token assign-left variable">messages</span><span class="token operator">=</span><span class="token string">&quot;Hello Jest,Hello Vue&quot;</span>
+  /<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token variable">`</span></span><span class="token punctuation">;</span>
+</code></pre></div><p>可以看出来，子组件没有被渲染，这时候针对App.vue的单元测试就从组件树中被完全隔离了。</p> <h2 id="测试dom结构"><a href="#测试dom结构" class="header-anchor">#</a> 测试DOM结构</h2> <p>通过mount、shallowMount、find、findAll方法都可以返回一个包裹器对象，包裹器会暴露很多封装、遍历和查询其内部的Vue组件实例的便捷的方法。</p> <p>其中，find和findAll方法都可以都接受一个选择器作为参数，find方法返回匹配选择器的DOM节点或Vue组件的Wrapper，findAll方法返回所有匹配选择器的DOM节点或Vue组件的Wrappers的WrapperArray。</p> <p>一个选择器可以是一个CSS选择器、一个Vue组件或是一个查找选项对象。</p> <ul><li>CSS选择器：可以匹配任何有效的CSS选择器
+<ul><li>标签选择器 (div、foo、bar)</li> <li>类选择器 (.foo、.bar)</li> <li>特性选择器 ([foo]、[foo=&quot;bar&quot;])</li></ul></li> <li>id 选择器 (#foo、#bar)
+<ul><li>伪选择器 (div:first-of-type)</li> <li>符合选择器（div &gt; #bar &gt; .foo、div + .foo)</li></ul></li> <li>Vue组件：Vue 组件也是有效的选择器。</li> <li>查找选项对象：
+<ul><li>Name：可以根据一个组件的name选择元素。wrapper.find({ name: 'my-button' })</li> <li>Ref：可以根据$ref选择元素。wrapper.find({ ref: 'myButton' })</li> <li>这样我们就可以对DOM的结构进行验证：</li></ul></li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> Test1 from <span class="token string">'@/pages/Test1'</span>
+<span class="token function">import</span> <span class="token punctuation">{</span>shallowMount<span class="token punctuation">}</span> from <span class="token string">'@vue/test-utils'</span>
+describe<span class="token punctuation">(</span><span class="token string">'Test for Test1 Component'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">let</span> wrapper,
+  vm<span class="token punctuation">;</span>
+  beforeEach<span class="token variable"><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    wrapper <span class="token operator">=</span> shallowMount<span class="token punctuation">(</span>Test1<span class="token punctuation">,</span> {
+      propsData<span class="token operator">:</span> {
+        messages<span class="token operator">:</span> ['byte']
+      }
+    }<span class="token punctuation">)</span>
+  }<span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span>'is a Test1 component'<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    <span class="token operator">/</span><span class="token operator">/</span> 使用Vue组件选择器
+    expect<span class="token punctuation">(</span>wrapper.is<span class="token punctuation">(</span>Test1<span class="token punctuation">))</span></span>.toBe<span class="token punctuation">(</span>true<span class="token punctuation">)</span>
+    // 使用CSS选择器
+    expect<span class="token punctuation">(</span>wrapper.is<span class="token punctuation">(</span><span class="token string">'.outer'</span><span class="token punctuation">))</span>.toBe<span class="token punctuation">(</span>true<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    // 使用CSS选择器
+    expect<span class="token punctuation">(</span>wrapper.contains<span class="token punctuation">(</span><span class="token string">'p'</span><span class="token punctuation">))</span>.toBe<span class="token punctuation">(</span>true<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>还可以进行一步对DOM结构进行更细致的验证：</p> <p>测试子组件时，使用mount挂载</p> <div class="language-bash extra-class"><pre class="language-bash"><code>src/pages/MyButton.vue
+<span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;my-button&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>button<span class="token operator">&gt;</span>按钮<span class="token operator">&lt;</span>/button<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'MyButton'</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+src/pages/Test1.vue
+
+<span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;outer&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>p v-for<span class="token operator">=</span><span class="token string">&quot;message in messages&quot;</span> :key<span class="token operator">=</span><span class="token string">&quot;message&quot;</span> <span class="token operator">&gt;</span><span class="token punctuation">{</span><span class="token punctuation">{</span>message<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>my-button<span class="token operator">&gt;</span><span class="token operator">&lt;</span>/my-button<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token function">import</span> MyButton from <span class="token string">'@/pages/MyButton'</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  props: <span class="token punctuation">[</span><span class="token string">'messages'</span><span class="token punctuation">]</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  components: <span class="token punctuation">{</span>
+    MyButton
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>Test1.spec.js
+<span class="token function">import</span> MyButton from <span class="token string">'@/pages/MyButton'</span>
+<span class="token function">import</span> <span class="token punctuation">{</span> mount<span class="token punctuation">}</span> from <span class="token string">'@vue/test-utils'</span>
+<span class="token punctuation">..</span>.
+  // exists<span class="token punctuation">(</span><span class="token punctuation">)</span>：断言 Wrapper 或 WrapperArray 是否存在。
+  test<span class="token punctuation">(</span><span class="token string">'不存在img'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>wrapper.findAll<span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">)</span>.exists<span class="token punctuation">(</span><span class="token punctuation">))</span>.toBeFalsy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  // isEmpty<span class="token punctuation">(</span><span class="token punctuation">)</span>：断言 Wrapper 并不包含子节点。
+  test<span class="token punctuation">(</span><span class="token string">'MyButton组件不为空'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>wrapper.find<span class="token punctuation">(</span>MyButton<span class="token punctuation">)</span>.isEmpty<span class="token punctuation">(</span><span class="token punctuation">))</span>.toBeFalsy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  // attributes<span class="token punctuation">(</span><span class="token punctuation">)</span>：返回 Wrapper DOM 节点的特性对象
+  // classes<span class="token punctuation">(</span><span class="token punctuation">)</span>：返回 Wrapper DOM 节点的 class 组成的数组
+  test<span class="token punctuation">(</span><span class="token string">'MyButton组件有my-button类'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>wrapper.find<span class="token punctuation">(</span>MyButton<span class="token punctuation">)</span>.attributes<span class="token punctuation">(</span><span class="token punctuation">)</span>.class<span class="token punctuation">)</span>.toContain<span class="token punctuation">(</span><span class="token string">'my-button'</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>wrapper.find<span class="token punctuation">(</span>MyButton<span class="token punctuation">)</span>.classes<span class="token punctuation">(</span><span class="token punctuation">))</span>.toContain<span class="token punctuation">(</span><span class="token string">'my-button'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="测试props"><a href="#测试props" class="header-anchor">#</a> 测试Props</h2> <p>父组件向子组件传递数据使用Props，而子组件向父组件传递数据则需要在子组件触发父组件的自定义事件</p> <p>当测试对父组件向子组件传递数据这一行为时，我们想要测试的当我们传递给子组件一个特定的参数，子组件是否会按照我们所断言的那样变现。</p> <p>在初始化时向子组件传值，使用的方法是propsData。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>const wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>Foo, <span class="token punctuation">{</span>
+  propsData: <span class="token punctuation">{</span>
+    foo: <span class="token string">'bar'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>也可以使用setProps方法：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>const wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>Foo<span class="token punctuation">)</span>
+wrapper.setProps<span class="token punctuation">(</span><span class="token punctuation">{</span> foo: <span class="token string">'bar'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>我们传递给Test1组件的messages一个['bye']数组，来验证是否存在：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>Test1, <span class="token punctuation">{</span>
+  propsData: <span class="token punctuation">{</span>
+    messages: <span class="token punctuation">[</span><span class="token string">'byte'</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">..</span>.
+
+ // props：返回 Wrapper vm 的 props 对象。
+  test<span class="token punctuation">(</span><span class="token string">'接收到了byte作为props'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>wrapper.props<span class="token punctuation">(</span><span class="token punctuation">)</span>.messages<span class="token punctuation">)</span>.toContain<span class="token punctuation">(</span><span class="token string">'byte'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>有时候会对Props的Type、默认值或者通过validator对Prop进行自定义的验证</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// vm.<span class="token variable">$options</span>返回Vue实例的初始化选项
+
+describe<span class="token punctuation">(</span><span class="token string">'验证props的各个属性'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">let</span> wrapper,
+  vm,
+  messages<span class="token punctuation">;</span>
+  beforeEach<span class="token variable"><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    <span class="token operator">/</span><span class="token operator">/</span> 如果要测子组件，就要用mount
+    wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>Test1<span class="token punctuation">,</span> {
+      propsData<span class="token operator">:</span> {
+        messages<span class="token operator">:</span> ['bye1'<span class="token punctuation">,</span> 'bye2'<span class="token punctuation">,</span> 'bye3']
+      }
+    }<span class="token punctuation">)</span>
+    vm <span class="token operator">=</span> wrapper.vm
+    messages <span class="token operator">=</span> vm.$options.props.messages
+  }<span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span>'messages is of  type array'<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    expect<span class="token punctuation">(</span>messages.type<span class="token punctuation">)</span>.toBe<span class="token punctuation">(</span>Array<span class="token punctuation">)</span>
+  }<span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span>'messages is required'<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    expect<span class="token punctuation">(</span>messages.required<span class="token punctuation">)</span>.toBeTruthy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  }<span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span>'messages has at least length <span class="token number">2</span>'<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    expect<span class="token punctuation">(</span>messages.validator <span class="token operator">&amp;&amp;</span> messages.validator<span class="token punctuation">(</span>['a']<span class="token punctuation">))</span></span>.toBeFalsy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>messages.validator <span class="token operator">&amp;&amp;</span> messages.validator<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'a'</span>, <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">))</span>.toBeTruthy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="测试自定义事件"><a href="#测试自定义事件" class="header-anchor">#</a> 测试自定义事件</h2> <p>自定义事件要测试点至少有以下两个：</p> <ul><li>测试事件会被正常触发</li> <li>测试事件被触发后的后续行为符合预期</li></ul> <p>具体到Test1组件和MyButton组件来看：</p> <p>Test1组件：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;outer&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>p v-for<span class="token operator">=</span><span class="token string">&quot;message in messages&quot;</span> :key<span class="token operator">=</span><span class="token string">&quot;message&quot;</span> <span class="token operator">&gt;</span><span class="token punctuation">{</span><span class="token punctuation">{</span>message<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>my-button @add<span class="token operator">=</span><span class="token string">&quot;addCounter&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span>/my-button<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>span<span class="token operator">&gt;</span>子组件传过来的值<span class="token operator">==</span><span class="token operator">==</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>count<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span>/span<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token function">import</span> MyButton from <span class="token string">'@/pages/MyButton'</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+// 省略一些代码
+  methods: <span class="token punctuation">{</span>
+    addCounter <span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      this.count <span class="token operator">=</span> val
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+</code></pre></div><p>MyButton组件</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;my-button&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">&quot;increment&quot;</span><span class="token operator">&gt;</span>按钮<span class="token operator">&lt;</span>/button<span class="token operator">&gt;</span>
+    <span class="token punctuation">{</span><span class="token punctuation">{</span>innerCount<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'MyButton'</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+      innerCount: <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  methods: <span class="token punctuation">{</span>
+    <span class="token function-name function">increment</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      this.innerCount <span class="token operator">+=</span> <span class="token number">1</span>
+      this.<span class="token variable">$emit</span><span class="token punctuation">(</span><span class="token string">'add'</span>, this.innerCount<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+</code></pre></div><p>要测试的目的是：</p> <ol><li>当MyButton组件的按钮被点击后会触发increment事件</li> <li>点击事件发生后，Test1组件的addCounter函数会被触发并且结果符合预期（及数字递增）</li></ol> <p>首先为MyButton编写单元测试文件：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> <span class="token punctuation">{</span>shallowMount<span class="token punctuation">}</span> from <span class="token string">'@vue/test-utils'</span>
+<span class="token function">import</span> MyButton from <span class="token string">'@/pages/MyButton'</span>
+describe<span class="token punctuation">(</span><span class="token string">'Test for MyButton Component'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  const wrapper <span class="token operator">=</span> shallowMount<span class="token punctuation">(</span>MyButton<span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span><span class="token string">'calls increment when click on button'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    // 创建mock函数
+    const mockFn <span class="token operator">=</span> jest.fn<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    // 设置wrapper vm的方法并强制更新
+    wrapper.setMethods<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      increment: mockFn
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    // 触发按钮的点击事件
+    wrapper.find<span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span>.trigger<span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>mockFn<span class="token punctuation">)</span>.toBeCalled<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>mockFn<span class="token punctuation">)</span>.toHaveBeenCalledTimes<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>通过setMethods方法用mock函数代替真实的方法，然后就可以断言点击按钮后对应的方法有没有被触发、触发几次、传入的参数等等。</p> <p>现在我们测试了点击事件后能触发对应的方法，下面要测试的就是increment方法将触发Test1组件中自定义的add方法</p> <div class="language-bash extra-class"><pre class="language-bash"><code>describe<span class="token punctuation">(</span><span class="token string">'increment方法会触发add方法'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span><span class="token punctuation">{</span>
+  const wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>MyButton<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  test<span class="token punctuation">(</span><span class="token string">'triggers a addCounter event when a handleClick method is called'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    // mock 自定义事件
+    const mockFn1 <span class="token operator">=</span> jest.fn<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    wrapper.vm.<span class="token variable">$on</span><span class="token punctuation">(</span><span class="token string">'add'</span>, mockFn1<span class="token punctuation">)</span>
+    wrapper.find<span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span>.trigger<span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    expect<span class="token punctuation">(</span>mockFn1<span class="token punctuation">)</span>.toBeCalled<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>mockFn1<span class="token punctuation">)</span>.toHaveBeenCalledWith<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    // 再次触发按钮的点击事件
+    wrapper.find<span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span>.trigger<span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    expect<span class="token punctuation">(</span>mockFn1<span class="token punctuation">)</span>.toHaveBeenCalledTimes<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    expect<span class="token punctuation">(</span>mockFn1<span class="token punctuation">)</span>.toHaveBeenCalledWith<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>这里使用了$on方法，将Test1自定义的add事件替换为Mock函数</p> <p>对于自定义事件，不能使用trigger方法触发，因为trigger只是用DOM事件。自定义事件使用$emit触发，前提是通过find找到MyButton组件</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// <span class="token variable">$emit</span> 触发自定义事件
+describe<span class="token punctuation">(</span><span class="token string">'验证addcounter是否被触发'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  const wrapper <span class="token operator">=</span> mount<span class="token punctuation">(</span>Test1<span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span><span class="token string">'addCounter Fn should be called'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const mockFn <span class="token operator">=</span> jest.fn<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    wrapper.setMethods<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token string">'addCounter'</span><span class="token builtin class-name">:</span> mockFn
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    wrapper.find<span class="token punctuation">(</span>MyButton<span class="token punctuation">)</span>.vm.<span class="token variable">$emit</span><span class="token punctuation">(</span><span class="token string">'add'</span>, <span class="token number">100</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>mockFn<span class="token punctuation">)</span>.toHaveBeenCalledTimes<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="测试计算属性"><a href="#测试计算属性" class="header-anchor">#</a> 测试计算属性</h2> <p>创建Test2组件，实现功能是使用计算属性将输入框输入的字符翻转：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;wrapper&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>label <span class="token assign-left variable">for</span><span class="token operator">=</span><span class="token string">&quot;input&quot;</span><span class="token operator">&gt;</span>输入<span class="token operator">&lt;</span>/label<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>input <span class="token assign-left variable">type</span><span class="token operator">=</span><span class="token string">&quot;text&quot;</span> <span class="token assign-left variable">id</span><span class="token operator">=</span><span class="token string">&quot;input&quot;</span>  v-model<span class="token operator">=</span><span class="token string">&quot;inputValue&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span>输出: <span class="token punctuation">{</span><span class="token punctuation">{</span>outputValue<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'Test2'</span>,
+  props: <span class="token punctuation">{</span>
+    needReverse: <span class="token punctuation">{</span>
+      type: Boolean,
+      default: <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+      inputValue: <span class="token string">''</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  computed: <span class="token punctuation">{</span>
+    <span class="token function-name function">outputValue</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token builtin class-name">return</span> this.needReverse ? <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">..</span>.this.inputValue<span class="token punctuation">]</span><span class="token punctuation">)</span>.reverse<span class="token punctuation">(</span><span class="token punctuation">)</span>.join<span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token builtin class-name">:</span> this.inputValue
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>style scoped<span class="token operator">&gt;</span>
+  .wrapper <span class="token punctuation">{</span>
+    width: 300px<span class="token punctuation">;</span>
+    margin: <span class="token number">0</span> auto<span class="token punctuation">;</span>
+    text-align: left<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/style<span class="token operator">&gt;</span>
+</code></pre></div><p>在Test2.spec.js中，可以通过wrapper.vm属性访问一个实例所有的方法和属性。这只存在于 Vue 组件包裹器中。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> <span class="token punctuation">{</span> shallowMount, <span class="token function">mount</span> <span class="token punctuation">}</span> from <span class="token string">&quot;@vue/test-utils&quot;</span>
+<span class="token function">import</span> Test2 from <span class="token string">'@/pages/Test2'</span>
+describe<span class="token punctuation">(</span><span class="token string">'Test for Test2 Component'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">let</span> wrapper
+  beforeEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    wrapper <span class="token operator">=</span> shallowMount<span class="token punctuation">(</span>Test2<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  afterEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    wrapper.destroy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span><span class="token string">'returns the string in normal order if reversed property is not true'</span>, async<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    await wrapper.setProps<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      needReverse: <span class="token boolean">false</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    wrapper.vm.inputValue <span class="token operator">=</span> <span class="token string">'ok'</span>
+    expect<span class="token punctuation">(</span>wrapper.vm.outputValue<span class="token punctuation">)</span>.toBe<span class="token punctuation">(</span><span class="token string">'ok'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span><span class="token string">'returns the string in normal order if reversed property is note provided'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token assign-left variable">wrapper.vm.inputValue</span><span class="token operator">=</span> <span class="token string">'ok'</span>
+    expect<span class="token punctuation">(</span>wrapper.vm.outputValue<span class="token punctuation">)</span>.toBe<span class="token punctuation">(</span><span class="token string">'ok'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  test<span class="token punctuation">(</span><span class="token string">'returns the string in reversed order if reversed property is true'</span>, async<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    await wrapper.setProps<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      needReverse: <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    wrapper.vm.inputValue <span class="token operator">=</span> <span class="token string">'123'</span>
+    expect<span class="token punctuation">(</span>wrapper.vm.outputValue<span class="token punctuation">)</span>.toBe<span class="token punctuation">(</span><span class="token string">'321'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="测试监听器"><a href="#测试监听器" class="header-anchor">#</a> 测试监听器</h2> <p>Vue提供的watch选项提供了一个更通用的方法，来响应数据的变化。</p> <p>为Test2添加侦听器：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>watch: <span class="token punctuation">{</span>
+  inputValue: <span class="token keyword">function</span> <span class="token punctuation">(</span>newValue, oldValue<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>newValue.trim<span class="token punctuation">(</span><span class="token punctuation">)</span>.length <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> newValue <span class="token operator">!=</span><span class="token operator">=</span> oldValue<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      this.printNewValue<span class="token punctuation">(</span>newValue<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>,
+methods: <span class="token punctuation">{</span>
+  printNewValue <span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span>val<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>为了测试，首先开始测试前将console的log方法用jest的spyOn方法mock掉，最好在测试结束后通过mockClear方法将其重置，避免无关状态的引入</p> <p>jest.spyOn(object, methodName)</p> <div class="language-bash extra-class"><pre class="language-bash"><code>describe<span class="token punctuation">(</span><span class="token string">'Test watch'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">let</span> spy<span class="token punctuation">;</span>
+    beforeEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      wrapper <span class="token operator">=</span> shallow<span class="token punctuation">(</span>Test2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      spy <span class="token operator">=</span> jest.spyOn<span class="token punctuation">(</span>console, <span class="token string">'log'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    afterEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      wrapper.destroy<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      spy.mockClear<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>然后执行给inputValue赋值，按照预期，spy方法会被调用</p> <div class="language-bash extra-class"><pre class="language-bash"><code>test<span class="token punctuation">(</span><span class="token string">'is called with the new value in other cases'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  wrapper.vm.inputValue <span class="token operator">=</span> <span class="token string">'ok'</span><span class="token punctuation">;</span>
+  expect<span class="token punctuation">(</span>spy<span class="token punctuation">)</span>.toBeCalled<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>但是在执行之后我们发现并非如此，spy并未被调用，原因是：</p> <p>watch中的方法被Vue<strong>推迟</strong>到了更新的下一个循环队列中去异步执行，如果这个watch被触发多次，只会被推送到队列一次。这种缓冲行为可以有效的去掉重复数据造成的不必要的性能开销。</p> <p>所以当我们设置了inputValue为'ok'之后，watch中的方法并没有立刻执行，但是expect却执行了，所以断言失败了。</p> <p>解决方法就是将断言放到$nextTick中，在下一个循环队列中执行，同时在expect后面执行Jest提供的done()方法，Jest会等到done()方法被执行才会结束测试。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>test<span class="token punctuation">(</span><span class="token string">'is called with the new value in other cases'</span>, <span class="token punctuation">(</span>done<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  wrapper.vm.inputValue <span class="token operator">=</span> <span class="token string">'ok'</span>
+  wrapper.vm.<span class="token variable">$nextTick</span><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>spy<span class="token punctuation">)</span>.toBeCalled<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    done<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>在测试第二个情况时，由于对inputValue赋值时spy会被执行一次，所以需要清除spy的状态，这样才能得出正确的预期：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>test<span class="token punctuation">(</span><span class="token string">'is not called with same value'</span>, <span class="token punctuation">(</span>done<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  wrapper.vm.inputValue <span class="token operator">=</span> <span class="token string">'ok'</span>
+  wrapper.vm.<span class="token variable">$nextTick</span><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    // 清除已发生的状态
+    spy.mockClear<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    wrapper.vm.inputValue <span class="token operator">=</span> <span class="token string">'ok'</span>
+    wrapper.vm.<span class="token variable">$nextTick</span><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+      expect<span class="token punctuation">(</span>spy<span class="token punctuation">)</span>.not.toBeCalled<span class="token punctuation">(</span><span class="token punctuation">)</span>
+      done<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="测试方法"><a href="#测试方法" class="header-anchor">#</a> 测试方法</h2> <p>单元测试的核心之一就是测试方法的行为是否符合预期，在测试时要避免一切的依赖，将所有的依赖都mock掉。</p> <p>创建Test3组件，输入问题后，点击按钮后，使用axios发送HTTP请求，获取答案</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;wrapper&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>label <span class="token assign-left variable">for</span><span class="token operator">=</span><span class="token string">&quot;input&quot;</span><span class="token operator">&gt;</span>问题：<span class="token operator">&lt;</span>/label<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>input <span class="token assign-left variable">id</span><span class="token operator">=</span><span class="token string">&quot;input&quot;</span> <span class="token assign-left variable">type</span><span class="token operator">=</span><span class="token string">&quot;text&quot;</span> v-model<span class="token operator">=</span><span class="token string">&quot;inputValue&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">&quot;getAnswer&quot;</span><span class="token operator">&gt;</span>click<span class="token operator">&lt;</span>/button<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span>答案：<span class="token punctuation">{</span><span class="token punctuation">{</span>answer<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>img :src<span class="token operator">=</span><span class="token string">&quot;src&quot;</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token function">import</span> axios from <span class="token string">'axios'</span>
+
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'Test3'</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+      inputValue: <span class="token string">'ok?'</span>,
+      answer: <span class="token string">''</span>,
+      src: <span class="token string">''</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  methods: <span class="token punctuation">{</span>
+    <span class="token function-name function">getAnswer</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      const URL <span class="token operator">=</span> <span class="token string">'https://yesno.wtf/api'</span>
+      <span class="token builtin class-name">return</span> axios.get<span class="token punctuation">(</span>URL<span class="token punctuation">)</span>.then<span class="token punctuation">(</span>result <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">&amp;&amp;</span> result.data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          this.answer <span class="token operator">=</span> result.data.answer
+          this.src <span class="token operator">=</span> result.data.image
+          <span class="token builtin class-name">return</span> result
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>.catch<span class="token punctuation">(</span>e <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>style scoped<span class="token operator">&gt;</span>
+  .wrapper <span class="token punctuation">{</span>
+    width: 500px<span class="token punctuation">;</span>
+    margin: <span class="token number">0</span> auto<span class="token punctuation">;</span>
+    text-align: left<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/style<span class="token operator">&gt;</span>
+</code></pre></div><p>这个例子里面，我们仅仅关注测试getAnswer方法，其他的忽略掉。为了测试这个方法，我们需要做的有：</p> <ul><li>我们不需要实际调用axios.get方法，需要将它mock掉</li> <li>我们需要测试是否调用了axios方法（但是并不实际触发）并且返回了一个Promise对象</li> <li>返回的Promise对象执行了回调函数，设置用户名和头像</li></ul> <p>我们现在要做的就是mock掉外部依赖。Jest提供了一个很好的mock系统，让我们能够很轻易的mock所有依赖，前面我们用过jest.spyOn方法和jest.fn方法，但对于上面的例子来说，仅使用这两个方法是不够的。</p> <p>我们现在要mock掉整个axios模块，使用的方法是jest.mock，就可以mock掉依赖的模块。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>jest.mock<span class="token punctuation">(</span><span class="token string">'dependency-path'</span>, implementationFunction<span class="token punctuation">)</span>
+</code></pre></div><p>在Test3.spec.js中，首先将axios中的get方法替换为我们的mock函数，然后引入相应的模块</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> <span class="token punctuation">{</span> shallowMount <span class="token punctuation">}</span> from <span class="token string">&quot;@vue/test-utils&quot;</span>
+<span class="token function">import</span> Test3 from <span class="token string">'@/pages/Test3'</span>
+<span class="token function">import</span> axios from <span class="token string">'axios'</span>
+
+jest.mock<span class="token punctuation">(</span><span class="token string">'axios'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  get: jest.fn<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">))</span>
+</code></pre></div><p>然后测试点击按钮后，axios的get方法是否被调用：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>describe<span class="token punctuation">(</span><span class="token string">'Test for Test3 Component'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">let</span> wrapper
+  beforeEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    axios.get.mockClear<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    wrapper <span class="token operator">=</span> shallowMount<span class="token punctuation">(</span>Test3<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  afterEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    wrapper.destroy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  // 点击按钮后调用了 getAnswer 方法
+  test<span class="token punctuation">(</span><span class="token string">'getAnswer Fn sholud be called'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const mockFn <span class="token operator">=</span> jest.fn<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    wrapper.setMethods<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      getAnswer: mockFn
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    wrapper.find<span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span>.trigger<span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>mockFn<span class="token punctuation">)</span>.toBeCalled<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  // 点击按钮后调用了axios.get方法
+  test<span class="token punctuation">(</span><span class="token string">'axios.get Fn should be called'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    const URL <span class="token operator">=</span> <span class="token string">'https://yesno.wtf/api'</span>
+    wrapper.find<span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span>.trigger<span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>axios.get<span class="token punctuation">)</span>.toBeCalledWith<span class="token punctuation">(</span>URL<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>测试结果发现，虽然我们的mock函数被调用了，但是控制台还是报错了，原因是我们mock的axios.get方法虽然被调用了，但是并没有返回任何值，所以报错了，所以下一步我们要给get方法返回一个Promise，查看方法能否正确处理我们返回的数据</p> <p>jest.fn()接受一个工厂函数作为参数，这样就可以定义其返回值</p> <div class="language-bash extra-class"><pre class="language-bash"><code>const mockData <span class="token operator">=</span> <span class="token punctuation">{</span>
+  data: <span class="token punctuation">{</span>
+    answer: <span class="token string">'mock_yes'</span>,
+    image: <span class="token string">'mock.png'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+jest.mock<span class="token punctuation">(</span><span class="token string">'axios'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  get: jest.fn<span class="token variable"><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Promise.resolve<span class="token punctuation">(</span>mockData<span class="token punctuation">))</span></span>
+<span class="token punctuation">}</span><span class="token punctuation">))</span>
+</code></pre></div><p>getAnswer是一个异步请求，Jest提供的解决异步代码测试的方法有以下三种：</p> <ul><li>回调函数中使用done()参数</li> <li>Pomise</li> <li>Aysnc/Await</li></ul> <p>第一种是使用在异步请求的回调函数中使用Jest提供的叫做done的单参数，Jest会等到done()执行结束后才会结束测试。</p> <p>我们使用第二种和第三种方法来测试getAnswer方法的返回值，前提就是在方法中返回一个Promise。（一般来说，在被测试的方法中给出一个返回值会让测试更加容易）。 Jest会等待Promise解析完成。 如果承诺被拒绝，则测试将自动失败。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// axios.get方法返回值（Promise）
+test<span class="token punctuation">(</span><span class="token string">'Calls get promise result'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">return</span> expect<span class="token punctuation">(</span>wrapper.vm.getAnswer<span class="token punctuation">(</span><span class="token punctuation">))</span>.resolves.toEqual<span class="token punctuation">(</span>mockData<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>或者可以使用第三种方法，也就是使用async和await来测试异步代码</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 可以用 Async/Await 测试 axios.get 方法返回值
+test<span class="token punctuation">(</span><span class="token string">'Calls get promise result 3'</span>, async<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  const result <span class="token operator">=</span> await wrapper.vm.getAnswer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  expect<span class="token punctuation">(</span>result<span class="token punctuation">)</span>.toEqual<span class="token punctuation">(</span>mockData<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>Jest都提供了resolves和rejects方法作为then和catch的语法糖：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>test<span class="token punctuation">(</span><span class="token string">'Calls get promise result 2'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">return</span> wrapper.vm.getAnswer<span class="token punctuation">(</span><span class="token punctuation">)</span>.then<span class="token punctuation">(</span>result <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    expect<span class="token punctuation">(</span>result<span class="token punctuation">)</span>.toEqual<span class="token punctuation">(</span>mockData<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+test<span class="token punctuation">(</span><span class="token string">'Calls get promise result 4'</span>, async<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  await expect<span class="token punctuation">(</span>wrapper.vm.getAnswer<span class="token punctuation">(</span><span class="token punctuation">))</span>.resolves.toEqual<span class="token punctuation">(</span>mockData<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="mock依赖"><a href="#mock依赖" class="header-anchor">#</a> mock依赖</h2> <p>我们可以创建一个__mocks__文件夹，将mock文件放入其中，这样就不必在每个测试文件中去单独的手动mock模块的依赖</p> <p>在__mocks__文件夹下创建axios.js文件：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// test/__mocks__/axios.js
+const mock <span class="token operator">=</span> <span class="token punctuation">{</span>
+  get: jest.fn<span class="token variable"><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Promise.resolve<span class="token punctuation">(</span>{
+    data<span class="token operator">:</span> {
+      answer<span class="token operator">:</span> 'mock_yes'<span class="token punctuation">,</span>
+      image<span class="token operator">:</span> 'mock.png'
+    }
+  }<span class="token punctuation">))</span></span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token builtin class-name">export</span> default mock
+</code></pre></div><p>这样就可以将Test3.spec.js中的jest.mock部分代码移除了。Jest会自动在__mocks__文件夹下寻找mock的模块，但是有一点要注意，模块的注册和状态会一直被保存，所有如果我们在Test3.spec.js最后增加一条断言：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 如果不清除模块状态此条断言会失败
+it<span class="token punctuation">(</span><span class="token string">'Axios should not be called here'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  expect<span class="token punctuation">(</span>axios.get<span class="token punctuation">)</span>.not.toBeCalled<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>因为我们在beforeEach中添加了axios.get的状态清除的语句 axios.get.mockClear()，所以上面的断言会通过，否则会失败。</p> <p>也可以用另外resetModules和clearAllMocks来确保每次开始前都重置模块和mock依赖的状态。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>beforeEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  wrapper <span class="token operator">=</span> shallow<span class="token punctuation">(</span>Test3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  jest.resetModules<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  jest.clearAllMocks<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="测试插槽"><a href="#测试插槽" class="header-anchor">#</a> 测试插槽</h2> <p>插槽（slots）用来在组件中插入、分发内容。创建一个使用slots的组件Test4</p> <div class="language-bash extra-class"><pre class="language-bash"><code>src/pages/test4/Test4.vue
+
+<span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>message-list<span class="token operator">&gt;</span>
+      <span class="token punctuation">{</span><span class="token punctuation">{</span>message<span class="token punctuation">}</span><span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span>/message-list<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token function">import</span> MessageList from <span class="token string">'./MessageList'</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'Test4'</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+      message: <span class="token string">'我是test4的内容'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>,
+  components: <span class="token punctuation">{</span>
+    MessageList
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+
+src/pages/test4/MessageList.vue
+
+<span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>ul <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;list-messages&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>slot /<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/ul<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/template<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token builtin class-name">export</span> default <span class="token punctuation">{</span>
+  name: <span class="token string">'MessageList'</span>,
+  <span class="token function-name function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span>/script<span class="token operator">&gt;</span>
+
+</code></pre></div><p>在测试slots时，我们的关注点是slots中的内容是否在组件中出现在该出现的位置，测试方法和前面介绍的测试DOM结构的方法相同。</p> <p>在测试时，为了将slots传递给MessageList组件，我们在Test4.spec.js中的mount或者shallowMount方法中使用slots属性</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">import</span> MessageList from <span class="token string">'@/pages/test4/MessageList'</span>
+<span class="token function">import</span> <span class="token punctuation">{</span>shallowMount<span class="token punctuation">}</span> from <span class="token string">'@vue/test-utils'</span>
+
+describe<span class="token punctuation">(</span><span class="token string">'Test for MessageList of Test4 Component'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">let</span> wrapper
+  beforeEach<span class="token variable"><span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    wrapper <span class="token operator">=</span> shallowMount<span class="token punctuation">(</span>MessageList<span class="token punctuation">,</span> {
+      slots<span class="token operator">:</span> {
+        default<span class="token operator">:</span> '<span class="token operator">&lt;</span>div class<span class="token operator">=</span>&quot;fake<span class="token operator">-</span>msg&quot;<span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>'
+      }
+    }<span class="token punctuation">)</span>
+  }<span class="token punctuation">)</span>
+  afterEach<span class="token punctuation">((</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    wrapper.destroy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  }<span class="token punctuation">)</span>
+
+  <span class="token operator">/</span><span class="token operator">/</span>  组件中应该通过slots插入了div.fake<span class="token operator">-</span>msg
+  test<span class="token punctuation">(</span>'Messages are inserted in a ul.list<span class="token operator">-</span>messages element'<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> {
+    const list <span class="token operator">=</span> wrapper.find<span class="token punctuation">(</span>'ul.list<span class="token operator">-</span>messages'<span class="token punctuation">)</span>
+    expect<span class="token punctuation">(</span>list.contains<span class="token punctuation">(</span>'div.fake<span class="token operator">-</span>msg'<span class="token punctuation">))</span></span>.toBeTruthy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="测试命名插槽-named-slots"><a href="#测试命名插槽-named-slots" class="header-anchor">#</a> 测试命名插槽（Named Slots）</h2> <p>测试命名插槽和默认插槽原理相同，里面应用新的MessageList组件，组件中增加一个给定名字为header的插槽，并设定默认内容：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>message-list<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>header <span class="token assign-left variable">slot</span><span class="token operator">=</span><span class="token string">&quot;header&quot;</span><span class="token operator">&gt;</span>Awesome header<span class="token operator">&lt;</span>/header<span class="token operator">&gt;</span>
+    <span class="token punctuation">{</span><span class="token punctuation">{</span>message<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span>/message-list<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+</code></pre></div><p>在MessageList.vue使用命名插槽</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>header <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;list-header&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>slot <span class="token assign-left variable">name</span><span class="token operator">=</span><span class="token string">&quot;header&quot;</span><span class="token operator">&gt;</span>This is a default header<span class="token operator">&lt;</span>/slot<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/header<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>ul <span class="token assign-left variable">class</span><span class="token operator">=</span><span class="token string">&quot;list-messages&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>slot /<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>/ul<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>/div<span class="token operator">&gt;</span>
+</code></pre></div><p>对MessageList组件进行测试时，首先测试组件中是否渲染了命名插槽的默认内容：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 渲染命名插槽的默认内容
+test<span class="token punctuation">(</span><span class="token string">'Header slot renders a default header text'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  const header <span class="token operator">=</span> wrapper.find<span class="token punctuation">(</span><span class="token string">'.list-header'</span><span class="token punctuation">)</span>
+  expect<span class="token punctuation">(</span>header.text<span class="token punctuation">(</span><span class="token punctuation">))</span>.toBe<span class="token punctuation">(</span><span class="token string">'This is a default header'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+</code></pre></div><p>然后测试插槽是否能插入我们给定的内容，只需要将mount方法中的slots选项的键值default改为被测试的插槽的name即可：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 向header插槽中插入内容
+test<span class="token punctuation">(</span><span class="token string">'Header slot is rendered withing .list-header'</span>, <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span><span class="token punctuation">{</span>
+  wrapper <span class="token operator">=</span> shallowMount<span class="token punctuation">(</span>MessageList, <span class="token punctuation">{</span>
+    slots: <span class="token punctuation">{</span>
+      header: <span class="token string">'&lt;header&gt;What an awesome header&lt;/header&gt;'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  const header <span class="token operator">=</span>  wrapper.find<span class="token punctuation">(</span><span class="token string">'.list-header'</span><span class="token punctuation">)</span>
+  expect<span class="token punctuation">(</span>header.text<span class="token punctuation">(</span><span class="token punctuation">))</span>.toBe<span class="token punctuation">(</span><span class="token string">'What an awesome header'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="参考资料"><a href="#参考资料" class="header-anchor">#</a> 参考资料</h2> <ul><li><a href="https://vue-test-utils.vuejs.org/zh/" target="_blank" rel="noopener noreferrer">Vue Test Utils<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://jestjs.io/zh-Hans/docs/getting-started" target="_blank" rel="noopener noreferrer">jest<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#介绍" class="sidebar-link reco-side-介绍" data-v-b57cc07c>介绍</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#安装" class="sidebar-link reco-side-安装" data-v-b57cc07c>安装</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#报错问题" class="sidebar-link reco-side-报错问题" data-v-b57cc07c>报错问题</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#别名配置" class="sidebar-link reco-side-别名配置" data-v-b57cc07c>别名配置</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#shallow-rendering" class="sidebar-link reco-side-shallow-rendering" data-v-b57cc07c>Shallow Rendering</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试dom结构" class="sidebar-link reco-side-测试dom结构" data-v-b57cc07c>测试DOM结构</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试props" class="sidebar-link reco-side-测试props" data-v-b57cc07c>测试Props</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试自定义事件" class="sidebar-link reco-side-测试自定义事件" data-v-b57cc07c>测试自定义事件</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试计算属性" class="sidebar-link reco-side-测试计算属性" data-v-b57cc07c>测试计算属性</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试监听器" class="sidebar-link reco-side-测试监听器" data-v-b57cc07c>测试监听器</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试方法" class="sidebar-link reco-side-测试方法" data-v-b57cc07c>测试方法</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#mock依赖" class="sidebar-link reco-side-mock依赖" data-v-b57cc07c>mock依赖</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试插槽" class="sidebar-link reco-side-测试插槽" data-v-b57cc07c>测试插槽</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#测试命名插槽-named-slots" class="sidebar-link reco-side-测试命名插槽-named-slots" data-v-b57cc07c>测试命名插槽（Named Slots）</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/vue-test-unit.html#参考资料" class="sidebar-link reco-side-参考资料" data-v-b57cc07c>参考资料</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://cs-sycdn.kuwo.cn/371642c104355a522300695af11424d3/64db8722/resource/n3/6/44/3638605905.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:20px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:10px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>可能</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>程响</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div></div></div>
+    <script src="/vuepress-blog/assets/js/app.cfe4f1dc.js" defer></script><script src="/vuepress-blog/assets/js/7.a84a24ff.js" defer></script><script src="/vuepress-blog/assets/js/2.c3a99807.js" defer></script><script src="/vuepress-blog/assets/js/1.c178cf32.js" defer></script><script src="/vuepress-blog/assets/js/63.13eb262f.js" defer></script>
+  </body>
+</html>

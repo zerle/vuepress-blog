@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>原生JS灵魂之问(上篇) | 张垒的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="记录好的技术文档">
+    
+    <link rel="preload" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css" as="style"><link rel="preload" href="/vuepress-blog/assets/js/app.cfe4f1dc.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/7.a84a24ff.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/2.c3a99807.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/1.c178cf32.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/46.466967ef.js" as="script"><link rel="prefetch" href="/vuepress-blog/assets/js/10.7e8e7b1e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/11.52366231.js"><link rel="prefetch" href="/vuepress-blog/assets/js/14.8efccace.js"><link rel="prefetch" href="/vuepress-blog/assets/js/15.acd8f527.js"><link rel="prefetch" href="/vuepress-blog/assets/js/16.696abc55.js"><link rel="prefetch" href="/vuepress-blog/assets/js/17.83830d6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/18.02b980f1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/19.68f440c9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/20.0a9cda66.js"><link rel="prefetch" href="/vuepress-blog/assets/js/21.7edb07fe.js"><link rel="prefetch" href="/vuepress-blog/assets/js/22.f567e8c0.js"><link rel="prefetch" href="/vuepress-blog/assets/js/23.2884f722.js"><link rel="prefetch" href="/vuepress-blog/assets/js/24.d348a5d9.js"><link rel="prefetch" href="/vuepress-blog/assets/js/25.ec080050.js"><link rel="prefetch" href="/vuepress-blog/assets/js/26.69adbacd.js"><link rel="prefetch" href="/vuepress-blog/assets/js/27.e94edaee.js"><link rel="prefetch" href="/vuepress-blog/assets/js/28.fa2c3683.js"><link rel="prefetch" href="/vuepress-blog/assets/js/29.480e11e4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/3.83b8031d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/30.9e44a369.js"><link rel="prefetch" href="/vuepress-blog/assets/js/31.ab5be7a3.js"><link rel="prefetch" href="/vuepress-blog/assets/js/32.fd74f8d8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/33.cf91586c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/34.57e43fc1.js"><link rel="prefetch" href="/vuepress-blog/assets/js/35.f12bb5f8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/36.0505d053.js"><link rel="prefetch" href="/vuepress-blog/assets/js/37.128579b6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/38.afd14854.js"><link rel="prefetch" href="/vuepress-blog/assets/js/39.136c8139.js"><link rel="prefetch" href="/vuepress-blog/assets/js/4.d9f667de.js"><link rel="prefetch" href="/vuepress-blog/assets/js/40.4702d49e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/41.c2c28470.js"><link rel="prefetch" href="/vuepress-blog/assets/js/42.2fc7c472.js"><link rel="prefetch" href="/vuepress-blog/assets/js/43.9b307549.js"><link rel="prefetch" href="/vuepress-blog/assets/js/44.ef443176.js"><link rel="prefetch" href="/vuepress-blog/assets/js/45.a7c60c22.js"><link rel="prefetch" href="/vuepress-blog/assets/js/47.48816b2e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/48.cbbfa44c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/49.b362bf6d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/5.3df9e6ac.js"><link rel="prefetch" href="/vuepress-blog/assets/js/50.7605d1cc.js"><link rel="prefetch" href="/vuepress-blog/assets/js/51.35192135.js"><link rel="prefetch" href="/vuepress-blog/assets/js/52.bf567756.js"><link rel="prefetch" href="/vuepress-blog/assets/js/53.b0768c7b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/54.9735e1f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/55.84021d4c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/56.e4771e7e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/57.7c72619d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/58.f8487d5b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/59.c97f0f0e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/6.5940db39.js"><link rel="prefetch" href="/vuepress-blog/assets/js/60.0cb291f7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/61.2405fff4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/62.a854dc11.js"><link rel="prefetch" href="/vuepress-blog/assets/js/63.13eb262f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/64.cb4d6ac7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/65.6e7515c4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/66.7db29015.js"><link rel="prefetch" href="/vuepress-blog/assets/js/67.45bf8f7c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/68.b604b4f6.js"><link rel="prefetch" href="/vuepress-blog/assets/js/69.8e28194e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/70.6c3a479b.js"><link rel="prefetch" href="/vuepress-blog/assets/js/71.b1ddb05f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/8.f2a8d12d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/9.0b4a9f34.js"><link rel="prefetch" href="/vuepress-blog/assets/js/vendors~docsearch.5bf76089.js">
+    <link rel="stylesheet" href="/vuepress-blog/assets/css/0.styles.3d11a1f1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>张垒的博客</h3> <p class="description" data-v-59e6cb88>记录好的技术文档</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-blog/" class="home-link router-link-active"><!----> <span class="site-name">张垒的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-blog/me.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>33</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>31</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-blog/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      zhang lei 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/4495277269197975" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/zerle" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>原生JS灵魂之问(上篇)</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">原生JS灵魂之问(上篇)</h1> <div data-v-8a445198><!----> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2020/10/26</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>JavaScript</span></i></div></div> <div class="theme-reco-content content__default"><p>原生JS的知识系统梳理</p> <h2 id="第一篇-js数据类型之问-概念篇"><a href="#第一篇-js数据类型之问-概念篇" class="header-anchor">#</a> 第一篇: JS数据类型之问——概念篇</h2> <h3 id="在-js-中-存在着-7-种原始值-分别是"><a href="#在-js-中-存在着-7-种原始值-分别是" class="header-anchor">#</a> 在 JS 中，存在着 7 种原始值，分别是：</h3> <ul><li>boolean</li> <li>null</li> <li>undefined</li> <li>number</li> <li>string</li> <li>symbol</li> <li>bigint</li></ul> <p>引用数据类型:
+对象Object（包含普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function）</p> <h3 id="_2-说出下面运行的结果-解释原因。"><a href="#_2-说出下面运行的结果-解释原因。" class="header-anchor">#</a> 2.说出下面运行的结果，解释原因。</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> test<span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  person.age <span class="token operator">=</span> <span class="token number">26</span>
+  person <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name: <span class="token string">'hzj'</span>,
+    age: <span class="token number">18</span>
+  <span class="token punctuation">}</span>
+  <span class="token builtin class-name">return</span> person
+<span class="token punctuation">}</span>
+const p1 <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name: <span class="token string">'fyq'</span>,
+  age: <span class="token number">19</span>
+<span class="token punctuation">}</span>
+const p2 <span class="token operator">=</span> test<span class="token punctuation">(</span>p1<span class="token punctuation">)</span>
+console.log<span class="token punctuation">(</span>p1<span class="token punctuation">)</span> // -<span class="token operator">&gt;</span> ?
+console.log<span class="token punctuation">(</span>p2<span class="token punctuation">)</span> // -<span class="token operator">&gt;</span> ?
+</code></pre></div><p>结果:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>p1：<span class="token punctuation">{</span>name: “fyq”, age: <span class="token number">26</span><span class="token punctuation">}</span>
+p2：<span class="token punctuation">{</span>name: “hzj”, age: <span class="token number">18</span><span class="token punctuation">}</span>
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code>原因: 在函数传参的时候传递的是对象在堆中的内存地址值，test函数中的实参person是p1对象的内存地址，通过调用person.age <span class="token operator">=</span> <span class="token number">26</span>确实改变了p1的值，但随后person变成了另一块内存空间的地址，并且在最后将这另外一份内存空间的地址返回，赋给了p2。
+</code></pre></div><h3 id="_3-null是对象吗-为什么"><a href="#_3-null是对象吗-为什么" class="header-anchor">#</a> 3.null是对象吗？为什么？</h3> <p>结论: null不是对象。
+解释: 虽然 typeof null 会输出 object，但是这只是 JS 存在的一个悠久 Bug。在 JS 的最初版本中使用的是 32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头代表是对象然而 null 表示为全零，所以将它错误的判断为 object 。</p> <h3 id="_4-1-tostring-为什么可以调用"><a href="#_4-1-tostring-为什么可以调用" class="header-anchor">#</a> 4.'1'.toString()为什么可以调用？</h3> <p>其实在这个语句运行的过程中做了这样几件事情：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var s <span class="token operator">=</span> new Object<span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+s.toString<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+s <span class="token operator">=</span> null<span class="token punctuation">;</span>
+</code></pre></div><p>第一步: 创建Object类实例。注意为什么不是String ？ 由于Symbol和BigInt的出现，对它们调用new都会报错，目前ES6规范也不建议用new来创建基本类型的包装类。
+第二步: 调用实例方法。
+第三步: 执行完方法立即销毁这个实例。
+整个过程体现了基本包装类型的性质，而基本包装类型恰恰属于基本数据类型，包括Boolean, Number和String。</p> <h3 id="_5-0-1-0-2为什么不等于0-3"><a href="#_5-0-1-0-2为什么不等于0-3" class="header-anchor">#</a> 5.0.1+0.2为什么不等于0.3？</h3> <p>0.1和0.2在转换成二进制后会无限循环，由于标准位数的限制后面多余的位数会被截掉，此时就已经出现了精度的损失，相加后因浮点数小数位的限制而截断的二进制数字在转换为十进制就会变成0.30000000000000004。</p> <h3 id="_6-如何理解bigint"><a href="#_6-如何理解bigint" class="header-anchor">#</a> 6.如何理解BigInt?</h3> <h4 id="什么是bigint"><a href="#什么是bigint" class="header-anchor">#</a> 什么是BigInt?</h4> <div class="language-bash extra-class"><pre class="language-bash"><code>BigInt是一种新的数据类型，用于当整数值大于Number数据类型支持的范围时。这种数据类型允许我们安全地对大整数执行算术操作，表示高分辨率的时间戳，使用大整数id，等等，而不需要使用库。
+</code></pre></div><h4 id="为什么需要bigint"><a href="#为什么需要bigint" class="header-anchor">#</a> 为什么需要BigInt?</h4> <p>在JS中，所有的数字都以双精度64位浮点格式表示，那这会带来什么问题呢？
+这导致JS中的Number无法精确表示非常大的整数，它会将非常大的整数四舍五入，确切地说，JS中的Number类型只能安全地表示-9007199254740991(-(2^53-1))和9007199254740991（(2^53-1)），任何超出此范围的整数值都可能失去精度。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>console.log<span class="token punctuation">(</span><span class="token number">999999999999999</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  //<span class="token operator">=</span><span class="token operator">&gt;</span><span class="token number">10000000000000000</span>
+</code></pre></div><p>同时也会有一定的安全性问题:</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">9007199254740992</span> <span class="token operator">==</span><span class="token operator">=</span> <span class="token number">9007199254740993</span><span class="token punctuation">;</span>    // → <span class="token boolean">true</span> 居然是true<span class="token operator">!</span>
+</code></pre></div><h4 id="如何创建并使用bigint"><a href="#如何创建并使用bigint" class="header-anchor">#</a> 如何创建并使用BigInt？</h4> <p>要创建BigInt，只需要在数字末尾追加n即可。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>console.log<span class="token punctuation">(</span> 9007199254740995n <span class="token punctuation">)</span><span class="token punctuation">;</span>    // → 9007199254740995n 
+console.log<span class="token punctuation">(</span> <span class="token number">9007199254740995</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>     // → <span class="token number">9007199254740996</span>
+</code></pre></div><p>另一种创建BigInt的方法是用BigInt()构造函数</p> <div class="language-bash extra-class"><pre class="language-bash"><code>BigInt<span class="token punctuation">(</span><span class="token string">&quot;9007199254740995&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    // → 9007199254740995n
+</code></pre></div><p>简单使用如下:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>10n + 20n<span class="token punctuation">;</span>    // → 30n  
+10n - 20n<span class="token punctuation">;</span>    // → <span class="token parameter variable">-10n</span> 
++10n<span class="token punctuation">;</span>         // → TypeError: Cannot convert a BigInt value to a number 
+-10n<span class="token punctuation">;</span>         // → <span class="token parameter variable">-10n</span> 
+10n * 20n<span class="token punctuation">;</span>    // → 200n 
+20n / 10n<span class="token punctuation">;</span>    // → 2n   
+23n % 10n<span class="token punctuation">;</span>    // → 3n   
+10n ** 3n<span class="token punctuation">;</span>    // → 1000n    
+
+const x <span class="token operator">=</span> 10n<span class="token punctuation">;</span>  
+++x<span class="token punctuation">;</span>          // → 11n  
+--x<span class="token punctuation">;</span>          // → 9n
+console.log<span class="token punctuation">(</span>typeof x<span class="token punctuation">)</span><span class="token punctuation">;</span>   //<span class="token string">&quot;bigint&quot;</span>
+</code></pre></div><h5 id="值得警惕的点"><a href="#值得警惕的点" class="header-anchor">#</a> 值得警惕的点</h5> <p>1.BigInt不支持一元加号运算符, 这可能是某些程序可能依赖于 + 始终生成 Number 的不变量，或者抛出异常。另外，更改 + 的行为也会破坏 asm.js代码。</p> <p>2.因为隐式类型转换可能丢失信息，所以不允许在bigint和 Number 之间进行混合操作。当混合使用大整数和浮点数时，结果值可能无法由BigInt或Number精确表示。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token number">10</span> + 10n<span class="token punctuation">;</span>    // → TypeError
+</code></pre></div><p>3.不能将BigInt传递给Web api和内置的 JS 函数，这些函数需要一个 Number 类型的数字。尝试这样做会报TypeError错误。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>Math.max<span class="token punctuation">(</span>2n, 4n, 6n<span class="token punctuation">)</span><span class="token punctuation">;</span>    // → TypeError
+</code></pre></div><p>4.当 Boolean 类型与 BigInt 类型相遇时，BigInt的处理方式与Number类似，换句话说，只要不是0n，BigInt就被视为truthy的值。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>if<span class="token punctuation">(</span>0n<span class="token punctuation">)</span><span class="token punctuation">{</span>//条件判断为false
+
+<span class="token punctuation">}</span>
+if<span class="token punctuation">(</span>3n<span class="token punctuation">)</span><span class="token punctuation">{</span>//条件为true
+
+<span class="token punctuation">}</span>
+</code></pre></div><p>5.元素都为BigInt的数组可以进行sort。</p> <p>6.BigInt可以正常地进行位运算，如|、&amp;、&lt;&lt;、&gt;&gt;和^</p> <p>浏览器兼容性
+caniuse的结果:</p> <p>{% asset_img 01.png This is an image %}</p> <p>其实现在的兼容性并不怎么好，只有chrome67、firefox、Opera这些主流实现，要正式成为规范，其实还有很长的路要走。</p> <p>我们期待BigInt的光明前途！</p> <h2 id="第二篇-js数据类型之问-检测篇"><a href="#第二篇-js数据类型之问-检测篇" class="header-anchor">#</a> 第二篇: JS数据类型之问——检测篇</h2> <h3 id="_1-typeof-是否能正确判断类型"><a href="#_1-typeof-是否能正确判断类型" class="header-anchor">#</a> 1.typeof 是否能正确判断类型？</h3> <p>对于原始类型来说，除了 null 都可以调用typeof显示正确的类型。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>typeof <span class="token number">1</span> // <span class="token string">'number'</span>
+typeof <span class="token string">'1'</span> // <span class="token string">'string'</span>
+typeof undefined // <span class="token string">'undefined'</span>
+typeof <span class="token boolean">true</span> // <span class="token string">'boolean'</span>
+typeof Symbol<span class="token punctuation">(</span><span class="token punctuation">)</span> // <span class="token string">'symbol'</span>
+</code></pre></div><p>但对于引用数据类型，除了函数之外，都会显示&quot;object&quot;。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>typeof <span class="token punctuation">[</span><span class="token punctuation">]</span> // <span class="token string">'object'</span>
+typeof <span class="token punctuation">{</span><span class="token punctuation">}</span> // <span class="token string">'object'</span>
+typeof console.log // <span class="token string">'function'</span>
+</code></pre></div><p>因此采用typeof判断对象数据类型是不合适的，采用instanceof会更好，instanceof的原理是基于原型链的查询，只要处于原型链中，判断永远为true</p> <div class="language-bash extra-class"><pre class="language-bash"><code>const Person <span class="token operator">=</span> <span class="token function-name function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+const p1 <span class="token operator">=</span> new Person<span class="token punctuation">(</span><span class="token punctuation">)</span>
+p1 instanceof Person // <span class="token boolean">true</span>
+
+var str1 <span class="token operator">=</span> <span class="token string">'hello world'</span>
+str1 instanceof String // <span class="token boolean">false</span>
+
+var str2 <span class="token operator">=</span> new String<span class="token punctuation">(</span><span class="token string">'hello world'</span><span class="token punctuation">)</span>
+str2 instanceof String // <span class="token boolean">true</span>
+</code></pre></div><h3 id="_2-instanceof能否判断基本数据类型"><a href="#_2-instanceof能否判断基本数据类型" class="header-anchor">#</a> 2. instanceof能否判断基本数据类型？</h3> <p>能。比如下面这种方式:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>class PrimitiveNumber <span class="token punctuation">{</span>
+  static <span class="token punctuation">[</span>Symbol.hasInstance<span class="token punctuation">]</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> typeof x <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'number'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+console.log<span class="token punctuation">(</span><span class="token number">111</span> instanceof PrimitiveNumber<span class="token punctuation">)</span> // <span class="token boolean">true</span>
+</code></pre></div><p>如果你不知道Symbol，可以看看<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/hasInstance?_blank" target="_blank" rel="noopener noreferrer">MDN上关于hasInstance的解释<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。
+其实就是自定义instanceof行为的一种方式，这里将原有的instanceof方法重定义，换成了typeof，因此能够判断基本数据类型。</p> <h3 id="_3-能不能手动实现一下instanceof的功能"><a href="#_3-能不能手动实现一下instanceof的功能" class="header-anchor">#</a> 3.能不能手动实现一下instanceof的功能？</h3> <p>核心: 原型链的向上查找</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> myInstanceof<span class="token punctuation">(</span>left, right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    //基本数据类型直接返回false
+    if<span class="token punctuation">(</span>typeof left <span class="token operator">!=</span><span class="token operator">=</span> <span class="token string">'object'</span> <span class="token operator">||</span> left <span class="token operator">==</span><span class="token operator">=</span> null<span class="token punctuation">)</span> <span class="token builtin class-name">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    //getProtypeOf是Object对象自带的一个方法，能够拿到参数的原型对象
+    <span class="token builtin class-name">let</span> proto <span class="token operator">=</span> Object.getPrototypeOf<span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    while<span class="token punctuation">(</span>true<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        //查找到尽头，还没找到
+        if<span class="token punctuation">(</span>proto <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token builtin class-name">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        //找到相同的原型对象
+        if<span class="token punctuation">(</span>proto <span class="token operator">==</span> right.prototype<span class="token punctuation">)</span> <span class="token builtin class-name">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        proto <span class="token operator">=</span> Object.getPrototypeOf<span class="token punctuation">(</span>proto<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>测试:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>console.log<span class="token punctuation">(</span>myInstanceof<span class="token punctuation">(</span><span class="token string">&quot;111&quot;</span>, String<span class="token punctuation">))</span><span class="token punctuation">;</span> //false
+console.log<span class="token punctuation">(</span>myInstanceof<span class="token punctuation">(</span>new String<span class="token punctuation">(</span><span class="token string">&quot;111&quot;</span><span class="token punctuation">)</span>, String<span class="token punctuation">))</span><span class="token punctuation">;</span>//true
+</code></pre></div><h3 id="_4-object-is和-的区别"><a href="#_4-object-is和-的区别" class="header-anchor">#</a> 4.Object.is和===的区别？</h3> <p>Object在严格等于的基础上修复了一些特殊情况下的失误，具体来说就是+0和-0，NaN和NaN。 源码如下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>
+<span class="token keyword">function</span> is<span class="token punctuation">(</span>x, y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span><span class="token operator">=</span> y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    //运行到1/x <span class="token operator">==</span><span class="token operator">=</span> <span class="token number">1</span>/y的时候x和y都为0，但是1/+0 <span class="token operator">=</span> +Infinity， <span class="token number">1</span>/-0 <span class="token operator">=</span> -Infinity, 是不一样的
+    <span class="token builtin class-name">return</span> x <span class="token operator">!=</span><span class="token operator">=</span> <span class="token number">0</span> <span class="token operator">||</span> y <span class="token operator">!=</span><span class="token operator">=</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token number">1</span> / x <span class="token operator">==</span><span class="token operator">=</span> <span class="token number">1</span> / y<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    //NaN<span class="token operator">==</span><span class="token operator">=</span>NaN是false,这是不对的，我们在这里做一个拦截，x <span class="token operator">!=</span><span class="token operator">=</span> x，那么一定是 NaN, y 同理
+    //两个都是NaN的时候返回true
+    <span class="token builtin class-name">return</span> x <span class="token operator">!=</span><span class="token operator">=</span> x <span class="token operator">&amp;&amp;</span> y <span class="token operator">!=</span><span class="token operator">=</span> y<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="第三篇-js数据类型之问-转换篇"><a href="#第三篇-js数据类型之问-转换篇" class="header-anchor">#</a> 第三篇: JS数据类型之问——转换篇</h2> <h3 id="_1-结果是什么-为什么"><a href="#_1-结果是什么-为什么" class="header-anchor">#</a> 1.[] == ![]结果是什么？为什么？</h3> <p>解析:
+== 中，左右两边都需要转换为数字然后进行比较。
+[]转换为数字为0。
+![] 首先是转换为布尔值，由于[]作为一个引用类型转换为布尔值为true,
+因此![]为false，进而在转换成数字，变为0。
+0 == 0 ， 结果为true</p> <h3 id="_2-js中类型转换有哪几种"><a href="#_2-js中类型转换有哪几种" class="header-anchor">#</a> 2.JS中类型转换有哪几种？</h3> <p>JS中，类型转换只有三种：</p> <ul><li>转换成数字</li> <li>转换成布尔值</li> <li>转换成字符串</li></ul> <p>转换具体规则如下:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>注意<span class="token string">&quot;Boolean 转字符串&quot;</span>这行结果指的是 <span class="token boolean">true</span> 转字符串的例子
+</code></pre></div><p>{% asset_img 02.png This is an image %}</p> <h3 id="_3-和-有什么区别"><a href="#_3-和-有什么区别" class="header-anchor">#</a> 3.== 和 ===有什么区别？</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">==</span><span class="token operator">=</span>叫做严格相等，是指：左右两边不仅值要相等，类型也要相等，例如<span class="token string">'1'</span><span class="token operator">==</span><span class="token operator">=</span><span class="token number">1</span>的结果是false，因为一边是string，另一边是number。
+</code></pre></div><p>==不像===那样严格，对于一般情况，只要值相等，就返回true，但==还涉及一些类型转换，它的转换规则如下：</p> <ul><li>两边的类型是否相同，相同的话就比较值的大小，例如1==2，返回false</li> <li>判断的是否是null和undefined，是的话就返回true</li> <li>判断的类型是否是String和Number，是的话，把String类型转换成Number，再进行比较</li> <li>判断其中一方是否是Boolean，是的话就把Boolean转换成Number，再进行比较</li> <li>如果其中一方为Object，且另一方为String、Number或者Symbol，会将Object转换成字符串，再进行比较</li></ul> <div class="language-bash extra-class"><pre class="language-bash"><code>console.log<span class="token punctuation">(</span><span class="token punctuation">{</span>a: <span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">==</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>//false
+console.log<span class="token punctuation">(</span><span class="token punctuation">{</span>a: <span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">==</span> <span class="token string">&quot;[object Object]&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>//true
+</code></pre></div><h3 id="_4-对象转原始类型是根据什么流程运行的"><a href="#_4-对象转原始类型是根据什么流程运行的" class="header-anchor">#</a> 4.对象转原始类型是根据什么流程运行的？</h3> <p>对象转原始类型，会调用内置的[ToPrimitive]函数，对于该函数而言，其逻辑如下：</p> <p>1.如果Symbol.toPrimitive()方法，优先调用再返回
+2.调用valueOf()，如果转换为原始类型，则返回
+3.调用toString()，如果转换为原始类型，则返回
+4.如果都没有返回原始类型，会报错</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var obj <span class="token operator">=</span> <span class="token punctuation">{</span>
+  value: <span class="token number">3</span>,
+  <span class="token function-name function">valueOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token number">4</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>,
+  <span class="token function-name function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token string">'5'</span>
+  <span class="token punctuation">}</span>,
+  <span class="token punctuation">[</span>Symbol.toPrimitive<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">return</span> <span class="token number">6</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+console.log<span class="token punctuation">(</span>obj + <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> // 输出7
+</code></pre></div><h3 id="_5-如何让if-a-1-a-2-条件成立"><a href="#_5-如何让if-a-1-a-2-条件成立" class="header-anchor">#</a> 5.如何让if(a == 1 &amp;&amp; a == 2)条件成立？</h3> <p>其实就是上一个问题的应用。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token punctuation">{</span>
+  value: <span class="token number">0</span>,
+  valueOf: <span class="token function-name function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    this.value++<span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span> this.value<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+console.log<span class="token punctuation">(</span>a <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> a <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>//true
+</code></pre></div><h2 id="第四篇-谈谈你对闭包的理解"><a href="#第四篇-谈谈你对闭包的理解" class="header-anchor">#</a> 第四篇: 谈谈你对闭包的理解</h2> <h3 id="什么是闭包"><a href="#什么是闭包" class="header-anchor">#</a> 什么是闭包？</h3> <p>红宝书(p178)上对于闭包的定义：闭包是指有权访问另外一个函数作用域中的变量的函数，</p> <div class="language-bash extra-class"><pre class="language-bash"><code>MDN 对闭包的定义为：闭包是指那些能够访问自由变量的函数。
+
+（其中自由变量，指在函数中使用的，但既不是函数参数arguments也不是函数的局部变量的变量，其实就是另外一个函数作用域中的变量。）
+</code></pre></div><h3 id="闭包产生的原因"><a href="#闭包产生的原因" class="header-anchor">#</a> 闭包产生的原因?</h3> <p>首先要明白作用域链的概念，其实很简单，在ES5中只存在两种作用域————全局作用域和函数作用域，当访问一个变量时，解释器会首先在当前作用域查找标示符，如果没有找到，就去父作用域找，直到找到该变量的标示符或者不在父作用域中，这就是作用域链，值得注意的是，每一个子函数都会拷贝上级的作用域，形成一个作用域的链条。 比如:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function-name function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  var a <span class="token operator">=</span> <span class="token number">2</span>
+  <span class="token keyword">function</span> <span class="token function-name function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    var a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    console.log<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>//3
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>在这段代码中，f1的作用域指向有全局作用域(window)和它本身，而f2的作用域指向全局作用域(window)、f1和它本身。而且作用域是从最底层向上找，直到找到全局作用域window为止，如果全局还没有的话就会报错。就这么简单一件事情！
+闭包产生的本质就是，当前环境中存在指向父级作用域的引用。还是举上面的例子:</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> <span class="token function-name function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  var a <span class="token operator">=</span> <span class="token number">2</span>
+  <span class="token keyword">function</span> <span class="token function-name function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>//2
+  <span class="token punctuation">}</span>
+  <span class="token builtin class-name">return</span> f2<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+var x <span class="token operator">=</span> f1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+x<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>这里x会拿到父级作用域中的变量，输出2。因为在当前环境中，含有对f2的引用，f2恰恰引用了window、f1和f2的作用域。因此f2可以访问到f1的作用域的变量。
+那是不是只有返回函数才算是产生了闭包呢？、
+回到闭包的本质，我们只需要让父级作用域的引用存在即可，因此我们还可以这么做：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var f3<span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function-name function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  var a <span class="token operator">=</span> <span class="token number">2</span>
+  f3 <span class="token operator">=</span> <span class="token function-name function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+f1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+f3<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>让f1执行，给f3赋值后，等于说现在f3拥有了window、f1和f3本身这几个作用域的访问权限，还是自底向上查找，最近是在f1中找到了a,因此输出2。
+在这里是外面的变量f3存在着父级作用域的引用，因此产生了闭包，形式变了，本质没有改变。</p> <h3 id="闭包有哪些表现形式"><a href="#闭包有哪些表现形式" class="header-anchor">#</a> 闭包有哪些表现形式?</h3> <p>明白了本质之后，我们就来看看，在真实的场景中，究竟在哪些地方能体现闭包的存在？</p> <p>1.返回一个函数。刚刚已经举例。
+2.作为函数参数传递</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function-name function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  var a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token keyword">function</span> <span class="token function-name function">baz</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  bar<span class="token punctuation">(</span>baz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> bar<span class="token punctuation">(</span>fn<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  // 这就是闭包
+  fn<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+// 输出2，而不是1
+foo<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>3.在定时器、事件监听、Ajax请求、跨窗口通信、Web Workers或者任何异步中，只要使用了回调函数，实际上就是在使用闭包。</p> <p>以下的闭包保存的仅仅是window和当前作用域。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// 定时器
+setTimeout<span class="token punctuation">(</span>function <span class="token function-name function">timeHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console.log<span class="token punctuation">(</span><span class="token string">'111'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>，100<span class="token punctuation">)</span>
+
+// 事件监听
+<span class="token variable"><span class="token variable">$(</span>'<span class="token comment">#app'</span><span class="token variable">)</span></span>.click<span class="token punctuation">(</span><span class="token function-name function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console.log<span class="token punctuation">(</span><span class="token string">'DOM Listener'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>4.IIFE(立即执行函数表达式)创建闭包, 保存了全局作用域window和当前函数的作用域，因此可以全局的变量。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>var a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">(</span>function <span class="token function-name function">IIFE</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  // 输出2
+  console.log<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>为什么会全部输出6？如何改进，让它输出1，2，3，4，5？(方法越多越好)
+因为setTimeout为宏任务，由于JS中单线程eventLoop机制，在主线程同步任务执行完后才去执行宏任务，因此循环结束后setTimeout中的回调才依次执行，但输出i的时候当前作用域没有，往上一级再找，发现了i,此时循环已经结束，i变成了6。因此会全部输出6。
+解决方法：</p> <p>1、利用IIFE(立即执行函数表达式)当每次for循环时，把此时的i变量传递到定时器中</p> <div class="language-bash extra-class"><pre class="language-bash"><code>for<span class="token punctuation">(</span>var i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span>i++<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token punctuation">(</span>function<span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    setTimeout<span class="token punctuation">(</span>function <span class="token function-name function">timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      console.log<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>, <span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>2、给定时器传入第三个参数, 作为timer函数的第一个函数参数</p> <div class="language-bash extra-class"><pre class="language-bash"><code>for<span class="token punctuation">(</span>var <span class="token assign-left variable">i</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span><span class="token number">5</span><span class="token punctuation">;</span>i++<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  setTimeout<span class="token punctuation">(</span>function timer<span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>, <span class="token number">0</span>, i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>3、使用ES6中的let</p> <div class="language-bash extra-class"><pre class="language-bash"><code>for<span class="token punctuation">(</span>let i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> i++<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  setTimeout<span class="token punctuation">(</span>function <span class="token function-name function">timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>,0<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>let使JS发生革命性的变化，让JS有函数作用域变为了块级作用域，用let后作用域链不复存在。代码的作用域以块级为单位，以上面代码为例:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>// i <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token punctuation">{</span>
+  setTimeout<span class="token punctuation">(</span>function <span class="token function-name function">timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>,0<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+// i <span class="token operator">=</span> <span class="token number">2</span>
+<span class="token punctuation">{</span>
+  setTimeout<span class="token punctuation">(</span>function <span class="token function-name function">timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>,0<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+// i <span class="token operator">=</span> <span class="token number">3</span>
+<span class="token punctuation">..</span>.
+</code></pre></div><p>因此能输出正确的结果。</p> <h2 id="第五篇-谈谈你对原型链的理解"><a href="#第五篇-谈谈你对原型链的理解" class="header-anchor">#</a> 第五篇: 谈谈你对原型链的理解</h2> <h3 id="_1-原型对象和构造函数有何关系"><a href="#_1-原型对象和构造函数有何关系" class="header-anchor">#</a> 1.原型对象和构造函数有何关系？</h3> <p>在JavaScript中，每当定义一个函数数据类型(普通函数、类)时候，都会天生自带一个prototype属性，这个属性指向函数的原型对象。
+当函数经过new调用时，这个函数就成为了构造函数，返回一个全新的实例对象，这个实例对象有一个__proto__属性，指向构造函数的原型对象。</p> <p>{% asset_img 03.png This is an image %}</p> <h3 id="_2-能不能描述一下原型链"><a href="#_2-能不能描述一下原型链" class="header-anchor">#</a> 2.能不能描述一下原型链？</h3> <p>JavaScript对象通过__proto__ 指向父类对象，直到指向Object对象为止，这样就形成了一个原型指向的链条, 即原型链。</p> <p>{% asset_img 04.png This is an image %}</p> <ul><li>对象的 hasOwnProperty() 来检查对象自身中是否含有该属性</li> <li>使用 in 检查对象中是否含有某个属性时，如果对象中没有但是原型链中有，也会返回 true</li></ul> <h2 id="第六篇-js如何实现继承"><a href="#第六篇-js如何实现继承" class="header-anchor">#</a> 第六篇: JS如何实现继承？</h2> <h3 id="第一种-借助call"><a href="#第一种-借助call" class="header-anchor">#</a> 第一种: 借助call</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>  <span class="token keyword">function</span> <span class="token function-name function">Parent1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    this.name <span class="token operator">=</span> <span class="token string">'parent1'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function-name function">Child1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Parent1.call<span class="token punctuation">(</span>this<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    this.type <span class="token operator">=</span> <span class="token string">'child1'</span>
+  <span class="token punctuation">}</span>
+  console.log<span class="token punctuation">(</span>new Child1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>这样写的时候子类虽然能够拿到父类的属性值，但是问题是父类原型对象中一旦存在方法那么子类无法继承。那么引出下面的方法。</p> <h3 id="第二种-借助原型链"><a href="#第二种-借助原型链" class="header-anchor">#</a> 第二种: 借助原型链</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>  <span class="token keyword">function</span> <span class="token function-name function">Parent2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    this.name <span class="token operator">=</span> <span class="token string">'parent2'</span><span class="token punctuation">;</span>
+    this.play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function-name function">Child2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    this.type <span class="token operator">=</span> <span class="token string">'child2'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  Child2.prototype <span class="token operator">=</span> new Parent2<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  console.log<span class="token punctuation">(</span>new Child2<span class="token punctuation">(</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+</code></pre></div><p>看似没有问题，父类的方法和属性都能够访问，但实际上有一个潜在的不足。举个例子：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>  var s1 <span class="token operator">=</span> new Child2<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  var s2 <span class="token operator">=</span> new Child2<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  s1.play.push<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console.log<span class="token punctuation">(</span>s1.play, s2.play<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>可以看到控制台：</p> <p>{% asset_img 05.png This is an image %}</p> <p>明明我只改变了s1的play属性，为什么s2也跟着变了呢？很简单，因为两个实例使用的是同一个原型对象。</p> <p>那么还有更好的方式么？</p> <h3 id="第三种-将前两种组合"><a href="#第三种-将前两种组合" class="header-anchor">#</a> 第三种：将前两种组合</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>  <span class="token keyword">function</span> <span class="token function-name function">Parent3</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    this.name <span class="token operator">=</span> <span class="token string">'parent3'</span><span class="token punctuation">;</span>
+    this.play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function-name function">Child3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Parent3.call<span class="token punctuation">(</span>this<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    this.type <span class="token operator">=</span> <span class="token string">'child3'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  Child3.prototype <span class="token operator">=</span> new Parent3<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  var s3 <span class="token operator">=</span> new Child3<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  var s4 <span class="token operator">=</span> new Child3<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  s3.play.push<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console.log<span class="token punctuation">(</span>s3.play, s4.play<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>可以看到控制台：</p> <p>{% asset_img 06.png This is an image %}</p> <p>之前的问题都得以解决。但是这里又徒增了一个新问题，那就是Parent3的构造函数会多执行了一次（Child3.prototype = new Parent3();）。这是我们不愿看到的。那么如何解决这个问题？</p> <h3 id="第四种-组合继承的优化1"><a href="#第四种-组合继承的优化1" class="header-anchor">#</a> 第四种: 组合继承的优化1</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>  <span class="token keyword">function</span> <span class="token function-name function">Parent4</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    this.name <span class="token operator">=</span> <span class="token string">'parent4'</span><span class="token punctuation">;</span>
+    this.play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function-name function">Child4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Parent4.call<span class="token punctuation">(</span>this<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    this.type <span class="token operator">=</span> <span class="token string">'child4'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  Child4.prototype <span class="token operator">=</span> Parent4.prototype<span class="token punctuation">;</span>
+</code></pre></div><p>这里让将父类原型对象直接给到子类，父类构造函数只执行一次，而且父类属性和方法均能访问，但是我们来测试一下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>  var s3 <span class="token operator">=</span> new Child4<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  var s4 <span class="token operator">=</span> new Child4<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console.log<span class="token punctuation">(</span>s3<span class="token punctuation">)</span>
+</code></pre></div><p>{% asset_img 07.png This is an image %}</p> <p>子类实例的构造函数是Parent4，显然这是不对的，应该是Child4。</p> <h3 id="第五种-最推荐使用-组合继承的优化1"><a href="#第五种-最推荐使用-组合继承的优化1" class="header-anchor">#</a> 第五种(最推荐使用): 组合继承的优化1</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>  <span class="token keyword">function</span> <span class="token function-name function">Parent5</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    this.name <span class="token operator">=</span> <span class="token string">'parent5'</span><span class="token punctuation">;</span>
+    this.play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function-name function">Child5</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Parent5.call<span class="token punctuation">(</span>this<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    this.type <span class="token operator">=</span> <span class="token string">'child5'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  Child5.prototype <span class="token operator">=</span> Object.create<span class="token punctuation">(</span>Parent5.prototype<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Child5.prototype.constructor <span class="token operator">=</span> Child5<span class="token punctuation">;</span>
+</code></pre></div><p>这是最推荐的一种方式，接近完美的继承，它的名字也叫做寄生组合继承。</p> <h3 id="es6的extends被编译后的javascript代码"><a href="#es6的extends被编译后的javascript代码" class="header-anchor">#</a> ES6的extends被编译后的JavaScript代码</h3> <p>ES6的代码最后都是要在浏览器上能够跑起来的，这中间就利用了babel这个编译工具，将ES6的代码编译成ES5让一些不支持新语法的浏览器也能运行。</p> <p>那最后编译成了什么样子呢？</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> _possibleConstructorReturn<span class="token punctuation">(</span>self, call<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    // <span class="token punctuation">..</span>.
+    <span class="token builtin class-name">return</span> call <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>typeof call <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'object'</span> <span class="token operator">||</span> typeof call <span class="token operator">==</span><span class="token operator">=</span> <span class="token string">'function'</span><span class="token punctuation">)</span> ? call <span class="token builtin class-name">:</span> self<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> _inherits<span class="token punctuation">(</span>subClass, superClass<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    // <span class="token punctuation">..</span>.
+    //看到没有
+    subClass.prototype <span class="token operator">=</span> Object.create<span class="token punctuation">(</span>superClass <span class="token operator">&amp;&amp;</span> superClass.prototype, <span class="token punctuation">{</span>
+        constructor: <span class="token punctuation">{</span>
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: <span class="token boolean">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>superClass<span class="token punctuation">)</span> Object.setPrototypeOf ? Object.setPrototypeOf<span class="token punctuation">(</span>subClass, superClass<span class="token punctuation">)</span> <span class="token builtin class-name">:</span> subClass.__proto__ <span class="token operator">=</span> superClass<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+var Parent <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function-name function">Parent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    // 验证是否是 Parent 构造出来的 this
+    _classCallCheck<span class="token punctuation">(</span>this, Parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+var Child <span class="token operator">=</span> <span class="token punctuation">(</span>function <span class="token punctuation">(</span>_Parent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    _inherits<span class="token punctuation">(</span>Child, _Parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">function</span> <span class="token function-name function">Child</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        _classCallCheck<span class="token punctuation">(</span>this, Child<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token builtin class-name">return</span> _possibleConstructorReturn<span class="token punctuation">(</span>this, <span class="token punctuation">(</span>Child.__proto__ <span class="token operator">||</span> Object.getPrototypeOf<span class="token punctuation">(</span>Child<span class="token punctuation">))</span>.apply<span class="token punctuation">(</span>this, arguments<span class="token punctuation">))</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token builtin class-name">return</span> Child<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">(</span>Parent<span class="token punctuation">))</span><span class="token punctuation">;</span>
+</code></pre></div><p>核心是_inherits函数，可以看到它采用的依然也是第五种方式————寄生组合继承方式，同时证明了这种方式的成功。不过这里加了一个Object.setPrototypeOf(subClass, superClass)，这是用来干啥的呢？
+答案是用来继承父类的静态方法。这也是原来的继承方式疏忽掉的地方。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>追问: 面向对象的设计一定是好的设计吗？
+</code></pre></div><p>不一定。从继承的角度说，这一设计是存在巨大隐患的。</p> <h3 id="从设计思想上谈谈继承本身的问题"><a href="#从设计思想上谈谈继承本身的问题" class="header-anchor">#</a> 从设计思想上谈谈继承本身的问题</h3> <p>假如现在有不同品牌的车，每辆车都有drive、music、addOil这三个方法。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>class Car<span class="token punctuation">{</span>
+  constructor<span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    this.id <span class="token operator">=</span> <span class="token function">id</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function-name function">drive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span><span class="token string">&quot;wuwuwu!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function-name function">music</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span><span class="token string">&quot;lalala!&quot;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function-name function">addOil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console.log<span class="token punctuation">(</span><span class="token string">&quot;哦哟！&quot;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+class otherCar extends Car<span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre></div><p>现在可以实现车的功能，并且以此去扩展不同的车。
+但是问题来了，新能源汽车也是车，但是它并不需要addOil(加油)。
+如果让新能源汽车的类继承Car的话，也是有问题的，俗称&quot;大猩猩和香蕉&quot;的问题。大猩猩手里有香蕉，但是我现在明明只需要香蕉，却拿到了一只大猩猩。也就是说加油这个方法，我现在是不需要的，但是由于继承的原因，也给到子类了。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>继承的最大问题在于：无法决定继承哪些属性，所有属性都得继承。
+</code></pre></div><p>当然你可能会说，可以再创建一个父类啊，把加油的方法给去掉，但是这也是有问题的，一方面父类是无法描述所有子类的细节情况的，为了不同的子类特性去增加不同的父类，代码势必会大量重复，另一方面一旦子类有所变动，父类也要进行相应的更新，代码的耦合性太高，维护性不好。
+那如何来解决继承的诸多问题呢？
+用组合，这也是当今编程语法发展的趋势，比如golang完全采用的是面向组合的设计方式。
+顾名思义，面向组合就是先设计一系列零件，然后将这些零件进行拼装，来形成不同的实例或者类。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">function</span> <span class="token function-name function">drive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console.log<span class="token punctuation">(</span><span class="token string">&quot;wuwuwu!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function-name function">music</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console.log<span class="token punctuation">(</span><span class="token string">&quot;lalala!&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function-name function">addOil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console.log<span class="token punctuation">(</span><span class="token string">&quot;哦哟！&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token builtin class-name">let</span> car <span class="token operator">=</span> compose<span class="token punctuation">(</span>drive, music, addOil<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token builtin class-name">let</span> newEnergyCar <span class="token operator">=</span> compose<span class="token punctuation">(</span>drive, music<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>代码干净，复用性也很好。这就是面向组合的设计方式。</p> <p><font color="#ff502c">申明：此篇文章转载于</font><a href="https://juejin.im/post/6844903974378668039?_blank" target="_blank" rel="noopener noreferrer">此处<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a><font color="#ff502c">，如有侵权，请联系删除，谢谢！</font></p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第一篇-js数据类型之问-概念篇" class="sidebar-link reco-side-第一篇-js数据类型之问-概念篇" data-v-b57cc07c>第一篇: JS数据类型之问——概念篇</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#在-js-中-存在着-7-种原始值-分别是" class="sidebar-link reco-side-在-js-中-存在着-7-种原始值-分别是" data-v-b57cc07c>在 JS 中，存在着 7 种原始值，分别是：</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_2-说出下面运行的结果-解释原因。" class="sidebar-link reco-side-_2-说出下面运行的结果-解释原因。" data-v-b57cc07c>2.说出下面运行的结果，解释原因。</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_3-null是对象吗-为什么" class="sidebar-link reco-side-_3-null是对象吗-为什么" data-v-b57cc07c>3.null是对象吗？为什么？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_4-1-tostring-为什么可以调用" class="sidebar-link reco-side-_4-1-tostring-为什么可以调用" data-v-b57cc07c>4.'1'.toString()为什么可以调用？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_5-0-1-0-2为什么不等于0-3" class="sidebar-link reco-side-_5-0-1-0-2为什么不等于0-3" data-v-b57cc07c>5.0.1+0.2为什么不等于0.3？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_6-如何理解bigint" class="sidebar-link reco-side-_6-如何理解bigint" data-v-b57cc07c>6.如何理解BigInt?</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第二篇-js数据类型之问-检测篇" class="sidebar-link reco-side-第二篇-js数据类型之问-检测篇" data-v-b57cc07c>第二篇: JS数据类型之问——检测篇</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_1-typeof-是否能正确判断类型" class="sidebar-link reco-side-_1-typeof-是否能正确判断类型" data-v-b57cc07c>1.typeof 是否能正确判断类型？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_2-instanceof能否判断基本数据类型" class="sidebar-link reco-side-_2-instanceof能否判断基本数据类型" data-v-b57cc07c>2. instanceof能否判断基本数据类型？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_3-能不能手动实现一下instanceof的功能" class="sidebar-link reco-side-_3-能不能手动实现一下instanceof的功能" data-v-b57cc07c>3.能不能手动实现一下instanceof的功能？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_4-object-is和-的区别" class="sidebar-link reco-side-_4-object-is和-的区别" data-v-b57cc07c>4.Object.is和===的区别？</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第三篇-js数据类型之问-转换篇" class="sidebar-link reco-side-第三篇-js数据类型之问-转换篇" data-v-b57cc07c>第三篇: JS数据类型之问——转换篇</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_1-结果是什么-为什么" class="sidebar-link reco-side-_1-结果是什么-为什么" data-v-b57cc07c>1.[] == ![]结果是什么？为什么？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_2-js中类型转换有哪几种" class="sidebar-link reco-side-_2-js中类型转换有哪几种" data-v-b57cc07c>2.JS中类型转换有哪几种？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_3-和-有什么区别" class="sidebar-link reco-side-_3-和-有什么区别" data-v-b57cc07c>3.== 和 ===有什么区别？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_4-对象转原始类型是根据什么流程运行的" class="sidebar-link reco-side-_4-对象转原始类型是根据什么流程运行的" data-v-b57cc07c>4.对象转原始类型是根据什么流程运行的？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_5-如何让if-a-1-a-2-条件成立" class="sidebar-link reco-side-_5-如何让if-a-1-a-2-条件成立" data-v-b57cc07c>5.如何让if(a == 1 &amp;&amp; a == 2)条件成立？</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第四篇-谈谈你对闭包的理解" class="sidebar-link reco-side-第四篇-谈谈你对闭包的理解" data-v-b57cc07c>第四篇: 谈谈你对闭包的理解</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#什么是闭包" class="sidebar-link reco-side-什么是闭包" data-v-b57cc07c>什么是闭包？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#闭包产生的原因" class="sidebar-link reco-side-闭包产生的原因" data-v-b57cc07c>闭包产生的原因?</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#闭包有哪些表现形式" class="sidebar-link reco-side-闭包有哪些表现形式" data-v-b57cc07c>闭包有哪些表现形式?</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第五篇-谈谈你对原型链的理解" class="sidebar-link reco-side-第五篇-谈谈你对原型链的理解" data-v-b57cc07c>第五篇: 谈谈你对原型链的理解</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_1-原型对象和构造函数有何关系" class="sidebar-link reco-side-_1-原型对象和构造函数有何关系" data-v-b57cc07c>1.原型对象和构造函数有何关系？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#_2-能不能描述一下原型链" class="sidebar-link reco-side-_2-能不能描述一下原型链" data-v-b57cc07c>2.能不能描述一下原型链？</a></li><li class="level-2" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第六篇-js如何实现继承" class="sidebar-link reco-side-第六篇-js如何实现继承" data-v-b57cc07c>第六篇: JS如何实现继承？</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第一种-借助call" class="sidebar-link reco-side-第一种-借助call" data-v-b57cc07c>第一种: 借助call</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第二种-借助原型链" class="sidebar-link reco-side-第二种-借助原型链" data-v-b57cc07c>第二种: 借助原型链</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第三种-将前两种组合" class="sidebar-link reco-side-第三种-将前两种组合" data-v-b57cc07c>第三种：将前两种组合</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第四种-组合继承的优化1" class="sidebar-link reco-side-第四种-组合继承的优化1" data-v-b57cc07c>第四种: 组合继承的优化1</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#第五种-最推荐使用-组合继承的优化1" class="sidebar-link reco-side-第五种-最推荐使用-组合继承的优化1" data-v-b57cc07c>第五种(最推荐使用): 组合继承的优化1</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#es6的extends被编译后的javascript代码" class="sidebar-link reco-side-es6的extends被编译后的javascript代码" data-v-b57cc07c>ES6的extends被编译后的JavaScript代码</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-blog/blogs/JavaScript.html#从设计思想上谈谈继承本身的问题" class="sidebar-link reco-side-从设计思想上谈谈继承本身的问题" data-v-b57cc07c>从设计思想上谈谈继承本身的问题</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://cs-sycdn.kuwo.cn/371642c104355a522300695af11424d3/64db8722/resource/n3/6/44/3638605905.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:20px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:10px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(https://img1.kuwo.cn/star/albumcover/500/53/43/1728161476.jpg);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>可能</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>程响</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div></div></div>
+    <script src="/vuepress-blog/assets/js/app.cfe4f1dc.js" defer></script><script src="/vuepress-blog/assets/js/7.a84a24ff.js" defer></script><script src="/vuepress-blog/assets/js/2.c3a99807.js" defer></script><script src="/vuepress-blog/assets/js/1.c178cf32.js" defer></script><script src="/vuepress-blog/assets/js/46.466967ef.js" defer></script>
+  </body>
+</html>
